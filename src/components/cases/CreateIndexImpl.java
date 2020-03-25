@@ -1,6 +1,5 @@
 package components.cases;
 
-import constants.Database;
 import system.System;
 
 import java.io.File;
@@ -42,7 +41,7 @@ public class CreateIndexImpl
     {
         public CreateIndexImpl_Step001(CreateIndexImpl.Parameter parameter) throws Exception
         {
-
+            //step 1
         }
     }
 
@@ -50,7 +49,7 @@ public class CreateIndexImpl
     {
         public CreateIndexImpl_Step002(CreateIndexImpl.Parameter parameter) throws Exception
         {
-
+            //step 2
         }
     }
 
@@ -58,7 +57,7 @@ public class CreateIndexImpl
     {
         public CreateIndexImpl_Step003(CreateIndexImpl.Parameter parameter) throws Exception
         {
-
+            //step 3
         }
     }
 
