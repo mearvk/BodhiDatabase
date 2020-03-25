@@ -3,7 +3,9 @@ package components.cases;
 import constants.Database;
 import system.System;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.util.StringTokenizer;
 
 public class CreateDatabaseImpl
@@ -55,17 +57,23 @@ public class CreateDatabaseImpl
     {
         public CreateDatabaseImpl_Step002(Parameter parameter) throws Exception
         {
-            File file = new File(Database.baseURL+"\\"+parameter.databasename_lowercase+".sql");
+            File file;
+
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file = new File(Database.baseURL+"\\"+parameter.databasename_lowercase+".sql")));
 
             if(file.exists())
             {
-                throw new Exception("Database with that name already exists");
+
             }
             else
             {
-                file.setWritable(true);
+                writer.write("employees.sql");
 
+                writer.flush();
 
+                writer.close();
+
+                writer = null;
             }
         }
     }
