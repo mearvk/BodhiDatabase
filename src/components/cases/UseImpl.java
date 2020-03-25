@@ -3,9 +3,7 @@ package components.cases;
 import constants.Database;
 import system.System;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.util.StringTokenizer;
 
 public class UseImpl
@@ -45,7 +43,7 @@ public class UseImpl
     {
         public UseImpl_Step001(UseImpl.Parameter parameter) throws Exception
         {
-            System.Database.database = new System.Database(parameter.databasename_lowercase);
+            System.Memory.reference.push("//database", new System.Database(parameter.databasename_lowercase));
         }
     }
 
@@ -53,26 +51,11 @@ public class UseImpl
     {
         public UseImpl_Step002(UseImpl.Parameter parameter) throws Exception
         {
-            File file;
+            File file = new File(Database.baseURL+"\\"+parameter.databasename_lowercase+".sql");
 
-            BufferedWriter writer = new BufferedWriter(new FileWriter(file = new File(Database.baseURL+"\\"+parameter.databasename_lowercase+".sql")));
+            if(!file.exists()) throw new Exception("No such database.");
 
-            if(file.exists()) throw new Exception();
-
-            else
-            {
-                writer.write("File Name >> " + parameter.databasename_lowercase + ".sql");
-
-                writer.newLine();
-
-                writer.write("Database Name >> " + parameter.databasename_lowercase);
-
-                writer.flush();
-
-                writer.close();
-
-                writer = null;
-            }
+            parameter.file = file;
         }
     }
 
@@ -80,7 +63,7 @@ public class UseImpl
     {
         public UseImpl_Step003(UseImpl.Parameter parameter) throws Exception
         {
-            //
+            //p
         }
     }
 
@@ -117,7 +100,7 @@ public class UseImpl
 
         public UseImpl parent;
 
-        File file;
+        public File file;
 
         public Parameter(UseImpl parent, String sqlString)
         {

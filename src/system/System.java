@@ -32,12 +32,8 @@ public class System
     {
         public String name;
 
-        public static Database database;
-
         public Database(String name)
         {
-            Database.database = this;
-
             this.name = name;
         }
     }
