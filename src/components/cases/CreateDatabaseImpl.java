@@ -59,11 +59,11 @@ public class CreateDatabaseImpl
 
             BufferedWriter writer = new BufferedWriter(new FileWriter(file = new File(Database.baseURL+"\\"+parameter.databasename_lowercase+".sql")));
 
-            writer.write("file.name >> "+parameter.databasename_lowercase+".sql");
+            writer.write("File Name >> "+parameter.databasename_lowercase+".sql");
 
             writer.newLine();
 
-            writer.write("database.name >> "+parameter.databasename_lowercase);
+            writer.write("Database Name >> "+parameter.databasename_lowercase);
 
             writer.flush();
 
