@@ -16,8 +16,6 @@ public class CreateDatabaseImpl
 
     public CreateDatabaseImpl_Step003 step003;
 
-    public String dbasename;
-
     public Parameter parameter;
 
     public CreateDatabaseImpl(String sqlString)
@@ -63,11 +61,13 @@ public class CreateDatabaseImpl
 
             if(file.exists())
             {
-
+                throw new Exception();
             }
             else
             {
-                writer.write("employees.sql");
+                writer.write("employees.sql - ++ text ++");
+
+                writer.newLine();
 
                 writer.flush();
 

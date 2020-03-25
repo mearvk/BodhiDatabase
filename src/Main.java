@@ -1,5 +1,6 @@
 import builder.Builder;
 import components.parser.Parser;
+import structures.Queue;
 import structures.SQLString;
 import system.System;
 
@@ -32,7 +33,7 @@ public class Main
 
         //
 
-        LinkedList<SQLString> queue = (LinkedList<SQLString>)System.Memory.reference.pull("//parser/queue");
+        Queue<SQLString> queue = (Queue<SQLString>)System.Memory.reference.pull("//parser/queue");
 
         queue.add(new SQLString("CREATE DATABASE employees"));
     }
