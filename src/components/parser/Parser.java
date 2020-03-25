@@ -1,10 +1,7 @@
 package components.parser;
 
 import components.Component;
-import components.cases.Case;
-import components.cases.CreateDatabaseImpl;
-import components.cases.CreateIndexImpl;
-import components.cases.CreateTableImpl;
+import components.cases.*;
 import structures.SQLString;
 import system.System;
 
@@ -152,7 +149,7 @@ public class Parser extends Component
 
             public DropColumn(String sqlString)
             {
-                this.sqlString = sqlString;
+                DropColumnImpl runner = new DropColumnImpl(this.sqlString = sqlString);
             }
         }
 
@@ -162,7 +159,7 @@ public class Parser extends Component
 
             public DropDatabase(String sqlString)
             {
-                this.sqlString = sqlString;
+                DropDatabaseImpl runner = new DropDatabaseImpl(this.sqlString = sqlString);
             }
         }
 
@@ -172,7 +169,7 @@ public class Parser extends Component
 
             public InsertInto(String sqlString)
             {
-                this.sqlString = sqlString;
+                InsertIntoImpl runner = new InsertIntoImpl(this.sqlString = sqlString);
             }
         }
 
@@ -182,7 +179,7 @@ public class Parser extends Component
 
             public Select(String sqlString)
             {
-                this.sqlString = sqlString;
+                SelectImpl runner = new SelectImpl(this.sqlString = sqlString);
             }
         }
 
@@ -192,7 +189,7 @@ public class Parser extends Component
 
             public Update(String sqlString)
             {
-                this.sqlString = sqlString;
+                UpdateImpl runner = new UpdateImpl(this.sqlString = sqlString);
             }
         }
 
