@@ -25,6 +25,8 @@ public class ParserCaseHandler
 
     public ParserCaseHandler.Update update;
 
+    public ParserCaseHandler.Use use;
+
     public ParserCaseHandler.Unknown unknown;
 
     //
@@ -66,6 +68,10 @@ public class ParserCaseHandler
             else if (sqlString.startsWith("SELECT"))
             {
                 this.select = new ParserCaseHandler.Select(sqlString);
+            }
+            else if (sqlString.startsWith("USE"))
+            {
+                this.use = new ParserCaseHandler.Use(sqlString);
             }
             else if (sqlString.startsWith("UPDATE"))
             {
@@ -173,6 +179,16 @@ public class ParserCaseHandler
         public Update(String sqlString)
         {
             UpdateImpl runner = new UpdateImpl(this.sqlString = sqlString);
+        }
+    }
+
+    public static class Use extends Case
+    {
+        public String sqlString;
+
+        public Use(String sqlString)
+        {
+            UseImpl runner = new UseImpl(this.sqlString = sqlString);
         }
     }
 

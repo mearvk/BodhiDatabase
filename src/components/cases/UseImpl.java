@@ -1,12 +1,10 @@
 package components.cases;
 
-import components.parser.Parser;
-
-public class CreateTableImpl
+public class UseImpl
 {
     public String sqlString;
 
-    public CreateTableImpl(String sqlString)
+    public UseImpl(String sqlString)
     {
         this.sqlString = sqlString;
     }

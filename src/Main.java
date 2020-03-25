@@ -35,6 +35,10 @@ public class Main
 
         Queue<SQLString> queue = (Queue<SQLString>)System.Memory.reference.pull("//parser/queue");
 
-        queue.add(new SQLString("CREATE DATABASE employees"));
+        queue.add(new SQLString("CREATE DATABASE company"));
+
+        queue.add(new SQLString("USE company"));
+
+        queue.add(new SQLString("CREATE TABLE employees (EmployeeID int, Firstname varchar(255), Lastname varchar(255))"));
     }
 }
