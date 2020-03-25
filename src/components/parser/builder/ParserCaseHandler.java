@@ -1,4 +1,4 @@
-package components.processor.builder;
+package components.parser.builder;
 
 import components.cases.Case;
 import structures.SQLString;

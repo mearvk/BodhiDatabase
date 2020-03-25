@@ -2,6 +2,9 @@ package components.parser;
 
 import components.Component;
 import components.cases.Case;
+import components.cases.CreateDatabaseImpl;
+import components.cases.CreateIndexImpl;
+import components.cases.CreateTableImpl;
 import structures.SQLString;
 import system.System;
 
@@ -50,43 +53,50 @@ public class Parser extends Component
         {
             String sqlString = queue.element().value.toUpperCase();
 
-            if(sqlString.startsWith("CREATE DATABASE"))
+            try
             {
-                this.create_database = new CaseHandler.CreateDatabase(sqlString);
+                if (sqlString.startsWith("CREATE DATABASE"))
+                {
+                    this.create_database = new CaseHandler.CreateDatabase(sqlString);
+                }
+                else if (sqlString.startsWith("CREATE INDEX"))
+                {
+                    this.create_index = new CaseHandler.CreateIndex(sqlString);
+                }
+                else if (sqlString.startsWith("CREATE TABLE"))
+                {
+                    this.create_table = new CaseHandler.CreateTable(sqlString);
+                }
+                else if (sqlString.startsWith("DELETE FROM"))
+                {
+                    this.delete_from = new CaseHandler.DeleteFrom(sqlString);
+                }
+                else if (sqlString.startsWith("DROP COLUMN"))
+                {
+                    this.drop_column = new CaseHandler.DropColumn(sqlString);
+                }
+                else if (sqlString.startsWith("DROP DATABASE"))
+                {
+                    this.drop_database = new CaseHandler.DropDatabase(sqlString);
+                }
+                else if (sqlString.startsWith("INSERT INTO"))
+                {
+                    this.insert_into = new CaseHandler.InsertInto(sqlString);
+                }
+                else if (sqlString.startsWith("SELECT"))
+                {
+                    this.select = new CaseHandler.Select(sqlString);
+                }
+                else if (sqlString.startsWith("UPDATE"))
+                {
+                    this.update = new CaseHandler.Update(sqlString);
+                }
+                else
+                {
+                    throw new Exception("Unknown Case");
+                }
             }
-            else if(sqlString.startsWith("CREATE INDEX"))
-            {
-                this.create_index = new CaseHandler.CreateIndex(sqlString);
-            }
-            else if(sqlString.startsWith("CREATE TABLE"))
-            {
-                this.create_table = new CaseHandler.CreateTable(sqlString);
-            }
-            else if(sqlString.startsWith("DELETE FROM"))
-            {
-                this.delete_from = new CaseHandler.DeleteFrom(sqlString);
-            }
-            else if(sqlString.startsWith("DROP COLUMN"))
-            {
-                this.drop_column = new CaseHandler.DropColumn(sqlString);
-            }
-            else if(sqlString.startsWith("DROP DATABASE"))
-            {
-                this.drop_database = new CaseHandler.DropDatabase(sqlString);
-            }
-            else if(sqlString.startsWith("INSERT INTO"))
-            {
-                this.insert_into = new CaseHandler.InsertInto(sqlString);
-            }
-            else if(sqlString.startsWith("SELECT"))
-            {
-                this.select = new CaseHandler.Select(sqlString);
-            }
-            else if(sqlString.startsWith("UPDATE"))
-            {
-                this.update = new CaseHandler.Update(sqlString);
-            }
-            else
+            catch (Exception e)
             {
                 this.unknown = new CaseHandler.Unknown();
             }
@@ -100,7 +110,7 @@ public class Parser extends Component
 
             public CreateDatabase(String sqlString)
             {
-                this.sqlString = sqlString;
+                CreateDatabaseImpl runner = new CreateDatabaseImpl(this.sqlString = sqlString);
             }
         }
 
@@ -110,7 +120,7 @@ public class Parser extends Component
 
             public CreateIndex(String sqlString)
             {
-                this.sqlString = sqlString;
+                CreateIndexImpl runner = new CreateIndexImpl(this.sqlString = sqlString);
             }
         }
 
@@ -120,6 +130,8 @@ public class Parser extends Component
 
             public CreateTable(String sqlString)
             {
+                CreateTableImpl runner = new CreateTableImpl(this.sqlString = sqlString);
+
                 this.sqlString = sqlString;
             }
         }
@@ -130,7 +142,7 @@ public class Parser extends Component
 
             public DeleteFrom(String sqlString)
             {
-                this.sqlString = sqlString;
+                DeleteFrom runner = new DeleteFrom(this.sqlString = sqlString);
             }
         }
 
