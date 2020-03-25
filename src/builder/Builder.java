@@ -24,6 +24,8 @@ public class Builder
         public Builder_Step001()
         {
             Parser parser = new Parser();
+
+            parser.thread.start();
         }
     }
 
@@ -32,6 +34,8 @@ public class Builder
         public Builder_Step002()
         {
             Persistence persistence = new Persistence();
+
+            persistence.thread.start();
         }
     }
 
@@ -40,6 +44,8 @@ public class Builder
         public Builder_Step003()
         {
             Network network = new Network();
+
+            network.thread.start();
         }
     }
 
@@ -48,6 +54,8 @@ public class Builder
         public Builder_Step004()
         {
             Processor processor = new Processor();
+
+            processor.thread.start();
         }
     }
 
@@ -56,6 +64,8 @@ public class Builder
         public Builder_Step005()
         {
             Terminal terminal = new Terminal();
+
+            terminal.thread.start();
         }
     }
 
