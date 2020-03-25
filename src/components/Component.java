@@ -1,4 +1,6 @@
 package components;
 
-public class Component {
+public class Component
+{
+    public String name;
 }
