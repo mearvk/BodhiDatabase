@@ -4,17 +4,20 @@ import components.Component;
 import structures.SQLString;
 import system.System;
 
+import java.util.LinkedList;
 import java.util.Queue;
 
 public class Processor extends Component
 {
     public ThreadImplementation thread= new ThreadImplementation();
 
+    public LinkedList<SQLString> queue = new LinkedList<SQLString>();
+
     public Processor()
     {
         System.Memory.reference.push("//processor", this);
 
-        System.Memory.reference.push("//processor/queue", this);
+        System.Memory.reference.push("//processor/queue", this.queue);
 
         System.Memory.reference.push("//processor/thread", this.thread);
     }
@@ -26,7 +29,7 @@ public class Processor extends Component
         @Override
         public void run()
         {
-            Queue<SQLString> queue_in = (Queue<SQLString>)System.Memory.reference.pull("//processor/queue");
+            LinkedList<SQLString> queue_in = (LinkedList<SQLString>)System.Memory.reference.pull("//processor/queue");
 
             while (running)
             {

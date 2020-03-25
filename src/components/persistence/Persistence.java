@@ -4,17 +4,20 @@ import components.Component;
 import structures.SQLString;
 import system.System;
 
+import java.util.LinkedList;
 import java.util.Queue;
 
 public class Persistence extends Component
 {
     public ThreadImplementation thread = new ThreadImplementation();
 
+    public LinkedList<SQLString> queue = new LinkedList<SQLString>();
+
     public Persistence()
     {
         System.Memory.reference.push("//persistence", this);
 
-        System.Memory.reference.push("//persistence/queue", this);
+        System.Memory.reference.push("//persistence/queue", this.queue);
 
         System.Memory.reference.push("//persistence/thread", this.thread);
     }
@@ -26,7 +29,7 @@ public class Persistence extends Component
         @Override
         public void run()
         {
-            Queue<SQLString> queue_in = (Queue<SQLString>)System.Memory.reference.pull("//persistence/queue");
+            LinkedList<SQLString> queue_in = (LinkedList<SQLString>)System.Memory.reference.pull("//persistence/queue");
 
             while (running)
             {

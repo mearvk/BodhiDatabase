@@ -4,17 +4,20 @@ import components.Component;
 import structures.SQLString;
 import system.System;
 
+import java.util.LinkedList;
 import java.util.Queue;
 
 public class Terminal extends Component
 {
     public ThreadImplementation thread = new ThreadImplementation();
 
+    public LinkedList<SQLString> queue = new LinkedList<SQLString>();
+
     public Terminal()
     {
         System.Memory.reference.push("//terminal", this);
 
-        System.Memory.reference.push("//terminal/queue", this);
+        System.Memory.reference.push("//terminal/queue", this.queue);
 
         System.Memory.reference.push("//terminal/thread", this.thread);
     }
@@ -26,7 +29,7 @@ public class Terminal extends Component
         @Override
         public void run()
         {
-            Queue<SQLString> queue = (Queue<SQLString>)System.Memory.reference.pull("//terminal/queue");
+            LinkedList<SQLString> queue = (LinkedList<SQLString>)System.Memory.reference.pull("//terminal/queue");
 
             while (running)
             {

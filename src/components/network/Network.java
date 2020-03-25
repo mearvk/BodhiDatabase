@@ -4,29 +4,31 @@ import components.Component;
 import structures.SQLString;
 import system.System;
 
-import java.util.Queue;
+import java.util.LinkedList;
 
 public class Network extends Component
 {
-    public Network.ThreadImplementation_001 thread = new ThreadImplementation_001();
+    public ThreadImplementation thread = new ThreadImplementation();
+
+    public LinkedList<SQLString> queue = new LinkedList<SQLString>();
 
     public Network()
     {
         System.Memory.reference.push("//network", this);
 
-        System.Memory.reference.push("//network/queue", this);
+        System.Memory.reference.push("//network/queue", this.queue);
 
         System.Memory.reference.push("//network/thread", this.thread);
     }
 
-    public static class ThreadImplementation_001 extends Thread
+    public static class ThreadImplementation extends Thread
     {
         public Boolean running = true;
 
         @Override
         public void run()
         {
-            Queue<SQLString> queue_in = (Queue<SQLString>)System.Memory.reference.pull("//network/queue");
+            LinkedList<SQLString> queue_in = (LinkedList<SQLString>)System.Memory.reference.pull("//network/queue");
 
             while (running)
             {
