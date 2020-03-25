@@ -1,6 +1,7 @@
 package components.parser;
 
 import components.Component;
+import components.processor.builder.CaseHandler;
 import structures.SQLString;
 import system.System;
 
@@ -29,43 +30,59 @@ public class Parser extends Component
         @Override
         public void run()
         {
-            Queue<SQLString> queue_in = (Queue<SQLString>)System.Memory.reference.pull("//parser/queue");
+            Queue<SQLString> queue = (Queue<SQLString>)System.Memory.reference.pull("//parser/queue");
 
             while (running)
             {
                 try
                 {
-                    if(queue_in.peek()==null) { Thread.sleep(25,0); continue; }
+                    if(queue.peek()==null) { Thread.sleep(25,0); continue; }
 
                     //
 
-                    String sqlString = queue_in.element().value;
+                    String sql_string = queue.element().value.toUpperCase();
 
                     //
 
-                    if(sqlString.startsWith("CREATE TABLE"))
-                    {
+                    CaseHandler handler = new CaseHandler();
 
+                    //
+
+                    if(sql_string.startsWith("CREATE DATABASE"))
+                    {
+                        handler.create_database = new CaseHandler.CreateDatabase();
                     }
-                    if(sqlString.startsWith("DELETE"))
+                    else if(sql_string.startsWith("CREATE INDEX"))
                     {
-
+                        handler.create_index = new CaseHandler.CreateIndex();
                     }
-                    else if(sqlString.startsWith("DROP"))
+                    else if(sql_string.startsWith("CREATE TABLE"))
                     {
-
+                        handler.create_table = new CaseHandler.CreateTable();
                     }
-                    else if(sqlString.startsWith("INSERT INTO"))
+                    else if(sql_string.startsWith("DELETE FROM"))
                     {
-
+                        handler.delete_from = new CaseHandler.DeleteFrom();
                     }
-                    else if(sqlString.startsWith("SELECT"))
+                    else if(sql_string.startsWith("DROP COLUMN"))
                     {
-
+                        handler.drop_column = new CaseHandler.DropColumn();
                     }
-                    else if(sqlString.startsWith("UPDATE"))
+                    else if(sql_string.startsWith("DROP DATABASE"))
                     {
-
+                        handler.drop_database = new CaseHandler.DropDatabase();
+                    }
+                    else if(sql_string.startsWith("INSERT INTO"))
+                    {
+                        handler.insert_into = new CaseHandler.InsertInto();
+                    }
+                    else if(sql_string.startsWith("SELECT"))
+                    {
+                        handler.select = new CaseHandler.Select();
+                    }
+                    else if(sql_string.startsWith("UPDATE"))
+                    {
+                        handler.update = new CaseHandler.Update();
                     }
                 }
                 catch(Exception e)

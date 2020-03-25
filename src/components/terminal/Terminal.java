@@ -8,7 +8,7 @@ import java.util.Queue;
 
 public class Terminal extends Component
 {
-    public Terminal.ThreadImplementation_001 thread = new ThreadImplementation_001();
+    public ThreadImplementation thread = new ThreadImplementation();
 
     public Terminal()
     {
@@ -19,7 +19,7 @@ public class Terminal extends Component
         System.Memory.reference.push("//terminal/thread", this.thread);
     }
 
-    public static class ThreadImplementation_001 extends Thread
+    public static class ThreadImplementation extends Thread
     {
         public Boolean running = true;
 
