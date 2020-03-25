@@ -9,58 +9,69 @@ import java.util.Queue;
 
 public class Parser extends Component
 {
-    public ThreadImplementation_001 thread = new ThreadImplementation_001();
+    public ThreadImplementation thread = new ThreadImplementation();
 
     public Queue<SQLString> queue_in = new LinkedList();
-
-    public Queue<SQLString> queue_out = new LinkedList();
 
     public Parser()
     {
         System.Memory.reference.push("//parser", this);
 
-        System.Memory.reference.push("//parser/queue/in", this.queue_in);
-
-        System.Memory.reference.push("//parser/queue/out", this.queue_out);
+        System.Memory.reference.push("//parser/queue", this.queue_in);
 
         System.Memory.reference.push("//parser/thread", this.thread);
     }
 
-    public static class ThreadImplementation_001 extends Thread
+    public static class ThreadImplementation extends Thread
     {
         public Boolean running = true;
 
         @Override
         public void run()
         {
-            Queue<SQLString> queue_in = (Queue<SQLString>)System.Memory.reference.pull("//parser/queues/in");
-
-            Queue<SQLString> queue_out = (Queue<SQLString>)System.Memory.reference.pull("//parser/queues/out");
+            Queue<SQLString> queue_in = (Queue<SQLString>)System.Memory.reference.pull("//parser/queue");
 
             while (running)
             {
                 try
                 {
-                    if(queue_in.peek()==null)
-                    {
-                        Thread.sleep(25,0); continue;
-                    }
-
-                    SQLString sql_string = queue_in.element();
+                    if(queue_in.peek()==null) { Thread.sleep(25,0); continue; }
 
                     //
 
-                    //TODO statement type; do 16 cases then dump
+                    String sqlString = queue_in.element().value;
 
-                     //
+                    //
 
-                     queue_out.add(sql_string);
+                    if(sqlString.startsWith("CREATE TABLE"))
+                    {
+
+                    }
+                    if(sqlString.startsWith("DELETE"))
+                    {
+
+                    }
+                    else if(sqlString.startsWith("DROP"))
+                    {
+
+                    }
+                    else if(sqlString.startsWith("INSERT INTO"))
+                    {
+
+                    }
+                    else if(sqlString.startsWith("SELECT"))
+                    {
+
+                    }
+                    else if(sqlString.startsWith("UPDATE"))
+                    {
+
+                    }
                 }
                 catch(Exception e)
                 {
                     e.printStackTrace();
                 }
-
             }
         }
     }
