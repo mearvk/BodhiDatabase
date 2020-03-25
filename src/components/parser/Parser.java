@@ -48,7 +48,7 @@ public class Parser extends Component
 
         public CaseHandler(LinkedList<SQLString> queue)
         {
-            String sqlString = queue.element().value.toUpperCase();
+            String sqlString = queue.poll().value.toUpperCase();
 
             try
             {
@@ -198,7 +198,6 @@ public class Parser extends Component
 
         }
     }
-
 
     public static class ThreadImplementation extends Thread
     {

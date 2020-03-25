@@ -1,5 +1,9 @@
 import builder.Builder;
+import components.parser.Parser;
+import structures.SQLString;
 import system.System;
+
+import java.util.LinkedList;
 
 public class Main
 {
@@ -25,5 +29,11 @@ public class Main
         builder.builder_step004 = new Builder.Builder_Step004();
 
         builder.builder_step005 = new Builder.Builder_Step005();
+
+        //
+
+        LinkedList<SQLString> queue = (LinkedList<SQLString>)System.Memory.reference.pull("//parser/queue");
+
+        queue.add(new SQLString("CREATE DATABASE employees"));
     }
 }
