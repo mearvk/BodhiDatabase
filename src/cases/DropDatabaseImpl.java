@@ -4,7 +4,7 @@ import system.System;
 
 import java.io.File;
 
-public class DropDatabaseImpl
+public class DropDatabaseImpl extends Case
 {
     public DropDatabaseImpl.DropDatabaseImpl_Step001 step001;
 

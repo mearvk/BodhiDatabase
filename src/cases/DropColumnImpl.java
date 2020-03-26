@@ -4,7 +4,7 @@ import system.System;
 
 import java.io.File;
 
-public class DropColumnImpl
+public class DropColumnImpl extends Case
 {
     public DropColumnImpl.DropColumnImpl_Step001 step001;
 

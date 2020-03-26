@@ -4,7 +4,7 @@ import system.System;
 
 import java.io.File;
 
-public class SelectImpl
+public class SelectImpl extends Case
 {
     public SelectImpl.SelectImpl_Step001 step001;
 

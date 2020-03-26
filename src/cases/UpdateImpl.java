@@ -4,7 +4,7 @@ import system.System;
 
 import java.io.File;
 
-public class UpdateImpl
+public class UpdateImpl extends Case
 {
     public UpdateImpl.UpdateImpl_Step001 step001;
 

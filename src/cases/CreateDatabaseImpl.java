@@ -8,7 +8,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.StringTokenizer;
 
-public class CreateDatabaseImpl
+public class CreateDatabaseImpl extends Case
 {
     public CreateDatabaseImpl_Step001 step001;
 

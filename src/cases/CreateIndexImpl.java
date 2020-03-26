@@ -4,7 +4,7 @@ import system.System;
 
 import java.io.File;
 
-public class CreateIndexImpl
+public class CreateIndexImpl extends Case
 {
     public CreateIndexImpl.CreateIndexImpl_Step001 step001;
 

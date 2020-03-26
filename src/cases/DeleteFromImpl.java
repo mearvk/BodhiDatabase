@@ -4,7 +4,7 @@ import system.System;
 
 import java.io.File;
 
-public class DeleteFromImpl
+public class DeleteFromImpl extends Case
 {
     public DeleteFromImpl.DeleteFromImpl_Step001 step001;
 

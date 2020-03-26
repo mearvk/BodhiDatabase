@@ -4,7 +4,7 @@ import system.System;
 
 import java.io.File;
 
-public class InsertIntoImpl
+public class InsertIntoImpl extends Case
 {
     public InsertIntoImpl.InsertIntoImpl_Step001 step001;
 

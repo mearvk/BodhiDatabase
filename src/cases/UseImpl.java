@@ -9,7 +9,7 @@ import java.awt.*;
 import java.io.File;
 import java.util.StringTokenizer;
 
-public class UseImpl
+public class UseImpl extends Case
 {
     public UseImpl.UseImpl_Step001 step001;
 
@@ -46,15 +46,9 @@ public class UseImpl
     {
         public UseImpl_Step001(UseImpl.Parameter parameter) throws Exception
         {
-            File file = new File(DatabaseConstants.baseURL+"\\"+parameter.databasename_lowercase+".sql");
+            parameter.databasename_lowercase = UseImplUtility.getDatabaseName(parameter.sqlString).toLowerCase();
 
-            if(!file.exists()) throw new Exception("No such database.");
-
-            System.Memory.reference.push("//database", new Database(parameter.databasename_lowercase, file));
-
-            System.Memory.reference.push("//database/file", file);
-
-            System.Memory.reference.push("//database/file/exists", file.exists());
+            parameter.databasename_uppercase = UseImplUtility.getDatabaseName(parameter.sqlString).toUpperCase();
         }
     }
 
@@ -62,13 +56,18 @@ public class UseImpl
     {
         public UseImpl_Step002(UseImpl.Parameter parameter) throws Exception
         {
-            DatabaseHandler handler;
+            File file = new File(DatabaseConstants.baseURL+"\\"+parameter.databasename_lowercase+".sql");
 
-            Database database = (Database)System.Memory.reference.pull("//database");
+            if(!file.exists())
+            {
+                java.lang.System.out.println("No such database <"+parameter.databasename_lowercase+">.");
 
-            String name = database.name;
+                throw new Exception("No such database.");
+            }
 
-            Boolean exists = database.file.exists();
+            System.Memory.reference.push("//database", new Database(parameter.databasename_lowercase, file));
+
+            java.lang.System.out.println("Database <"+parameter.databasename_lowercase+"> selected.");
         }
     }
 
@@ -76,12 +75,14 @@ public class UseImpl
     {
         public UseImpl_Step003(UseImpl.Parameter parameter) throws Exception
         {
-            //not used
+            return;
         }
     }
 
     public static class UseImplUtility
     {
+        UseImpl parent;
+
         public UseImplUtility(UseImpl parent, String sqlString)
         {
 
@@ -95,12 +96,10 @@ public class UseImpl
 
             String token002 = tokenizer.nextToken();
 
-            String token003 = tokenizer.nextToken();
-
-            if(token003==null) return null;
-
-            return token003;
+            return token002;
         }
+
+
     }
 
     public static class Parameter

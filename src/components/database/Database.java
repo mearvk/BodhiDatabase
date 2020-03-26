@@ -1,7 +1,6 @@
 package components.database;
 
 import components.database.handler.DatabaseHandler;
-import constants.DatabaseConstants;
 
 import java.io.File;
 
