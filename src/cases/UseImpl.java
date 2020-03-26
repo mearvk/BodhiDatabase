@@ -63,7 +63,7 @@ public class UseImpl
     {
         public UseImpl_Step003(UseImpl.Parameter parameter) throws Exception
         {
-            //p
+            //not used
         }
     }
 
