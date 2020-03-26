@@ -39,6 +39,11 @@ public class DatabaseReader
         return true;
     }
 
+    public Boolean table_not_exists(String tablename)
+    {
+        return true;
+    }
+
     public static class FileUtility
     {
 

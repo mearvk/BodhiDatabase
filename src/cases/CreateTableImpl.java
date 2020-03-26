@@ -74,7 +74,7 @@ public class CreateTableImpl extends Case
 
             if(reader.database_exists(databasename))
             {
-                if(writer.table_not_exists(tablename))
+                if(reader.table_not_exists(tablename))
                 {
                     writer.create_table(sqlstring);
                 }
