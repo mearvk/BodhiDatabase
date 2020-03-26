@@ -29,7 +29,7 @@ public class DatabaseReader
         //TODO implement the CSV reader here then leave a nice clean API
     }
 
-    public Boolean verifydatabase(String sqlstring) throws Exception
+    public Boolean verify_database(String sqlstring) throws Exception
     {
         return true;
     }

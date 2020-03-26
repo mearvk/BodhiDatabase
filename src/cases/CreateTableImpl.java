@@ -62,17 +62,21 @@ public class CreateTableImpl extends Case
 
             DatabaseWriter writer = new DatabaseWriter(new Database(parameter));
 
-            if(reader.database_exists(parameter.databasename))
-            {
-                if(writer.table_exists(parameter.tablename))
-                {
-                    throw new Exception("Table <"+parameter.tablename+"> already exists.");
-                }
-                else
-                {
-                    writer.create_table(parameter.sqlstring);
+            //
 
-                    java.lang.System.out.println("Table <"+parameter.databasename+"> created.");
+            String databasename = parameter.databasename;
+
+            String tablename = parameter.tablename;
+
+            String sqlstring = parameter.sqlstring;
+
+            //
+
+            if(reader.database_exists(databasename))
+            {
+                if(writer.table_not_exists(tablename))
+                {
+                    writer.create_table(sqlstring);
                 }
             }
         }
@@ -84,9 +88,21 @@ public class CreateTableImpl extends Case
         {
             DatabaseReader reader = new DatabaseReader(new Database(parameter));
 
-            reader.verifydatabase(parameter.sqlstring);
+            //
 
-            reader.verify_table(parameter.sqlstring);
+            Boolean result1;
+
+            Boolean result2;
+
+            //
+
+            result1 = reader.verify_database(parameter.sqlstring);
+
+            result2 = reader.verify_table(parameter.sqlstring);
+
+            if(result1 && result2) return;
+
+            //TODO build output to a error/exception file
         }
     }
 

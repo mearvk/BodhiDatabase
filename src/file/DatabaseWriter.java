@@ -11,7 +11,7 @@ public class DatabaseWriter
         this.database = database;
     }
 
-    public Boolean table_exists(String tablename)
+    public Boolean table_not_exists(String tablename)
     {
         return true;
     }
