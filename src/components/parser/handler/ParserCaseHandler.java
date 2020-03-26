@@ -1,6 +1,6 @@
 package components.parser.handler;
 
-import components.cases.*;
+import cases.*;
 import structures.SQLString;
 
 import java.util.LinkedList;

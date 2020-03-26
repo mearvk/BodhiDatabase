@@ -1,4 +1,4 @@
-package components.cases;
+package cases;
 
 import system.System;
 

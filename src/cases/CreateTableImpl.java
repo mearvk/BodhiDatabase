@@ -1,6 +1,5 @@
-package components.cases;
+package cases;
 
-import components.parser.Parser;
 import system.System;
 
 import java.io.File;
