@@ -3,6 +3,7 @@ package cases;
 import components.database.Database;
 import components.database.handler.DatabaseHandler;
 import constants.DatabaseConstants;
+import parameter.Parameter;
 import system.System;
 
 import java.awt.*;
@@ -17,7 +18,7 @@ public class UseImpl extends Case
 
     public UseImpl.UseImpl_Step003 step003;
 
-    public UseImpl.Parameter parameter;
+    public Parameter parameter;
 
     public UseImpl(String sqlString)
     {
@@ -25,7 +26,7 @@ public class UseImpl extends Case
 
         //
 
-        this.parameter = new UseImpl.Parameter(this, sqlString);
+        this.parameter = new Parameter(this, sqlString);
 
         //
 
@@ -44,36 +45,36 @@ public class UseImpl extends Case
 
     public static class UseImpl_Step001
     {
-        public UseImpl_Step001(UseImpl.Parameter parameter) throws Exception
+        public UseImpl_Step001(Parameter parameter) throws Exception
         {
-            parameter.databasename_lowercase = UseImplUtility.getDatabaseName(parameter.sqlString).toLowerCase();
+            parameter.databasename = UseImplUtility.getDatabaseName(parameter.sqlstring).toLowerCase();
 
-            parameter.databasename_uppercase = UseImplUtility.getDatabaseName(parameter.sqlString).toUpperCase();
+            parameter.databasename = UseImplUtility.getDatabaseName(parameter.sqlstring).toUpperCase();
         }
     }
 
     public static class UseImpl_Step002
     {
-        public UseImpl_Step002(UseImpl.Parameter parameter) throws Exception
+        public UseImpl_Step002(Parameter parameter) throws Exception
         {
-            File file = new File(DatabaseConstants.baseURL+"\\"+parameter.databasename_lowercase+".sql");
+            File file = new File(DatabaseConstants.baseURL+"\\"+parameter.databasename+".sql");
 
             if(!file.exists())
             {
-                java.lang.System.out.println("No such database <"+parameter.databasename_lowercase+">.");
+                java.lang.System.out.println("No such database <"+parameter.databasename+">.");
 
-                throw new Exception("No such database.");
+                throw new Exception("<No such database>");
             }
 
-            System.Memory.reference.push("//database", new Database(parameter.databasename_lowercase, file));
+            System.Memory.reference.push("//database", new Database(parameter));
 
-            java.lang.System.out.println("Database <"+parameter.databasename_lowercase+"> selected.");
+            java.lang.System.out.println("Database <"+parameter.databasename+"> selected.");
         }
     }
 
     public static class UseImpl_Step003
     {
-        public UseImpl_Step003(UseImpl.Parameter parameter) throws Exception
+        public UseImpl_Step003(Parameter parameter) throws Exception
         {
             return;
         }
@@ -97,28 +98,6 @@ public class UseImpl extends Case
             String token002 = tokenizer.nextToken();
 
             return token002;
-        }
-
-
-    }
-
-    public static class Parameter
-    {
-        public String sqlString;
-
-        public String databasename_uppercase = "";
-
-        public String databasename_lowercase = "";
-
-        public UseImpl parent;
-
-        public File file;
-
-        public Parameter(UseImpl parent, String sqlString)
-        {
-            this.parent = parent;
-
-            this.sqlString = sqlString;
         }
     }
 }

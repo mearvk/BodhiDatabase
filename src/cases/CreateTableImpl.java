@@ -4,9 +4,9 @@ import components.database.Database;
 import constants.DatabaseConstants;
 import file.DatabaseReader;
 import file.DatabaseWriter;
+import parameter.Parameter;
 import system.System;
 
-import java.io.File;
 import java.util.StringTokenizer;
 
 public class CreateTableImpl extends Case
@@ -17,15 +17,15 @@ public class CreateTableImpl extends Case
 
     public CreateTableImpl.CreateTableImpl_Step003 step003;
 
-    public CreateTableImpl.Parameter parameter;
+    public Parameter parameter;
 
-    public CreateTableImpl(String sqlString)
+    public CreateTableImpl(String sqlstring)
     {
         System.Memory.reference.push("//createtableimpl", this);
 
         //
 
-        this.parameter = new CreateTableImpl.Parameter(this, sqlString);
+        this.parameter = new Parameter(this, sqlstring);
 
         //
 
@@ -44,11 +44,11 @@ public class CreateTableImpl extends Case
 
     public static class CreateTableImpl_Step001
     {
-        public CreateTableImpl_Step001(CreateTableImpl.Parameter parameter) throws Exception
+        public CreateTableImpl_Step001(Parameter parameter) throws Exception
         {
             parameter.databasename = CreateTableImpl.CreateTableImplUtility.getDatabaseName().toLowerCase();
 
-            parameter.tablename = CreateTableImpl.CreateTableImplUtility.getTableName(parameter.sqlString).toLowerCase();
+            parameter.tablename = CreateTableImpl.CreateTableImplUtility.getTableName(parameter.sqlstring).toLowerCase();
 
             parameter.databaseurl = DatabaseConstants.baseURL+"\\"+parameter.databasename+".sql";
         }
@@ -58,59 +58,35 @@ public class CreateTableImpl extends Case
     {
         public CreateTableImpl_Step002(Parameter parameter) throws Exception
         {
-            DatabaseReader reader = new DatabaseReader(new Database(parameter.databasename, parameter.file));
+            DatabaseReader reader = new DatabaseReader(new Database(parameter));
 
-            DatabaseWriter writer = new DatabaseWriter(new Database(parameter.databasename, parameter.file));
+            DatabaseWriter writer = new DatabaseWriter(new Database(parameter));
 
-            if(reader.databaseExists(parameter.databasename))
+            if(reader.database_exists(parameter.databasename))
             {
-                if(writer.tableExists(parameter.tablename))
+                if(writer.table_exists(parameter.tablename))
                 {
-                    java.lang.System.out.println("Table <"+parameter.tablename+"> already exists");
-
-                    throw new Exception();
+                    throw new Exception("Table <"+parameter.tablename+"> already exists.");
                 }
                 else
                 {
-                    writer.createTable(parameter.tablename);
+                    writer.create_table(parameter.sqlstring);
 
-                    writer.flush();
-
-                    writer.close();
+                    java.lang.System.out.println("Table <"+parameter.databasename+"> created.");
                 }
             }
-
-            java.lang.System.out.println("Table <"+parameter.databasename+"> created.");
         }
     }
 
     public static class CreateTableImpl_Step003
     {
-        public CreateTableImpl_Step003(CreateTableImpl.Parameter parameter) throws Exception
+        public CreateTableImpl_Step003(Parameter parameter) throws Exception
         {
-            //step 3
-        }
-    }
+            DatabaseReader reader = new DatabaseReader(new Database(parameter));
 
-    public static class Parameter
-    {
-        public String sqlString;
+            reader.verifydatabase(parameter.sqlstring);
 
-        public String tablename = "";
-
-        public String databasename = "";
-
-        public String databaseurl = "";
-
-        public CreateTableImpl parent;
-
-        public File file;
-
-        public Parameter(CreateTableImpl parent, String sqlString)
-        {
-            this.parent = parent;
-
-            this.sqlString = sqlString;
+            reader.verify_table(parameter.sqlstring);
         }
     }
 

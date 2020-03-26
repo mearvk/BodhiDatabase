@@ -1,6 +1,7 @@
 package components.database;
 
 import components.database.handler.DatabaseHandler;
+import parameter.Parameter;
 
 import java.io.File;
 
@@ -16,10 +17,10 @@ public class Database
 
     public DatabaseHandler handler;
 
-    public Database(String name, File file)
+    public Database(Parameter parameter)
     {
-        this.file = file;
+        this.file = parameter.file;
 
-        this.name = name;
+        this.name = parameter.databasename;
     }
 }

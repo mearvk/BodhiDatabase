@@ -11,14 +11,19 @@ public class DatabaseWriter
         this.database = database;
     }
 
-    public Boolean tableExists(String tablename)
+    public Boolean table_exists(String tablename)
     {
         return true;
     }
 
-    public Boolean createTable(String tablename)
+    public DatabaseWriter create_table(String tablename)
     {
-        return true;
+        return this;
+    }
+
+    public DatabaseWriter writeColumns(String tablename)
+    {
+        return this;
     }
 
     public DatabaseWriter flush()
