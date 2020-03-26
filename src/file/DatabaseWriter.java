@@ -20,4 +20,14 @@ public class DatabaseWriter
     {
         return true;
     }
+
+    public DatabaseWriter flush()
+    {
+        return this;
+    }
+
+    public DatabaseWriter close()
+    {
+        return this;
+    }
 }

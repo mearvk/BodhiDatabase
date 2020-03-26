@@ -66,11 +66,17 @@ public class CreateTableImpl extends Case
             {
                 if(writer.tableExists(parameter.tablename))
                 {
+                    java.lang.System.out.println("Table <"+parameter.tablename+"> already exists");
 
+                    throw new Exception();
                 }
                 else
                 {
                     writer.createTable(parameter.tablename);
+
+                    writer.flush();
+
+                    writer.close();
                 }
             }
 
