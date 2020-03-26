@@ -27,14 +27,4 @@ public class System
             this.map.put(name, object);
         }
     }
-
-    public static class Database
-    {
-        public String name;
-
-        public Database(String name)
-        {
-            this.name = name;
-        }
-    }
 }

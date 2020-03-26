@@ -1,6 +1,6 @@
 package cases;
 
-import constants.Database;
+import constants.DatabaseConstants;
 import system.System;
 
 import java.io.BufferedWriter;
@@ -57,7 +57,7 @@ public class CreateDatabaseImpl
         {
             File file;
 
-            BufferedWriter writer = new BufferedWriter(new FileWriter(file = new File(Database.baseURL+"\\"+parameter.databasename_lowercase+".sql")));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file = new File(DatabaseConstants.baseURL+"\\"+parameter.databasename_lowercase+".sql")));
 
             if(file.exists()) throw new Exception();
 

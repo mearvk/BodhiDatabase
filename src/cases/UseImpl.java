@@ -1,6 +1,7 @@
 package cases;
 
-import constants.Database;
+import components.database.Database;
+import constants.DatabaseConstants;
 import system.System;
 
 import java.io.File;
@@ -43,7 +44,7 @@ public class UseImpl
     {
         public UseImpl_Step001(UseImpl.Parameter parameter) throws Exception
         {
-            System.Memory.reference.push("//database", new System.Database(parameter.databasename_lowercase));
+            System.Memory.reference.push("//database", new Database(parameter.databasename_lowercase));
         }
     }
 
@@ -51,7 +52,7 @@ public class UseImpl
     {
         public UseImpl_Step002(UseImpl.Parameter parameter) throws Exception
         {
-            File file = new File(Database.baseURL+"\\"+parameter.databasename_lowercase+".sql");
+            File file = new File(DatabaseConstants.baseURL+"\\"+parameter.databasename_lowercase+".sql");
 
             if(!file.exists()) throw new Exception("No such database.");
 
