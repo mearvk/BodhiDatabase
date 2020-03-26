@@ -1,9 +1,11 @@
 package cases;
 
 import components.database.Database;
+import components.database.handler.DatabaseHandler;
 import constants.DatabaseConstants;
 import system.System;
 
+import java.awt.*;
 import java.io.File;
 import java.util.StringTokenizer;
 
@@ -44,7 +46,15 @@ public class UseImpl
     {
         public UseImpl_Step001(UseImpl.Parameter parameter) throws Exception
         {
-            System.Memory.reference.push("//database", new Database(parameter.databasename_lowercase));
+            File file = new File(DatabaseConstants.baseURL+"\\"+parameter.databasename_lowercase+".sql");
+
+            if(!file.exists()) throw new Exception("No such database.");
+
+            System.Memory.reference.push("//database", new Database(parameter.databasename_lowercase, file));
+
+            System.Memory.reference.push("//database/file", file);
+
+            System.Memory.reference.push("//database/file/exists", file.exists());
         }
     }
 
@@ -52,11 +62,13 @@ public class UseImpl
     {
         public UseImpl_Step002(UseImpl.Parameter parameter) throws Exception
         {
-            File file = new File(DatabaseConstants.baseURL+"\\"+parameter.databasename_lowercase+".sql");
+            DatabaseHandler handler;
 
-            if(!file.exists()) throw new Exception("No such database.");
+            Database database = (Database)System.Memory.reference.pull("//database");
 
-            parameter.file = file;
+            String name = database.name;
+
+            Boolean exists = database.file.exists();
         }
     }
 
