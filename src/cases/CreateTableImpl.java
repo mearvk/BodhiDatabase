@@ -18,7 +18,7 @@ public class CreateTableImpl extends UseCase
 
     public Parameter parameter;
 
-    public CreateTableImpl(String sqlstring)
+    public CreateTableImpl(String sqlstring) throws Exception
     {
         System.Memory.reference.push("//impl/createtable", this);
 
@@ -29,7 +29,8 @@ public class CreateTableImpl extends UseCase
         //
 
         try
-        {   this.step001 = new CreateTableImpl.CreateTableImpl_Step001(this.parameter);
+        {
+            this.step001 = new CreateTableImpl.CreateTableImpl_Step001(this.parameter);
 
             this.step002 = new CreateTableImpl.CreateTableImpl_Step002(this.parameter);
 
@@ -37,7 +38,7 @@ public class CreateTableImpl extends UseCase
         }
         catch (Exception e)
         {
-            java.lang.System.out.println(e);
+            throw e;
         }
     }
 

@@ -94,9 +94,14 @@ public class ParserCaseHandler
     {
         public String sqlString;
 
-        public CreateDatabase(String sqlString)
+        public CreateDatabase(String sqlString) throws Exception
         {
-            CreateDatabaseImpl runner = new CreateDatabaseImpl(this.sqlString = sqlString);
+            try
+            { CreateDatabaseImpl runner = new CreateDatabaseImpl(this.sqlString = sqlString); }
+            catch (Exception e)
+            {
+                //TODO
+            }
         }
     }
 
@@ -104,9 +109,14 @@ public class ParserCaseHandler
     {
         public String sqlString;
 
-        public CreateIndex(String sqlString)
+        public CreateIndex(String sqlString) throws Exception
         {
-            CreateIndexImpl runner = new CreateIndexImpl(this.sqlString = sqlString);
+            try
+            { CreateIndexImpl runner = new CreateIndexImpl(this.sqlString = sqlString); }
+            catch(Exception e)
+            {
+
+            }
         }
     }
 
@@ -114,9 +124,14 @@ public class ParserCaseHandler
     {
         public String sqlString;
 
-        public CreateTable(String sqlString)
+        public CreateTable(String sqlString) throws Exception
         {
-            CreateTableImpl runner = new CreateTableImpl(this.sqlString = sqlString);
+            try
+            { CreateTableImpl runner = new CreateTableImpl(this.sqlString = sqlString); }
+            catch(Exception e)
+            {
+                //TODO
+            }
 
             this.sqlString = sqlString;
         }
@@ -126,9 +141,14 @@ public class ParserCaseHandler
     {
         public String sqlString;
 
-        public DeleteFrom(String sqlString)
+        public DeleteFrom(String sqlString) throws Exception
         {
-            DeleteFrom runner = new DeleteFrom(this.sqlString = sqlString);
+            try
+            { DeleteFrom runner = new DeleteFrom(this.sqlString = sqlString); }
+            catch (Exception e)
+            {
+                //TODO
+            }
         }
     }
 
@@ -136,9 +156,14 @@ public class ParserCaseHandler
     {
         public String sqlString;
 
-        public DropColumn(String sqlString)
+        public DropColumn(String sqlString) throws Exception
         {
-            DropColumnImpl runner = new DropColumnImpl(this.sqlString = sqlString);
+            try
+            { DropColumnImpl runner = new DropColumnImpl(this.sqlString = sqlString); }
+            catch (Exception e)
+            {
+                //TODO
+            }
         }
     }
 
@@ -146,9 +171,14 @@ public class ParserCaseHandler
     {
         public String sqlString;
 
-        public DropDatabase(String sqlString)
+        public DropDatabase(String sqlString) throws Exception
         {
-            DropDatabaseImpl runner = new DropDatabaseImpl(this.sqlString = sqlString);
+            try
+            { DropDatabaseImpl runner = new DropDatabaseImpl(this.sqlString = sqlString); }
+            catch (Exception e)
+            {
+                //TODO
+            }
         }
     }
 
@@ -158,7 +188,12 @@ public class ParserCaseHandler
 
         public InsertInto(String sqlString)
         {
-            InsertIntoImpl runner = new InsertIntoImpl(this.sqlString = sqlString);
+            try
+            { InsertIntoImpl runner = new InsertIntoImpl(this.sqlString = sqlString); }
+            catch (Exception e)
+            {
+                //TODO
+            }
         }
     }
 
@@ -168,7 +203,12 @@ public class ParserCaseHandler
 
         public Select(String sqlString)
         {
-            SelectImpl runner = new SelectImpl(this.sqlString = sqlString);
+            try
+            { SelectImpl runner = new SelectImpl(this.sqlString = sqlString); }
+            catch (Exception e)
+            {
+
+            }
         }
     }
 
@@ -178,7 +218,12 @@ public class ParserCaseHandler
 
         public Update(String sqlString)
         {
-            UpdateImpl runner = new UpdateImpl(this.sqlString = sqlString);
+            try
+            { UpdateImpl runner = new UpdateImpl(this.sqlString = sqlString); }
+            catch (Exception e)
+            {
+                //TODO
+            }
         }
     }
 
@@ -188,7 +233,12 @@ public class ParserCaseHandler
 
         public Use(String sqlString)
         {
-            UseImpl runner = new UseImpl(this.sqlString = sqlString);
+            try
+            { UseImpl runner = new UseImpl(this.sqlString = sqlString); }
+            catch(Exception e)
+            {
+                //TODO
+            }
         }
     }
 
