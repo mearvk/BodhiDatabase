@@ -12,7 +12,7 @@ public class System
 {
     public Memory memory = new Memory();
 
-    public static DatabaseHandler handler = new DatabaseHandler();
+    public static DatabaseHandler database = new DatabaseHandler();
 
     public static class Memory
     {
@@ -45,7 +45,7 @@ public class System
         }
     }
 
-    public static Boolean drop(String name) throws Exception
+    public static Boolean touch(String name) throws Exception
     {
         return Memory.reference.exists(name);
     }

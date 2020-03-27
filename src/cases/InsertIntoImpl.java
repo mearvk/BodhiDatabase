@@ -42,7 +42,7 @@ public class InsertIntoImpl extends UseCase
     {
         public InsertIntoImpl_Step001(Parameter parameter) throws Exception
         {
-            //step 1
+            System.touch("//database");
         }
     }
 
@@ -50,7 +50,7 @@ public class InsertIntoImpl extends UseCase
     {
         public InsertIntoImpl_Step002(Parameter parameter) throws Exception
         {
-            //step 2
+            System.database.writer.insert_into(parameter);
         }
     }
 
@@ -58,7 +58,7 @@ public class InsertIntoImpl extends UseCase
     {
         public InsertIntoImpl_Step003(Parameter parameter) throws Exception
         {
-            //step 3
+            System.touch("//database");
         }
     }
 

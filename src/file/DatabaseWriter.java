@@ -33,7 +33,17 @@ public class DatabaseWriter
         return this;
     }
 
+    public DatabaseWriter insert_into(Parameter parameter)
+    {
+        return this;
+    }
+
     public DatabaseWriter verify_table(Parameter parameter)
+    {
+        return this;
+    }
+
+    public DatabaseWriter drop_database(Parameter parameter)
     {
         return this;
     }

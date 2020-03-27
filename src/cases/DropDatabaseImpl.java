@@ -42,7 +42,7 @@ public class DropDatabaseImpl extends UseCase
     {
         public DropDatabaseImpl_Step001(Parameter parameter) throws Exception
         {
-            //step 1
+            System.touch("//database");
         }
     }
 
@@ -50,7 +50,7 @@ public class DropDatabaseImpl extends UseCase
     {
         public DropDatabaseImpl_Step002(Parameter parameter) throws Exception
         {
-            //step 2
+            System.database.writer.drop_database(parameter);
         }
     }
 
@@ -58,7 +58,7 @@ public class DropDatabaseImpl extends UseCase
     {
         public DropDatabaseImpl_Step003(Parameter parameter) throws Exception
         {
-            //step 3
+            System.touch("//database");
         }
     }
 
