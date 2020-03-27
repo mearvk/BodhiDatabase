@@ -64,7 +64,7 @@ public class DeleteFromImpl extends UseCase
     {
         public PreConditionRunner(Parameter parameter) throws Exception
         {
-            System.wheat("//database");
+            System.drop("//database");
         }
     }
 
@@ -80,7 +80,7 @@ public class DeleteFromImpl extends UseCase
     {
         public PostConditionRunner(Parameter parameter) throws Exception
         {
-            System.wheat("//database");
+            System.drop("//database");
         }
     }
 }

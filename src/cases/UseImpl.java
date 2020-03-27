@@ -110,7 +110,7 @@ public class UseImpl extends UseCase
     {
         public TaskRunner(Parameter parameter) throws Exception
         {
-            System.wheat("//database");
+            System.drop("//database");
 
             java.lang.System.out.println("Database <" + parameter.database_name + "> selected.");
         }
