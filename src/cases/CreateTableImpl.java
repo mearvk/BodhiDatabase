@@ -2,14 +2,15 @@ package cases;
 
 import components.database.Database;
 import constants.DatabaseConstants;
-import file.DatabaseReader;
-import file.DatabaseWriter;
+import file.TableReader;
+import file.TableWriter;
 import parameter.Parameter;
+import structures.table.Table;
 import system.System;
 
 import java.util.StringTokenizer;
 
-public class CreateTableImpl extends Case
+public class CreateTableImpl extends UseCase
 {
     public CreateTableImpl.CreateTableImpl_Step001 step001;
 
@@ -46,9 +47,9 @@ public class CreateTableImpl extends Case
     {
         public CreateTableImpl_Step001(Parameter parameter) throws Exception
         {
-            parameter.databasename = CreateTableImpl.CreateTableImplUtility.getDatabaseName().toLowerCase();
+            parameter.databasename = Utility.getDatabaseName(parameter).toLowerCase();
 
-            parameter.tablename = CreateTableImpl.CreateTableImplUtility.getTableName(parameter.sqlstring).toLowerCase();
+            parameter.tablename = Utility.getTableName(parameter).toLowerCase();
 
             parameter.databaseurl = DatabaseConstants.baseURL+"\\"+parameter.databasename+".sql";
         }
@@ -58,27 +59,9 @@ public class CreateTableImpl extends Case
     {
         public CreateTableImpl_Step002(Parameter parameter) throws Exception
         {
-            DatabaseReader reader = new DatabaseReader(new Database(parameter));
+            TableWriter writer = new TableWriter(new Table(parameter));
 
-            DatabaseWriter writer = new DatabaseWriter(new Database(parameter));
-
-            //
-
-            String databasename = parameter.databasename;
-
-            String tablename = parameter.tablename;
-
-            String sqlstring = parameter.sqlstring;
-
-            //
-
-            if(reader.database_exists(databasename))
-            {
-                if(reader.table_not_exists(tablename))
-                {
-                    writer.create_table(sqlstring);
-                }
-            }
+            writer.write();
         }
     }
 
@@ -86,48 +69,36 @@ public class CreateTableImpl extends Case
     {
         public CreateTableImpl_Step003(Parameter parameter) throws Exception
         {
-            DatabaseReader reader = new DatabaseReader(new Database(parameter));
+            TableReader reader = new TableReader(new Table(parameter));
 
-            //
-
-            Boolean result1;
-
-            Boolean result2;
-
-            //
-
-            result1 = reader.verify_database(parameter.sqlstring);
-
-            result2 = reader.verify_table(parameter.sqlstring);
-
-            if(result1 && result2) return;
-
-            //TODO build output to a error/exception file
+            reader.read();
         }
     }
 
-    public static class CreateTableImplUtility
+    public static class Utility
     {
         public CreateTableImpl parent;
 
         public String sqlString;
 
-        public CreateTableImplUtility(CreateTableImpl parent, String sqlString)
+        public Utility(CreateTableImpl parent, String sqlString)
         {
             this.parent = parent;
 
             this.sqlString = sqlString;
         }
 
-        public static String getDatabaseName()
+        public static String getDatabaseName(Parameter parameter)
         {
             Database database = (Database)System.Memory.reference.pull("//database");
 
             return database.name;
         }
 
-        public static String getTableName(String sqlString)
+        public static String getTableName(Parameter parameter)
         {
+            String sqlString = parameter.sqlstring;
+
             StringTokenizer tokenizer = new StringTokenizer(sqlString, " ");
 
             String token001 = tokenizer.nextToken();

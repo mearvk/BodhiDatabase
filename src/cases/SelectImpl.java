@@ -1,10 +1,11 @@
 package cases;
 
+import parameter.Parameter;
 import system.System;
 
-import java.io.File;
+import java.util.StringTokenizer;
 
-public class SelectImpl extends Case
+public class SelectImpl extends UseCase
 {
     public SelectImpl.SelectImpl_Step001 step001;
 
@@ -12,7 +13,7 @@ public class SelectImpl extends Case
 
     public SelectImpl.SelectImpl_Step003 step003;
 
-    public SelectImpl.Parameter parameter;
+    public Parameter parameter;
 
     public SelectImpl(String sqlString)
     {
@@ -20,7 +21,7 @@ public class SelectImpl extends Case
 
         //
 
-        this.parameter = new SelectImpl.Parameter(this, sqlString);
+        this.parameter = new Parameter(this, sqlString);
 
         //
 
@@ -39,7 +40,7 @@ public class SelectImpl extends Case
 
     public static class SelectImpl_Step001
     {
-        public SelectImpl_Step001(SelectImpl.Parameter parameter) throws Exception
+        public SelectImpl_Step001(Parameter parameter) throws Exception
         {
             //step 1
         }
@@ -47,7 +48,7 @@ public class SelectImpl extends Case
 
     public static class SelectImpl_Step002
     {
-        public SelectImpl_Step002(SelectImpl.Parameter parameter) throws Exception
+        public SelectImpl_Step002(Parameter parameter) throws Exception
         {
             //step 2
         }
@@ -55,29 +56,34 @@ public class SelectImpl extends Case
 
     public static class SelectImpl_Step003
     {
-        public SelectImpl_Step003(SelectImpl.Parameter parameter) throws Exception
+        public SelectImpl_Step003(Parameter parameter) throws Exception
         {
             //step 3
         }
     }
 
-    public static class Parameter
+    public static class Utility
     {
-        public String sqlString;
-
-        public String databasename_uppercase = "";
-
-        public String databasename_lowercase = "";
-
-        public SelectImpl parent;
-
-        public File file;
-
-        public Parameter(SelectImpl parent, String sqlString)
+        public Utility(CreateDatabaseImpl parent, String sqlString)
         {
-            this.parent = parent;
 
-            this.sqlString = sqlString;
+        }
+
+        public static String getDatabaseName(Parameter parameter)
+        {
+            String sqlString = parameter.sqlstring;
+
+            StringTokenizer tokenizer = new StringTokenizer(sqlString, " ");
+
+            String token001 = tokenizer.nextToken();
+
+            String token002 = tokenizer.nextToken();
+
+            String token003 = tokenizer.nextToken();
+
+            if(token003==null) return null;
+
+            return token003;
         }
     }
 }

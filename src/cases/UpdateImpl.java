@@ -1,10 +1,12 @@
 package cases;
 
+import components.database.Database;
+import parameter.Parameter;
 import system.System;
 
-import java.io.File;
+import java.util.StringTokenizer;
 
-public class UpdateImpl extends Case
+public class UpdateImpl extends UseCase
 {
     public UpdateImpl.UpdateImpl_Step001 step001;
 
@@ -12,7 +14,7 @@ public class UpdateImpl extends Case
 
     public UpdateImpl.UpdateImpl_Step003 step003;
 
-    public UpdateImpl.Parameter parameter;
+    public Parameter parameter;
 
     public UpdateImpl(String sqlString)
     {
@@ -20,7 +22,7 @@ public class UpdateImpl extends Case
 
         //
 
-        this.parameter = new UpdateImpl.Parameter(this, sqlString);
+        this.parameter = new Parameter(this, sqlString);
 
         //
 
@@ -39,7 +41,7 @@ public class UpdateImpl extends Case
 
     public static class UpdateImpl_Step001
     {
-        public UpdateImpl_Step001(UpdateImpl.Parameter parameter) throws Exception
+        public UpdateImpl_Step001(Parameter parameter) throws Exception
         {
             //step 1
         }
@@ -47,7 +49,7 @@ public class UpdateImpl extends Case
 
     public static class UpdateImpl_Step002
     {
-        public UpdateImpl_Step002(UpdateImpl.Parameter parameter) throws Exception
+        public UpdateImpl_Step002(Parameter parameter) throws Exception
         {
             //step 2
         }
@@ -55,29 +57,46 @@ public class UpdateImpl extends Case
 
     public static class UpdateImpl_Step003
     {
-        public UpdateImpl_Step003(UpdateImpl.Parameter parameter) throws Exception
+        public UpdateImpl_Step003(Parameter parameter) throws Exception
         {
             //step 3
         }
     }
 
-    public static class Parameter
+    public static class Utility
     {
+        public CreateTableImpl parent;
+
         public String sqlString;
 
-        public String databasename_uppercase = "";
-
-        public String databasename_lowercase = "";
-
-        public UpdateImpl parent;
-
-        public File file;
-
-        public Parameter(UpdateImpl parent, String sqlString)
+        public Utility(CreateTableImpl parent, String sqlString)
         {
             this.parent = parent;
 
             this.sqlString = sqlString;
         }
+
+        public static String getDatabaseName(Parameter parameter)
+        {
+            Database database = (Database)System.Memory.reference.pull("//database");
+
+            return database.name;
+        }
+
+        public static String getTableName(Parameter parameter)
+        {
+            String sqlString = parameter.sqlstring;
+
+            StringTokenizer tokenizer = new StringTokenizer(sqlString, " ");
+
+            String token001 = tokenizer.nextToken();
+
+            String token002 = tokenizer.nextToken();
+
+            String token003 = tokenizer.nextToken();
+
+            return token003;
+        }
+
     }
 }

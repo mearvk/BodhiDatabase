@@ -90,7 +90,7 @@ public class ParserCaseHandler
 
     //
 
-    public static class CreateDatabase extends Case
+    public static class CreateDatabase extends UseCase
     {
         public String sqlString;
 
@@ -100,7 +100,7 @@ public class ParserCaseHandler
         }
     }
 
-    public static class CreateIndex extends Case
+    public static class CreateIndex extends UseCase
     {
         public String sqlString;
 
@@ -110,7 +110,7 @@ public class ParserCaseHandler
         }
     }
 
-    public static class CreateTable extends Case
+    public static class CreateTable extends UseCase
     {
         public String sqlString;
 
@@ -122,7 +122,7 @@ public class ParserCaseHandler
         }
     }
 
-    public static class DeleteFrom extends Case
+    public static class DeleteFrom extends UseCase
     {
         public String sqlString;
 
@@ -132,7 +132,7 @@ public class ParserCaseHandler
         }
     }
 
-    public static class DropColumn extends Case
+    public static class DropColumn extends UseCase
     {
         public String sqlString;
 
@@ -142,7 +142,7 @@ public class ParserCaseHandler
         }
     }
 
-    public static class DropDatabase extends Case
+    public static class DropDatabase extends UseCase
     {
         public String sqlString;
 
@@ -152,7 +152,7 @@ public class ParserCaseHandler
         }
     }
 
-    public static class InsertInto extends Case
+    public static class InsertInto extends UseCase
     {
         public String sqlString;
 
@@ -162,7 +162,7 @@ public class ParserCaseHandler
         }
     }
 
-    public static class Select extends Case
+    public static class Select extends UseCase
     {
         public String sqlString;
 
@@ -172,7 +172,7 @@ public class ParserCaseHandler
         }
     }
 
-    public static class Update extends Case
+    public static class Update extends UseCase
     {
         public String sqlString;
 
@@ -182,7 +182,7 @@ public class ParserCaseHandler
         }
     }
 
-    public static class Use extends Case
+    public static class Use extends UseCase
     {
         public String sqlString;
 
@@ -192,7 +192,7 @@ public class ParserCaseHandler
         }
     }
 
-    public static class Unknown extends Case
+    public static class Unknown extends UseCase
     {
 
     }

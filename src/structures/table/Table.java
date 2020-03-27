@@ -1,9 +1,13 @@
 package structures.table;
 
+import parameter.Parameter;
+
 public class Table
 {
-    public Table(String tablename)
-    {
+    public Parameter parameter;
 
+    public Table(Parameter parameter)
+    {
+        this.parameter = parameter;
     }
 }

@@ -11,6 +11,8 @@ public class Database
 
     public String location;
 
+    public String sqlstring;
+
     public static Database database;
 
     public File file;
@@ -22,5 +24,10 @@ public class Database
         this.file = parameter.file;
 
         this.name = parameter.databasename;
+    }
+
+    public Database(String sqlstring)
+    {
+        this.sqlstring = sqlstring;
     }
 }

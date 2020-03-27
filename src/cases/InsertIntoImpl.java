@@ -1,10 +1,11 @@
 package cases;
 
+import parameter.Parameter;
 import system.System;
 
-import java.io.File;
+import java.util.StringTokenizer;
 
-public class InsertIntoImpl extends Case
+public class InsertIntoImpl extends UseCase
 {
     public InsertIntoImpl.InsertIntoImpl_Step001 step001;
 
@@ -12,7 +13,7 @@ public class InsertIntoImpl extends Case
 
     public InsertIntoImpl.InsertIntoImpl_Step003 step003;
 
-    public InsertIntoImpl.Parameter parameter;
+    public Parameter parameter;
 
     public InsertIntoImpl(String sqlString)
     {
@@ -20,7 +21,7 @@ public class InsertIntoImpl extends Case
 
         //
 
-        this.parameter = new InsertIntoImpl.Parameter(this, sqlString);
+        this.parameter = new Parameter(this, sqlString);
 
         //
 
@@ -39,7 +40,7 @@ public class InsertIntoImpl extends Case
 
     public static class InsertIntoImpl_Step001
     {
-        public InsertIntoImpl_Step001(InsertIntoImpl.Parameter parameter) throws Exception
+        public InsertIntoImpl_Step001(Parameter parameter) throws Exception
         {
             //step 1
         }
@@ -47,7 +48,7 @@ public class InsertIntoImpl extends Case
 
     public static class InsertIntoImpl_Step002
     {
-        public InsertIntoImpl_Step002(InsertIntoImpl.Parameter parameter) throws Exception
+        public InsertIntoImpl_Step002(Parameter parameter) throws Exception
         {
             //step 2
         }
@@ -55,29 +56,34 @@ public class InsertIntoImpl extends Case
 
     public static class InsertIntoImpl_Step003
     {
-        public InsertIntoImpl_Step003(InsertIntoImpl.Parameter parameter) throws Exception
+        public InsertIntoImpl_Step003(Parameter parameter) throws Exception
         {
             //step 3
         }
     }
 
-    public static class Parameter
+    public static class Utility
     {
-        public String sqlString;
-
-        public String databasename_uppercase = "";
-
-        public String databasename_lowercase = "";
-
-        public InsertIntoImpl parent;
-
-        public File file;
-
-        public Parameter(InsertIntoImpl parent, String sqlString)
+        public Utility(CreateDatabaseImpl parent, String sqlString)
         {
-            this.parent = parent;
 
-            this.sqlString = sqlString;
+        }
+
+        public static String getDatabaseName(Parameter parameter)
+        {
+            String sqlString = parameter.sqlstring;
+
+            StringTokenizer tokenizer = new StringTokenizer(sqlString, " ");
+
+            String token001 = tokenizer.nextToken();
+
+            String token002 = tokenizer.nextToken();
+
+            String token003 = tokenizer.nextToken();
+
+            if(token003==null) return null;
+
+            return token003;
         }
     }
 }

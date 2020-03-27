@@ -3,6 +3,7 @@ package file;
 import components.database.Database;
 
 import java.io.File;
+import java.util.HashMap;
 
 public class DatabaseReader
 {
@@ -42,6 +43,15 @@ public class DatabaseReader
     public Boolean table_not_exists(String tablename)
     {
         return true;
+    }
+
+    public HashMap<String, String> get_columns()
+    {
+        if(this.database.sqlstring==null) return null;
+
+        //TODO write XML parser
+
+        return null;
     }
 
     public static class FileUtility

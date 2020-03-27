@@ -1,6 +1,7 @@
 package cases;
 
 import constants.DatabaseConstants;
+import parameter.Parameter;
 import system.System;
 
 import java.io.BufferedWriter;
@@ -8,7 +9,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.StringTokenizer;
 
-public class CreateDatabaseImpl extends Case
+public class CreateDatabaseImpl extends UseCase
 {
     public CreateDatabaseImpl_Step001 step001;
 
@@ -45,9 +46,7 @@ public class CreateDatabaseImpl extends Case
     {
         public CreateDatabaseImpl_Step001(Parameter parameter) throws Exception
         {
-            parameter.databasename_uppercase = CreateDatabaseImplUtility.getDatabaseName(parameter.sqlString).toUpperCase();
-
-            parameter.databasename_lowercase = CreateDatabaseImplUtility.getDatabaseName(parameter.sqlString).toLowerCase();
+            parameter.databasename = Utility.getDatabaseName(parameter).toLowerCase();
         }
     }
 
@@ -57,17 +56,17 @@ public class CreateDatabaseImpl extends Case
         {
             File file;
 
-            BufferedWriter writer = new BufferedWriter(new FileWriter(file = new File(DatabaseConstants.baseURL+"\\"+parameter.databasename_lowercase+".sql")));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file = new File(DatabaseConstants.baseURL+"\\"+parameter.databasename+".sql")));
 
             if(file.exists()) throw new Exception();
 
             else
              {
-                writer.write("File Name >> " + parameter.databasename_lowercase + ".sql");
+                writer.write("File Name >> " + parameter.databasename + ".sql");
 
                 writer.newLine();
 
-                writer.write("Database Name >> " + parameter.databasename_lowercase);
+                writer.write("Database Name >> " + parameter.databasename);
 
                 writer.flush();
 
@@ -86,15 +85,17 @@ public class CreateDatabaseImpl extends Case
         }
     }
 
-    public static class CreateDatabaseImplUtility
+    public static class Utility
     {
-        public CreateDatabaseImplUtility(CreateDatabaseImpl parent, String sqlString)
+        public Utility(CreateDatabaseImpl parent, String sqlString)
         {
 
         }
 
-        public static String getDatabaseName(String sqlString)
+        public static String getDatabaseName(Parameter parameter)
         {
+            String sqlString = parameter.sqlstring;
+
             StringTokenizer tokenizer = new StringTokenizer(sqlString, " ");
 
             String token001 = tokenizer.nextToken();
@@ -106,26 +107,6 @@ public class CreateDatabaseImpl extends Case
             if(token003==null) return null;
 
             return token003;
-        }
-    }
-
-    public static class Parameter
-    {
-        public String sqlString;
-
-        public String databasename_uppercase = "";
-
-        public String databasename_lowercase = "";
-
-        public CreateDatabaseImpl parent;
-
-        File file;
-
-        public Parameter(CreateDatabaseImpl parent, String sqlString)
-        {
-            this.parent = parent;
-
-            this.sqlString = sqlString;
         }
     }
 }

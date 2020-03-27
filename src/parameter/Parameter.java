@@ -1,7 +1,6 @@
 package parameter;
 
-import cases.Case;
-import cases.CreateTableImpl;
+import cases.UseCase;
 
 import java.io.File;
 
@@ -15,11 +14,11 @@ public class Parameter
 
     public String databaseurl = "";
 
-    public Case parent;
+    public UseCase parent;
 
     public File file;
 
-    public Parameter(Case parent, String sqlString)
+    public Parameter(UseCase parent, String sqlString)
     {
         this.parent = parent;
 

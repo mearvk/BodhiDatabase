@@ -1,16 +1,14 @@
 package cases;
 
 import components.database.Database;
-import components.database.handler.DatabaseHandler;
 import constants.DatabaseConstants;
 import parameter.Parameter;
 import system.System;
 
-import java.awt.*;
 import java.io.File;
 import java.util.StringTokenizer;
 
-public class UseImpl extends Case
+public class UseImpl extends UseCase
 {
     public UseImpl.UseImpl_Step001 step001;
 
@@ -47,9 +45,9 @@ public class UseImpl extends Case
     {
         public UseImpl_Step001(Parameter parameter) throws Exception
         {
-            parameter.databasename = UseImplUtility.getDatabaseName(parameter.sqlstring).toLowerCase();
+            parameter.databasename = Utility.getDatabaseName(parameter.sqlstring).toLowerCase();
 
-            parameter.databasename = UseImplUtility.getDatabaseName(parameter.sqlstring).toUpperCase();
+            parameter.databasename = Utility.getDatabaseName(parameter.sqlstring).toUpperCase();
         }
     }
 
@@ -80,11 +78,11 @@ public class UseImpl extends Case
         }
     }
 
-    public static class UseImplUtility
+    public static class Utility
     {
         UseImpl parent;
 
-        public UseImplUtility(UseImpl parent, String sqlString)
+        public Utility(UseImpl parent, String sqlString)
         {
 
         }

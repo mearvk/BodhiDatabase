@@ -1,10 +1,11 @@
 package cases;
 
+import parameter.Parameter;
 import system.System;
 
-import java.io.File;
+import java.util.StringTokenizer;
 
-public class DropDatabaseImpl extends Case
+public class DropDatabaseImpl extends UseCase
 {
     public DropDatabaseImpl.DropDatabaseImpl_Step001 step001;
 
@@ -12,15 +13,15 @@ public class DropDatabaseImpl extends Case
 
     public DropDatabaseImpl.DropDatabaseImpl_Step003 step003;
 
-    public DropDatabaseImpl.Parameter parameter;
+    public Parameter parameter;
 
     public DropDatabaseImpl(String sqlString)
     {
-        System.Memory.reference.push("//createtableimpl", this);
+        System.Memory.reference.push("//dropdatabaseimpl", this);
 
         //
 
-        this.parameter = new DropDatabaseImpl.Parameter(this, sqlString);
+        this.parameter = new Parameter(this, sqlString);
 
         //
 
@@ -39,7 +40,7 @@ public class DropDatabaseImpl extends Case
 
     public static class DropDatabaseImpl_Step001
     {
-        public DropDatabaseImpl_Step001(DropDatabaseImpl.Parameter parameter) throws Exception
+        public DropDatabaseImpl_Step001(Parameter parameter) throws Exception
         {
             //step 1
         }
@@ -47,7 +48,7 @@ public class DropDatabaseImpl extends Case
 
     public static class DropDatabaseImpl_Step002
     {
-        public DropDatabaseImpl_Step002(DropDatabaseImpl.Parameter parameter) throws Exception
+        public DropDatabaseImpl_Step002(Parameter parameter) throws Exception
         {
             //step 2
         }
@@ -55,29 +56,34 @@ public class DropDatabaseImpl extends Case
 
     public static class DropDatabaseImpl_Step003
     {
-        public DropDatabaseImpl_Step003(DropDatabaseImpl.Parameter parameter) throws Exception
+        public DropDatabaseImpl_Step003(Parameter parameter) throws Exception
         {
             //step 3
         }
     }
 
-    public static class Parameter
+    public static class Utility
     {
-        public String sqlString;
-
-        public String databasename_uppercase = "";
-
-        public String databasename_lowercase = "";
-
-        public DropDatabaseImpl parent;
-
-        public File file;
-
-        public Parameter(DropDatabaseImpl parent, String sqlString)
+        public Utility(CreateDatabaseImpl parent, String sqlString)
         {
-            this.parent = parent;
 
-            this.sqlString = sqlString;
+        }
+
+        public static String getDatabaseName(Parameter parameter)
+        {
+            String sqlString = parameter.sqlstring;
+
+            StringTokenizer tokenizer = new StringTokenizer(sqlString, " ");
+
+            String token001 = tokenizer.nextToken();
+
+            String token002 = tokenizer.nextToken();
+
+            String token003 = tokenizer.nextToken();
+
+            if(token003==null) return null;
+
+            return token003;
         }
     }
 }

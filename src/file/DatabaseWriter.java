@@ -1,10 +1,15 @@
 package file;
 
 import components.database.Database;
+import parameter.Parameter;
 
 public class DatabaseWriter
 {
     public Database database;
+
+    public static final Integer TABLE = 0;
+
+    public static final Integer DATABASE = 1;
 
     public DatabaseWriter(Database database)
     {
@@ -16,7 +21,7 @@ public class DatabaseWriter
         return true;
     }
 
-    public DatabaseWriter create_table(String tablename)
+    public DatabaseWriter write(Parameter parameter, Integer type)
     {
         return this;
     }

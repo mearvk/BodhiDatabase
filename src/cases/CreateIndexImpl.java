@@ -1,10 +1,9 @@
 package cases;
 
+import parameter.Parameter;
 import system.System;
 
-import java.io.File;
-
-public class CreateIndexImpl extends Case
+public class CreateIndexImpl extends UseCase
 {
     public CreateIndexImpl.CreateIndexImpl_Step001 step001;
 
@@ -12,7 +11,7 @@ public class CreateIndexImpl extends Case
 
     public CreateIndexImpl.CreateIndexImpl_Step003 step003;
 
-    public CreateIndexImpl.Parameter parameter;
+    public Parameter parameter;
 
     public CreateIndexImpl(String sqlString)
     {
@@ -20,7 +19,7 @@ public class CreateIndexImpl extends Case
 
         //
 
-        this.parameter = new CreateIndexImpl.Parameter(this, sqlString);
+        this.parameter = new Parameter(this, sqlString);
 
         //
 
@@ -39,7 +38,7 @@ public class CreateIndexImpl extends Case
 
     public static class CreateIndexImpl_Step001
     {
-        public CreateIndexImpl_Step001(CreateIndexImpl.Parameter parameter) throws Exception
+        public CreateIndexImpl_Step001(Parameter parameter) throws Exception
         {
             //step 1
         }
@@ -47,7 +46,7 @@ public class CreateIndexImpl extends Case
 
     public static class CreateIndexImpl_Step002
     {
-        public CreateIndexImpl_Step002(CreateIndexImpl.Parameter parameter) throws Exception
+        public CreateIndexImpl_Step002(Parameter parameter) throws Exception
         {
             //step 2
         }
@@ -55,29 +54,9 @@ public class CreateIndexImpl extends Case
 
     public static class CreateIndexImpl_Step003
     {
-        public CreateIndexImpl_Step003(CreateIndexImpl.Parameter parameter) throws Exception
+        public CreateIndexImpl_Step003(Parameter parameter) throws Exception
         {
             //step 3
-        }
-    }
-
-    public static class Parameter
-    {
-        public String sqlString;
-
-        public String databasename_uppercase = "";
-
-        public String databasename_lowercase = "";
-
-        public CreateIndexImpl parent;
-
-        public File file;
-
-        public Parameter(CreateIndexImpl parent, String sqlString)
-        {
-            this.parent = parent;
-
-            this.sqlString = sqlString;
         }
     }
 }
