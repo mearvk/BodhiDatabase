@@ -1,10 +1,18 @@
 package system;
 
+import file.DatabaseReader;
+import file.DatabaseWriter;
+import parameter.Parameter;
+import structures.database.Database;
+import structures.database.handler.DatabaseHandler;
+
 import java.util.HashMap;
 
 public class System
 {
     public Memory memory = new Memory();
+
+    public DatabaseHandler handler = new DatabaseHandler();
 
     public static class Memory
     {
@@ -27,4 +35,42 @@ public class System
             this.map.put(name, object);
         }
     }
+
+    public static class DatabaseHandler
+    {
+        public static DatabaseHandler reference = new DatabaseHandler();
+
+        public Database database;
+
+        public DatabaseWriter writer;
+
+        public DatabaseReader reader;
+
+        public DatabaseHandler()
+        {
+            Database database = (Database)System.Memory.reference.pull("//database");
+
+            this.writer = new DatabaseWriter(database);
+
+            this.reader = new DatabaseReader(database);
+        }
+
+        protected boolean integrity()
+        {
+            //TODO reader checks integrity
+
+            return true;
+        }
+
+        public DatabaseHandler createTable(Parameter parameter)
+        {
+            return this;
+        }
+
+        public DatabaseHandler verifyTable(Parameter parameter)
+        {
+            return this;
+        }
+    }
+
 }

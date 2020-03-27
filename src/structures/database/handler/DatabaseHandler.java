@@ -2,6 +2,7 @@ package structures.database.handler;
 
 import file.DatabaseReader;
 import file.DatabaseWriter;
+import parameter.Parameter;
 import structures.database.Database;
 import system.System;
 
@@ -11,7 +12,7 @@ public class DatabaseHandler
 
     public DatabaseReader reader;
 
-    public DatabaseHandler()
+    public DatabaseHandler(Parameter parameter)
     {
         Database database = (Database)System.Memory.reference.pull("//database");
 
@@ -27,7 +28,7 @@ public class DatabaseHandler
         return true;
     }
 
-    public DatabaseHandler write_table()
+    public DatabaseHandler createTable()
     {
         return this;
     }

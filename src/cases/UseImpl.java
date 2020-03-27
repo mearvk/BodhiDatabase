@@ -45,9 +45,7 @@ public class UseImpl extends UseCase
     {
         public UseImpl_Step001(Parameter parameter) throws Exception
         {
-            parameter.database_name = Utility.getDatabaseName(parameter).toLowerCase();
-
-            parameter.database_file = Utility.getDatabaseFile(parameter);
+            System.Memory.reference.push("//database/useimpl/step001/result", new PreConditionRunner(parameter));
         }
     }
 
@@ -55,22 +53,7 @@ public class UseImpl extends UseCase
     {
         public UseImpl_Step002(Parameter parameter) throws Exception
         {
-            System.Memory.reference.push("//database", new Database(parameter));
-
-            System.Memory.reference.push("//database/name", parameter.database_name);
-
-            System.Memory.reference.push("//database/file", parameter.database_file);
-
-            //
-
-            if(parameter.database_file.exists())
-            {
-                java.lang.System.out.println("Database <" + parameter.database_name + "> selected.");
-            }
-            else
-            {
-                java.lang.System.out.println("Database <"+parameter.database_name+"> does not exist.");
-            }
+            System.Memory.reference.push("//database/useimpl/step002/result", new TaskRunner(parameter));
         }
     }
 
@@ -78,7 +61,7 @@ public class UseImpl extends UseCase
     {
         public UseImpl_Step003(Parameter parameter) throws Exception
         {
-            return;
+            System.Memory.reference.push("//database/useimpl/step003/result", new PostConditionRunner(parameter));
         }
     }
 
@@ -109,6 +92,47 @@ public class UseImpl extends UseCase
         public static File getDatabaseFile(Parameter parameter)
         {
             return new File(DatabaseConstants.baseURL+"\\"+parameter.database_name +".sql");
+        }
+    }
+
+    public static class PreConditionRunner
+    {
+        public PreConditionRunner(Parameter parameter) throws Exception
+        {
+            parameter.database_name = Utility.getDatabaseName(parameter).toLowerCase();
+
+            parameter.database_file = Utility.getDatabaseFile(parameter);
+        }
+    }
+
+    public static class TaskRunner
+    {
+        public TaskRunner(Parameter parameter) throws Exception
+        {
+            System.Memory.reference.push("//database", new Database(parameter));
+
+            System.Memory.reference.push("//database/name", parameter.database_name);
+
+            System.Memory.reference.push("//database/file", parameter.database_file);
+
+            //
+
+            if(parameter.database_file.exists())
+            {
+                java.lang.System.out.println("Database <" + parameter.database_name + "> selected.");
+            }
+            else
+            {
+                java.lang.System.out.println("Database <"+parameter.database_name+"> does not exist.");
+            }
+        }
+    }
+
+    public static class PostConditionRunner
+    {
+        public PostConditionRunner(Parameter parameter) throws Exception
+        {
+
         }
     }
 }

@@ -1,11 +1,9 @@
 package cases;
 
-import structures.database.handler.DatabaseHandler;
 import constants.DatabaseConstants;
-import file.DatabaseWriter;
-import file.TableWriter;
 import parameter.Parameter;
 import structures.database.Database;
+import structures.database.handler.DatabaseHandler;
 import system.System;
 
 import java.util.StringTokenizer;
@@ -39,7 +37,7 @@ public class CreateTableImpl extends UseCase
         }
         catch (Exception e)
         {
-            return;
+            java.lang.System.out.println(e);
         }
     }
 
@@ -47,7 +45,7 @@ public class CreateTableImpl extends UseCase
     {
         public CreateTableImpl_Step001(Parameter parameter) throws Exception
         {
-            //TODO check out integrity before writer impl a lil
+            System.Memory.reference.push("//database/createtableimpl/step001/result", new PreConditionRunner(parameter));
         }
     }
 
@@ -55,9 +53,7 @@ public class CreateTableImpl extends UseCase
     {
         public CreateTableImpl_Step002(Parameter parameter) throws Exception
         {
-            DatabaseWriter writer = new DatabaseWriter(parameter);
-
-            writer.write_table();
+            System.Memory.reference.push("//database/createtableimpl/step002/result", new TaskRunner(parameter));
         }
     }
 
@@ -65,7 +61,7 @@ public class CreateTableImpl extends UseCase
     {
         public CreateTableImpl_Step003(Parameter parameter) throws Exception
         {
-            //TODO quickly wash hands; integrity check the database then return 
+            System.Memory.reference.push("//database/createtableimpl/step001/result", new PostConditionRunner(parameter));
         }
     }
 
@@ -106,7 +102,30 @@ public class CreateTableImpl extends UseCase
 
             return token003;
         }
+    }
 
+    public static class PreConditionRunner
+    {
+        public PreConditionRunner(Parameter parameter) throws Exception
+        {
+            System.DatabaseHandler.reference.database = (Database)System.Memory.reference.pull("//database");
+        }
+    }
+
+    public static class TaskRunner
+    {
+        public TaskRunner(Parameter parameter) throws Exception
+        {
+            System.DatabaseHandler.reference.createTable(parameter);
+        }
+    }
+
+    public static class PostConditionRunner
+    {
+        public PostConditionRunner(Parameter parameter) throws Exception
+        {
+            System.DatabaseHandler.reference.verifyTable(parameter);
+        }
     }
 }
 
