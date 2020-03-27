@@ -1,6 +1,8 @@
 package file;
 
+import parameter.Parameter;
 import structures.database.Database;
+import structures.results.Result;
 
 import java.io.File;
 import java.util.HashMap;
@@ -28,6 +30,11 @@ public class DatabaseReader
         return true;
 
         //TODO implement the CSV reader here then leave a nice clean API
+    }
+
+    public Result select(Parameter parameter)
+    {
+        return new Result();
     }
 
     public Boolean verify_database(String sqlstring) throws Exception

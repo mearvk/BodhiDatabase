@@ -50,7 +50,7 @@ public class System
         return Memory.reference.exists(name);
     }
 
-    public static Boolean asset(String name) throws Exception
+    public static Boolean put(String name) throws Exception
     {
         return Memory.reference.exists(name);
     }

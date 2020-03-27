@@ -42,7 +42,7 @@ public class SelectImpl extends UseCase
     {
         public SelectImpl_Step001(Parameter parameter) throws Exception
         {
-            //step 1
+            System.touch("//database");
         }
     }
 
@@ -50,7 +50,7 @@ public class SelectImpl extends UseCase
     {
         public SelectImpl_Step002(Parameter parameter) throws Exception
         {
-            //step 2
+            System.push("//result", System.database.reader.select(parameter));
         }
     }
 
@@ -58,7 +58,7 @@ public class SelectImpl extends UseCase
     {
         public SelectImpl_Step003(Parameter parameter) throws Exception
         {
-            //step 3
+            System.touch("//database");
         }
     }
 
