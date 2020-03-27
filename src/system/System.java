@@ -34,6 +34,25 @@ public class System
         {
             this.map.put(name, object);
         }
+
+        public Boolean exists(String name) throws Exception
+        {
+            boolean result = Memory.reference.pull(name)==null;
+
+            if(result==true) throw new Exception();
+
+            return false;
+        }
+    }
+
+    public static Boolean die(String name) throws Exception
+    {
+        return Memory.reference.exists(name);
+    }
+
+    public static Boolean asset(String name) throws Exception
+    {
+        return Memory.reference.exists(name);
     }
 
     public static Object pull(String name)

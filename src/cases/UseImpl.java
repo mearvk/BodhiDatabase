@@ -112,9 +112,9 @@ public class UseImpl extends UseCase
         {
             System.push("//database", new Database(parameter));
 
-            System.Memory.reference.push("//database/name", parameter.database_name);
+            System.push("//database/name", parameter.database_name);
 
-            System.Memory.reference.push("//database/file", parameter.database_file);
+            System.push("//database/file", parameter.database_file);
 
             //
 

@@ -28,7 +28,12 @@ public class DatabaseWriter
         return true;
     }
 
-    public DatabaseWriter write_table()
+    public DatabaseWriter write_table(Parameter parameter)
+    {
+        return this;
+    }
+
+    public DatabaseWriter verify_table(Parameter parameter)
     {
         return this;
     }

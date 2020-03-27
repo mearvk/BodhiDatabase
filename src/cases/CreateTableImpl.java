@@ -1,12 +1,7 @@
 package cases;
 
-import constants.DatabaseConstants;
 import parameter.Parameter;
-import structures.database.Database;
-import structures.database.handler.DatabaseHandler;
 import system.System;
-
-import java.util.StringTokenizer;
 
 public class CreateTableImpl extends UseCase
 {
@@ -46,7 +41,7 @@ public class CreateTableImpl extends UseCase
     {
         public CreateTableImpl_Step001(Parameter parameter) throws Exception
         {
-            System.Memory.reference.push("//step001", new PreConditionRunner(parameter));
+            System.push("//step001", new PreConditionRunner(parameter));
         }
     }
 
@@ -54,7 +49,7 @@ public class CreateTableImpl extends UseCase
     {
         public CreateTableImpl_Step002(Parameter parameter) throws Exception
         {
-            System.Memory.reference.push("//step002", new TaskRunner(parameter));
+            System.push("//step002", new TaskRunner(parameter));
         }
     }
 
@@ -62,46 +57,7 @@ public class CreateTableImpl extends UseCase
     {
         public CreateTableImpl_Step003(Parameter parameter) throws Exception
         {
-            System.Memory.reference.push("//step003", new PostConditionRunner(parameter));
-        }
-    }
-
-    public static class Utility
-    {
-        public CreateTableImpl parent;
-
-        public String sqlString;
-
-        public Utility(CreateTableImpl parent, String sqlString)
-        {
-            this.parent = parent;
-
-            this.sqlString = sqlString;
-        }
-
-        public static String getDatabaseUrl(Parameter parameter)
-        {
-            return DatabaseConstants.baseURL+"\\"+parameter.database_name +".sql";
-        }
-
-        public static String getDatabaseName(Parameter parameter)
-        {
-            return ((Database)System.Memory.reference.pull("//database")).name;
-        }
-
-        public static String getTableName(Parameter parameter)
-        {
-            String sqlString = parameter.sqlstring;
-
-            StringTokenizer tokenizer = new StringTokenizer(sqlString, " ");
-
-            String token001 = tokenizer.nextToken();
-
-            String token002 = tokenizer.nextToken();
-
-            String token003 = tokenizer.nextToken();
-
-            return token003;
+            System.push("//step003", new PostConditionRunner(parameter));
         }
     }
 
@@ -109,9 +65,7 @@ public class CreateTableImpl extends UseCase
     {
         public PreConditionRunner(Parameter parameter) throws Exception
         {
-            System.handler.reference.database_exists(parameter);
-
-            System.handler.reference.table_exists(parameter);
+            System.die("//database");
         }
     }
 
@@ -119,7 +73,9 @@ public class CreateTableImpl extends UseCase
     {
         public TaskRunner(Parameter parameter) throws Exception
         {
-            System.handler.reference.createTable(parameter);
+            System.handler.writer.write_table(parameter);
+
+            System.handler.writer.verify_table(parameter);
         }
     }
 
@@ -127,7 +83,7 @@ public class CreateTableImpl extends UseCase
     {
         public PostConditionRunner(Parameter parameter) throws Exception
         {
-            System.handler.reference.verifyTable(parameter);
+            System.push("//database", parameter.database);
         }
     }
 }
