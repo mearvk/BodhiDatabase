@@ -65,7 +65,7 @@ public class CreateTableImpl extends UseCase
     {
         public PreConditionRunner(Parameter parameter) throws Exception
         {
-            System.die("//database");
+            System.wet("//database");
         }
     }
 
@@ -73,9 +73,7 @@ public class CreateTableImpl extends UseCase
     {
         public TaskRunner(Parameter parameter) throws Exception
         {
-            System.handler.writer.write_table(parameter);
-
-            System.handler.writer.verify_table(parameter);
+            System.handler.writer.tablewriter(parameter);
         }
     }
 
@@ -83,7 +81,7 @@ public class CreateTableImpl extends UseCase
     {
         public PostConditionRunner(Parameter parameter) throws Exception
         {
-            System.push("//database", parameter.database);
+            System.wet("//database");
         }
     }
 }

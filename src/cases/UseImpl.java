@@ -1,8 +1,8 @@
 package cases;
 
-import components.database.Database;
 import constants.DatabaseConstants;
 import parameter.Parameter;
+import structures.database.Database;
 import system.System;
 
 import java.io.File;
@@ -66,18 +66,16 @@ public class UseImpl extends UseCase
         }
     }
 
-    public static class Utility
+    public static class utility
     {
         UseImpl parent;
 
-        public Utility(UseImpl parent, String sqlString)
+        public utility(UseImpl parent, String sqlString)
         {
             this.parent = parent;
-
-
         }
 
-        public static String getDatabaseName(Parameter parameter)
+        public static String getdatabasename(Parameter parameter)
         {
             String sqlstring = parameter.sqlstring;
 
@@ -90,7 +88,7 @@ public class UseImpl extends UseCase
             return token002.trim().toLowerCase();
         }
 
-        public static File getDatabaseFile(Parameter parameter)
+        public static File getdatabasefile(Parameter parameter)
         {
             return new File(DatabaseConstants.baseURL+"\\"+parameter.database_name +".sql");
         }
@@ -100,9 +98,11 @@ public class UseImpl extends UseCase
     {
         public PreConditionRunner(Parameter parameter) throws Exception
         {
-            parameter.database_name = Utility.getDatabaseName(parameter).toLowerCase();
+            System.push("//database", parameter.database = new Database(parameter));
 
-            parameter.database_file = Utility.getDatabaseFile(parameter);
+            System.push("//database/name", parameter.database_name = utility.getdatabasename(parameter));
+
+            System.push("//database/file", parameter.database_file = utility.getdatabasefile(parameter));
         }
     }
 
@@ -110,22 +110,9 @@ public class UseImpl extends UseCase
     {
         public TaskRunner(Parameter parameter) throws Exception
         {
-            System.push("//database", new Database(parameter));
+            System.wet("//database");
 
-            System.push("//database/name", parameter.database_name);
-
-            System.push("//database/file", parameter.database_file);
-
-            //
-
-            if(parameter.database_file.exists())
-            {
-                java.lang.System.out.println("Database <" + parameter.database_name + "> selected.");
-            }
-            else
-            {
-                java.lang.System.out.println("Database <"+parameter.database_name+"> does not exist.");
-            }
+            java.lang.System.out.println("Database <" + parameter.database_name + "> selected.");
         }
     }
 

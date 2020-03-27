@@ -40,7 +40,7 @@ public class CreateIndexImpl extends UseCase
     {
         public CreateIndexImpl_Step001(Parameter parameter) throws Exception
         {
-            //step 1
+            System.wet("//database");
         }
     }
 
@@ -48,7 +48,7 @@ public class CreateIndexImpl extends UseCase
     {
         public CreateIndexImpl_Step002(Parameter parameter) throws Exception
         {
-            //step 2
+            //TODO JSON in RAM and output option
         }
     }
 
@@ -56,7 +56,7 @@ public class CreateIndexImpl extends UseCase
     {
         public CreateIndexImpl_Step003(Parameter parameter) throws Exception
         {
-            //step 3
+            System.wet("//database");
         }
     }
 }

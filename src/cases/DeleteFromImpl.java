@@ -42,7 +42,7 @@ public class DeleteFromImpl extends UseCase
     {
         public DeleteFromImpl_Step001(Parameter parameter) throws Exception
         {
-            //step 1
+            System.push("//step001", new PreConditionRunner(parameter));
         }
     }
 
@@ -50,7 +50,7 @@ public class DeleteFromImpl extends UseCase
     {
         public DeleteFromImpl_Step002(Parameter parameter) throws Exception
         {
-            //step 2
+            System.push("//step002", new TaskRunner(parameter));
         }
     }
 
@@ -58,32 +58,31 @@ public class DeleteFromImpl extends UseCase
     {
         public DeleteFromImpl_Step003(Parameter parameter) throws Exception
         {
-            //step 3
+            System.push("//step00\3", new PostConditionRunner(parameter));
         }
     }
 
-    public static class Utility
+    public static class PreConditionRunner
     {
-        public Utility(CreateDatabaseImpl parent, String sqlString)
+        public PreConditionRunner(Parameter parameter) throws Exception
         {
-
+            System.wet("//database");
         }
+    }
 
-        public static String getDatabaseName(Parameter parameter)
+    public static class TaskRunner
+    {
+        public TaskRunner(Parameter parameter) throws Exception
         {
-            String sqlString = parameter.sqlstring;
+            System.handler.writer.tablewriter(parameter);
+        }
+    }
 
-            StringTokenizer tokenizer = new StringTokenizer(sqlString, " ");
-
-            String token001 = tokenizer.nextToken();
-
-            String token002 = tokenizer.nextToken();
-
-            String token003 = tokenizer.nextToken();
-
-            if(token003==null) return null;
-
-            return token003;
+    public static class PostConditionRunner
+    {
+        public PostConditionRunner(Parameter parameter) throws Exception
+        {
+            System.wet("//database");
         }
     }
 }

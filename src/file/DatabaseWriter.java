@@ -28,7 +28,7 @@ public class DatabaseWriter
         return true;
     }
 
-    public DatabaseWriter write_table(Parameter parameter)
+    public DatabaseWriter tablewriter(Parameter parameter)
     {
         return this;
     }
