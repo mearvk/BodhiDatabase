@@ -1,13 +1,11 @@
 import builder.Builder;
-import components.parser.Parser;
-import structures.Queue;
-import structures.SQLString;
 import system.System;
-
-import java.util.LinkedList;
+import test.TestHarness;
 
 public class Main
 {
+
+
     public static void main(String...args)
     {
         Main main = new Main();
@@ -33,12 +31,18 @@ public class Main
 
         //
 
-        Queue<SQLString> queue = (Queue<SQLString>) System.pull("//parser/queue");
 
-        //queue.add(new SQLString("CREATE DATABASE company"));
+        TestHarness harness = new TestHarness();
 
-        queue.add(new SQLString("USE company"));
+        harness.test_001 = new TestHarness.Test_001();
 
-        queue.add(new SQLString("CREATE TABLE employees (EmployeeID int, Firstname varchar(255), Lastname varchar(255))"));
+        harness.test_002 = new TestHarness.Test_002();
+
+        harness.test_003 = new TestHarness.Test_003();
+
+        harness.test_004 = new TestHarness.Test_004();
+
+        harness.test_005 = new TestHarness.Test_005();
     }
+
 }
