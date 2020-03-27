@@ -144,7 +144,7 @@ public class ParserCaseHandler
         public DeleteFrom(String sqlString) throws Exception
         {
             try
-            { DeleteFrom runner = new DeleteFrom(this.sqlString = sqlString); }
+            { DeleteFromImpl runner = new DeleteFromImpl(this.sqlString = sqlString); }
             catch (Exception e)
             {
                 //TODO
