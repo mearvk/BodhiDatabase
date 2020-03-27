@@ -23,7 +23,7 @@ public class Database
 
         this.name = parameter.database_name;
 
-        this.handler = new DatabaseHandler();
+        //this.handler = new DatabaseHandler();
     }
 
     public Database(String sqlstring)

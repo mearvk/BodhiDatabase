@@ -29,7 +29,8 @@ public class UseImpl extends UseCase
         //
 
         try
-        {   this.step001 = new UseImpl.UseImpl_Step001(this.parameter);
+        {
+            this.step001 = new UseImpl.UseImpl_Step001(this.parameter);
 
             this.step002 = new UseImpl.UseImpl_Step002(this.parameter);
 
@@ -45,7 +46,7 @@ public class UseImpl extends UseCase
     {
         public UseImpl_Step001(Parameter parameter) throws Exception
         {
-            System.Memory.reference.push("//database/useimpl/step001/result", new PreConditionRunner(parameter));
+            System.Memory.reference.push("//step001", new PreConditionRunner(parameter));
         }
     }
 
@@ -53,7 +54,7 @@ public class UseImpl extends UseCase
     {
         public UseImpl_Step002(Parameter parameter) throws Exception
         {
-            System.Memory.reference.push("//database/useimpl/step002/result", new TaskRunner(parameter));
+            System.Memory.reference.push("//step002", new TaskRunner(parameter));
         }
     }
 
@@ -61,7 +62,7 @@ public class UseImpl extends UseCase
     {
         public UseImpl_Step003(Parameter parameter) throws Exception
         {
-            System.Memory.reference.push("//database/useimpl/step003/result", new PostConditionRunner(parameter));
+            System.Memory.reference.push("//step003", new PostConditionRunner(parameter));
         }
     }
 
@@ -109,7 +110,7 @@ public class UseImpl extends UseCase
     {
         public TaskRunner(Parameter parameter) throws Exception
         {
-            System.Memory.reference.push("//database", new Database(parameter));
+            System.push("//database", new Database(parameter));
 
             System.Memory.reference.push("//database/name", parameter.database_name);
 

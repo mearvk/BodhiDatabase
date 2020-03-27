@@ -12,7 +12,7 @@ public class System
 {
     public Memory memory = new Memory();
 
-    public DatabaseHandler handler = new DatabaseHandler();
+    public static DatabaseHandler handler = new DatabaseHandler();
 
     public static class Memory
     {
@@ -36,6 +36,16 @@ public class System
         }
     }
 
+    public static Object pull(String name)
+    {
+        return Memory.reference.pull(name);
+    }
+
+    public static void push(String name, Object object)
+    {
+        Memory.reference.push(name, object);
+    }
+
     public static class DatabaseHandler
     {
         public static DatabaseHandler reference = new DatabaseHandler();
@@ -48,7 +58,7 @@ public class System
 
         public DatabaseHandler()
         {
-            Database database = (Database)System.Memory.reference.pull("//database");
+            Database database = (Database)System.pull("//database");
 
             this.writer = new DatabaseWriter(database);
 
@@ -60,6 +70,16 @@ public class System
             //TODO reader checks integrity
 
             return true;
+        }
+
+        public DatabaseHandler table_exists(Parameter parameter)
+        {
+            return this;
+        }
+
+        public DatabaseHandler database_exists(Parameter parameter)
+        {
+            return this;
         }
 
         public DatabaseHandler createTable(Parameter parameter)

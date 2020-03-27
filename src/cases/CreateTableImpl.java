@@ -45,7 +45,7 @@ public class CreateTableImpl extends UseCase
     {
         public CreateTableImpl_Step001(Parameter parameter) throws Exception
         {
-            System.Memory.reference.push("//database/createtableimpl/step001/result", new PreConditionRunner(parameter));
+            System.Memory.reference.push("//step001", new PreConditionRunner(parameter));
         }
     }
 
@@ -53,7 +53,7 @@ public class CreateTableImpl extends UseCase
     {
         public CreateTableImpl_Step002(Parameter parameter) throws Exception
         {
-            System.Memory.reference.push("//database/createtableimpl/step002/result", new TaskRunner(parameter));
+            System.Memory.reference.push("//step002", new TaskRunner(parameter));
         }
     }
 
@@ -61,7 +61,7 @@ public class CreateTableImpl extends UseCase
     {
         public CreateTableImpl_Step003(Parameter parameter) throws Exception
         {
-            System.Memory.reference.push("//database/createtableimpl/step001/result", new PostConditionRunner(parameter));
+            System.Memory.reference.push("//step003", new PostConditionRunner(parameter));
         }
     }
 
@@ -108,7 +108,9 @@ public class CreateTableImpl extends UseCase
     {
         public PreConditionRunner(Parameter parameter) throws Exception
         {
-            System.DatabaseHandler.reference.database = (Database)System.Memory.reference.pull("//database");
+            System.handler.reference.database_exists(parameter);
+
+            System.handler.reference.table_exists(parameter);
         }
     }
 
@@ -116,7 +118,7 @@ public class CreateTableImpl extends UseCase
     {
         public TaskRunner(Parameter parameter) throws Exception
         {
-            System.DatabaseHandler.reference.createTable(parameter);
+            System.handler.reference.createTable(parameter);
         }
     }
 
@@ -124,7 +126,7 @@ public class CreateTableImpl extends UseCase
     {
         public PostConditionRunner(Parameter parameter) throws Exception
         {
-            System.DatabaseHandler.reference.verifyTable(parameter);
+            System.handler.reference.verifyTable(parameter);
         }
     }
 }
