@@ -51,7 +51,7 @@ public class CreateTableImpl extends UseCase
 
             parameter.tablename = Utility.getTableName(parameter).toLowerCase();
 
-            parameter.databaseurl = DatabaseConstants.baseURL+"\\"+parameter.databasename+".sql";
+            parameter.databaseurl = Utility.getDatabaseUrl(parameter).toLowerCase();
         }
     }
 
@@ -88,11 +88,14 @@ public class CreateTableImpl extends UseCase
             this.sqlString = sqlString;
         }
 
+        public static String getDatabaseUrl(Parameter parameter)
+        {
+            return DatabaseConstants.baseURL+"\\"+parameter.databasename+".sql";
+        }
+
         public static String getDatabaseName(Parameter parameter)
         {
-            Database database = (Database)System.Memory.reference.pull("//database");
-
-            return database.name;
+            return ((Database)System.Memory.reference.pull("//database")).name;
         }
 
         public static String getTableName(Parameter parameter)
