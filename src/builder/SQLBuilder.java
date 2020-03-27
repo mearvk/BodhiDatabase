@@ -6,7 +6,7 @@ import components.persistence.Persistence;
 import components.processor.Processor;
 import components.terminal.Terminal;
 
-public class Builder
+public class SQLBuilder
 {
     public Builder_Step001 builder_step001;
 

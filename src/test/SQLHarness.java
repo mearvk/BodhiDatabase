@@ -4,7 +4,7 @@ import structures.Queue;
 import structures.SQLString;
 import system.System;
 
-public class TestHarness
+public class SQLHarness
 {
     public Test_001 test_001;
 
