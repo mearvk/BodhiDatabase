@@ -15,7 +15,7 @@ public class DeleteFromImpl extends UseCase
 
     public DeleteFromImpl(String sqlString)
     {
-        System.Memory.reference.push("//createtableimpl", this);
+        System.Memory.reference.push("//impl/createtable", this);
 
         //
 

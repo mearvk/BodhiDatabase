@@ -1,6 +1,6 @@
 package cases;
 
-public class UseCase
+public abstract class UseCase
 {
 
 }

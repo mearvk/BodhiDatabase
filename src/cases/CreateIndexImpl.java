@@ -15,7 +15,7 @@ public class CreateIndexImpl extends UseCase
 
     public CreateIndexImpl(String sqlString)
     {
-        System.Memory.reference.push("//createindeximpl", this);
+        System.Memory.reference.push("//impl/createindex", this);
 
         //
 

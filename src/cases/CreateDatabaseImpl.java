@@ -21,7 +21,7 @@ public class CreateDatabaseImpl extends UseCase
 
     public CreateDatabaseImpl(String sqlString)
     {
-        System.Memory.reference.push("//createdatabaseimpl", this);
+        System.Memory.reference.push("//impl/createdatabase", this);
 
         //
 

@@ -18,7 +18,7 @@ public class UpdateImpl extends UseCase
 
     public UpdateImpl(String sqlString)
     {
-        System.Memory.reference.push("//updateimpl", this);
+        System.Memory.reference.push("//impl/update", this);
 
         //
 
