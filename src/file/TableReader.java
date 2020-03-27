@@ -11,7 +11,7 @@ public class TableReader
         this.table = table;
     }
 
-    public void read()
+    public void integrity()
     {
 
     }

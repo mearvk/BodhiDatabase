@@ -1,11 +1,11 @@
 package cases;
 
-import components.database.Database;
+import structures.database.handler.DatabaseHandler;
 import constants.DatabaseConstants;
-import file.TableReader;
+import file.DatabaseWriter;
 import file.TableWriter;
 import parameter.Parameter;
-import structures.table.Table;
+import structures.database.Database;
 import system.System;
 
 import java.util.StringTokenizer;
@@ -22,7 +22,7 @@ public class CreateTableImpl extends UseCase
 
     public CreateTableImpl(String sqlstring)
     {
-        System.Memory.reference.push("//createtableimpl", this);
+        System.Memory.reference.push("//impl/createtable", this);
 
         //
 
@@ -47,11 +47,7 @@ public class CreateTableImpl extends UseCase
     {
         public CreateTableImpl_Step001(Parameter parameter) throws Exception
         {
-            parameter.databasename = Utility.getDatabaseName(parameter).toLowerCase();
-
-            parameter.tablename = Utility.getTableName(parameter).toLowerCase();
-
-            parameter.databaseurl = Utility.getDatabaseUrl(parameter).toLowerCase();
+            //TODO check out integrity before writer impl a lil
         }
     }
 
@@ -59,9 +55,9 @@ public class CreateTableImpl extends UseCase
     {
         public CreateTableImpl_Step002(Parameter parameter) throws Exception
         {
-            TableWriter writer = new TableWriter(new Table(parameter));
+            DatabaseWriter writer = new DatabaseWriter(parameter);
 
-            writer.write();
+            writer.write_table();
         }
     }
 
@@ -69,9 +65,7 @@ public class CreateTableImpl extends UseCase
     {
         public CreateTableImpl_Step003(Parameter parameter) throws Exception
         {
-            TableReader reader = new TableReader(new Table(parameter));
-
-            reader.read();
+            //TODO quickly wash hands; integrity check the database then return 
         }
     }
 
@@ -90,7 +84,7 @@ public class CreateTableImpl extends UseCase
 
         public static String getDatabaseUrl(Parameter parameter)
         {
-            return DatabaseConstants.baseURL+"\\"+parameter.databasename+".sql";
+            return DatabaseConstants.baseURL+"\\"+parameter.database_name +".sql";
         }
 
         public static String getDatabaseName(Parameter parameter)

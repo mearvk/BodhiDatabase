@@ -46,7 +46,7 @@ public class CreateDatabaseImpl extends UseCase
     {
         public CreateDatabaseImpl_Step001(Parameter parameter) throws Exception
         {
-            parameter.databasename = Utility.getDatabaseName(parameter).toLowerCase();
+            parameter.database_name = Utility.getDatabaseName(parameter).toLowerCase();
         }
     }
 
@@ -56,17 +56,17 @@ public class CreateDatabaseImpl extends UseCase
         {
             File file;
 
-            BufferedWriter writer = new BufferedWriter(new FileWriter(file = new File(DatabaseConstants.baseURL+"\\"+parameter.databasename+".sql")));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file = new File(DatabaseConstants.baseURL+"\\"+parameter.database_name +".sql")));
 
             if(file.exists()) throw new Exception();
 
             else
              {
-                writer.write("File Name >> " + parameter.databasename + ".sql");
+                writer.write("File Name >> " + parameter.database_name + ".sql");
 
                 writer.newLine();
 
-                writer.write("Database Name >> " + parameter.databasename);
+                writer.write("Database Name >> " + parameter.database_name);
 
                 writer.flush();
 

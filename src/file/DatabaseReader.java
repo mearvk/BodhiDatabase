@@ -1,6 +1,6 @@
 package file;
 
-import components.database.Database;
+import structures.database.Database;
 
 import java.io.File;
 import java.util.HashMap;
@@ -47,8 +47,6 @@ public class DatabaseReader
 
     public HashMap<String, String> get_columns()
     {
-        if(this.database.sqlstring==null) return null;
-
         //TODO write XML parser
 
         return null;

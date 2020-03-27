@@ -1,6 +1,7 @@
 package parameter;
 
 import cases.UseCase;
+import structures.database.Database;
 
 import java.io.File;
 
@@ -8,15 +9,17 @@ public class Parameter
 {
     public String sqlstring;
 
-    public String tablename = "";
+    public String table_name = "";
 
-    public String databasename = "";
+    public String database_name = "";
 
-    public String databaseurl = "";
+    public String database_url = "";
 
     public UseCase parent;
 
-    public File file;
+    public File database_file;
+
+    public Database database;
 
     public Parameter(UseCase parent, String sqlString)
     {

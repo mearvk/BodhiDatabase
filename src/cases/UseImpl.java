@@ -20,7 +20,7 @@ public class UseImpl extends UseCase
 
     public UseImpl(String sqlString)
     {
-        System.Memory.reference.push("//useimpl", this);
+        System.Memory.reference.push("//impl/use", this);
 
         //
 
@@ -45,9 +45,9 @@ public class UseImpl extends UseCase
     {
         public UseImpl_Step001(Parameter parameter) throws Exception
         {
-            parameter.databasename = Utility.getDatabaseName(parameter.sqlstring).toLowerCase();
+            parameter.database_name = Utility.getDatabaseName(parameter).toLowerCase();
 
-            parameter.databasename = Utility.getDatabaseName(parameter.sqlstring).toUpperCase();
+            parameter.database_file = Utility.getDatabaseFile(parameter);
         }
     }
 
@@ -55,18 +55,22 @@ public class UseImpl extends UseCase
     {
         public UseImpl_Step002(Parameter parameter) throws Exception
         {
-            File file = new File(DatabaseConstants.baseURL+"\\"+parameter.databasename+".sql");
-
-            if(!file.exists())
-            {
-                java.lang.System.out.println("No such database <"+parameter.databasename+">.");
-
-                throw new Exception("<No such database>");
-            }
-
             System.Memory.reference.push("//database", new Database(parameter));
 
-            java.lang.System.out.println("Database <"+parameter.databasename+"> selected.");
+            System.Memory.reference.push("//database/name", parameter.database_name);
+
+            System.Memory.reference.push("//database/file", parameter.database_file);
+
+            //
+
+            if(parameter.database_file.exists())
+            {
+                java.lang.System.out.println("Database <" + parameter.database_name + "> selected.");
+            }
+            else
+            {
+                java.lang.System.out.println("Database <"+parameter.database_name+"> does not exist.");
+            }
         }
     }
 
@@ -84,18 +88,27 @@ public class UseImpl extends UseCase
 
         public Utility(UseImpl parent, String sqlString)
         {
+            this.parent = parent;
+
 
         }
 
-        public static String getDatabaseName(String sqlString)
+        public static String getDatabaseName(Parameter parameter)
         {
-            StringTokenizer tokenizer = new StringTokenizer(sqlString, " ");
+            String sqlstring = parameter.sqlstring;
+
+            StringTokenizer tokenizer = new StringTokenizer(sqlstring, " ");
 
             String token001 = tokenizer.nextToken();
 
             String token002 = tokenizer.nextToken();
 
-            return token002;
+            return token002.trim().toLowerCase();
+        }
+
+        public static File getDatabaseFile(Parameter parameter)
+        {
+            return new File(DatabaseConstants.baseURL+"\\"+parameter.database_name +".sql");
         }
     }
 }

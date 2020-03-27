@@ -1,6 +1,5 @@
 package file;
 
-import parameter.Parameter;
 import structures.table.Table;
 
 public class TableWriter
@@ -14,8 +13,6 @@ public class TableWriter
 
     public void write()
     {
-        DatabaseWriter writer = new DatabaseWriter(null);
-
 
     }
 }

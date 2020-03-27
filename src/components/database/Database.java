@@ -1,6 +1,6 @@
 package components.database;
 
-import components.database.handler.DatabaseHandler;
+import structures.database.handler.DatabaseHandler;
 import parameter.Parameter;
 
 import java.io.File;
@@ -8,8 +8,6 @@ import java.io.File;
 public class Database
 {
     public String name;
-
-    public String location;
 
     public String sqlstring;
 
@@ -21,9 +19,11 @@ public class Database
 
     public Database(Parameter parameter)
     {
-        this.file = parameter.file;
+        this.file = parameter.database_file;
 
-        this.name = parameter.databasename;
+        this.name = parameter.database_name;
+
+        this.handler = new DatabaseHandler();
     }
 
     public Database(String sqlstring)
