@@ -38,6 +38,11 @@ public class DatabaseWriter
         return this;
     }
 
+    public DatabaseWriter drop_columns(Parameter parameter)
+    {
+        return this;
+    }
+
     public DatabaseWriter write_columns(String tablename)
     {
         return this;

@@ -3,8 +3,6 @@ package cases;
 import parameter.Parameter;
 import system.System;
 
-import java.util.StringTokenizer;
-
 public class DeleteFromImpl extends UseCase
 {
     public DeleteFromImpl.DeleteFromImpl_Step001 step001;
@@ -66,7 +64,7 @@ public class DeleteFromImpl extends UseCase
     {
         public PreConditionRunner(Parameter parameter) throws Exception
         {
-            System.wet("//database");
+            System.wheat("//database");
         }
     }
 
@@ -82,7 +80,7 @@ public class DeleteFromImpl extends UseCase
     {
         public PostConditionRunner(Parameter parameter) throws Exception
         {
-            System.wet("//database");
+            System.wheat("//database");
         }
     }
 }

@@ -45,7 +45,7 @@ public class System
         }
     }
 
-    public static Boolean wet(String name) throws Exception
+    public static Boolean wheat(String name) throws Exception
     {
         return Memory.reference.exists(name);
     }

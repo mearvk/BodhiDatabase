@@ -65,7 +65,7 @@ public class CreateTableImpl extends UseCase
     {
         public PreConditionRunner(Parameter parameter) throws Exception
         {
-            System.wet("//database");
+            System.wheat("//database");
         }
     }
 
@@ -81,7 +81,7 @@ public class CreateTableImpl extends UseCase
     {
         public PostConditionRunner(Parameter parameter) throws Exception
         {
-            System.wet("//database");
+            System.wheat("//database");
         }
     }
 }
