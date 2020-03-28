@@ -71,10 +71,6 @@ public class UseImpl extends UseCase
             System.push("//database/name", new DatabaseReference.Reference.Name(parameter));
 
             System.push("//database/file", new DatabaseReference.Reference.File(parameter));
-
-            //
-
-
         }
     }
 

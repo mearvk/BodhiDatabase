@@ -1,7 +1,6 @@
 package cases;
 
 import parameter.Parameter;
-import structures.database.DatabaseReference;
 import system.System;
 
 public class CreateDatabaseImpl extends UseCase
@@ -66,12 +65,7 @@ public class CreateDatabaseImpl extends UseCase
     {
         public PreConditionRunner(Parameter parameter) throws Exception
         {
-            try
-            { System.touch("//database"); }
-            catch (Exception e)
-            {
-                System.push("//database", new DatabaseReference.Reference(parameter));
-            }
+            boolean result = System.database.reader.database_exists(parameter);
         }
     }
 
@@ -79,9 +73,7 @@ public class CreateDatabaseImpl extends UseCase
     {
         public TaskRunner(Parameter parameter) throws Exception
         {
-            System.persist(parameter, "Unable to create database <"+parameter.database_name+">");
-
-            java.lang.System.out.println("Database <" + parameter.database_name + "> selected.");
+            System.database.writer.database_persist(parameter);
         }
     }
 
@@ -89,7 +81,7 @@ public class CreateDatabaseImpl extends UseCase
     {
         public PostConditionRunner(Parameter parameter) throws Exception
         {
-            System.touch("//database");
+            boolean result = System.database.reader.database_exists(parameter);
         }
     }
 }

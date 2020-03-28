@@ -18,7 +18,7 @@ public class DatabaseReader
         this.database = database;
     }
 
-    public Boolean database_exists(String dbname)
+    public Boolean database_exists(Parameter parameter)
     {
         return true;
 

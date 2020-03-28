@@ -62,7 +62,7 @@ public class System
         }
     }
 
-    public static void persist(Parameter parameter, String exception)
+    public static void persist(Parameter parameter)
     {
         Persistence persistence = (Persistence)System.pull("//persistence");
 
@@ -118,6 +118,11 @@ public class System
             //TODO reader checks integrity
 
             return true;
+        }
+
+        public DatabaseHandler delete_from(Parameter parameter)
+        {
+            return this;
         }
 
         public DatabaseHandler table_exists(Parameter parameter)

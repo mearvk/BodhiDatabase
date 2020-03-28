@@ -72,7 +72,7 @@ public class DeleteFromImpl extends UseCase
     {
         public TaskRunner(Parameter parameter) throws Exception
         {
-            System.database.writer.tablewriter(parameter);
+            System.database.writer.delete_from(parameter);
         }
     }
 

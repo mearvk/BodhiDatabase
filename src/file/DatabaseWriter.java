@@ -28,7 +28,19 @@ public class DatabaseWriter
         return true;
     }
 
-    public DatabaseWriter tablewriter(Parameter parameter)
+    public DatabaseWriter database_persist(Parameter parameter)
+    {
+        //TODO perist database, index, table
+
+        return this;
+    }
+
+    public DatabaseWriter delete_from(Parameter parameter)
+{
+    return this;
+}
+
+    public DatabaseWriter table_persist(Parameter parameter)
     {
         return this;
     }
