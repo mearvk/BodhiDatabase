@@ -2,6 +2,7 @@ package cases;
 
 import constants.DatabaseConstants;
 import parameter.Parameter;
+import structures.database.Database;
 import system.System;
 
 import java.io.BufferedWriter;
@@ -46,7 +47,7 @@ public class CreateDatabaseImpl extends UseCase
     {
         public CreateDatabaseImpl_Step001(Parameter parameter) throws Exception
         {
-            parameter.database_name = Utility.getDatabaseName(parameter).toLowerCase();
+            System.Memory.reference.push("//step001", new UseImpl.PreConditionRunner(parameter));
         }
     }
 
@@ -54,26 +55,7 @@ public class CreateDatabaseImpl extends UseCase
     {
         public CreateDatabaseImpl_Step002(Parameter parameter) throws Exception
         {
-            File file;
-
-            BufferedWriter writer = new BufferedWriter(new FileWriter(file = new File(DatabaseConstants.baseURL+"\\"+parameter.database_name +".sql")));
-
-            if(file.exists()) throw new Exception();
-
-            else
-             {
-                writer.write("File Name >> " + parameter.database_name + ".sql");
-
-                writer.newLine();
-
-                writer.write("Database Name >> " + parameter.database_name);
-
-                writer.flush();
-
-                writer.close();
-
-                writer = null;
-            }
+            System.Memory.reference.push("//step002", new UseImpl.TaskRunner(parameter));
         }
     }
 
@@ -81,32 +63,31 @@ public class CreateDatabaseImpl extends UseCase
     {
         public CreateDatabaseImpl_Step003(Parameter parameter) throws Exception
         {
-            //
+            System.Memory.reference.push("//step003", new UseImpl.PostConditionRunner(parameter));
         }
     }
 
-    public static class Utility
+    public static class PreConditionRunner
     {
-        public Utility(CreateDatabaseImpl parent, String sqlString)
+        public PreConditionRunner(Parameter parameter) throws Exception
         {
-
+            System.touch("//database");
         }
+    }
 
-        public static String getDatabaseName(Parameter parameter)
+    public static class TaskRunner
+    {
+        public TaskRunner(Parameter parameter) throws Exception
         {
-            String sqlString = parameter.sqlstring;
+            java.lang.System.out.println("Database <" + parameter.database_name + "> selected.");
+        }
+    }
 
-            StringTokenizer tokenizer = new StringTokenizer(sqlString, " ");
-
-            String token001 = tokenizer.nextToken();
-
-            String token002 = tokenizer.nextToken();
-
-            String token003 = tokenizer.nextToken();
-
-            if(token003==null) return null;
-
-            return token003;
+    public static class PostConditionRunner
+    {
+        public PostConditionRunner(Parameter parameter) throws Exception
+        {
+            System.touch("//database");
         }
     }
 }

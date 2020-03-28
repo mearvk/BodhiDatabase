@@ -3,6 +3,8 @@ package cases;
 import constants.DatabaseConstants;
 import parameter.Parameter;
 import structures.database.Database;
+import structures.database.DatabaseFile;
+import structures.database.DatabaseName;
 import system.System;
 
 import java.io.File;
@@ -66,13 +68,17 @@ public class UseImpl extends UseCase
         }
     }
 
-    public static class utility
+    public static class Utility
     {
         UseImpl parent;
 
-        public utility(UseImpl parent, String sqlString)
+        public String sqlstring;
+
+        public Utility(UseImpl parent, String sqlstring)
         {
             this.parent = parent;
+
+            this.sqlstring = sqlstring;
         }
 
         public static String getdatabasename(Parameter parameter)
@@ -98,11 +104,11 @@ public class UseImpl extends UseCase
     {
         public PreConditionRunner(Parameter parameter) throws Exception
         {
-            System.push("//database", parameter.database = new Database(parameter));
+            System.push("//database", new Database(parameter));
 
-            System.push("//database/name", parameter.database_name = utility.getdatabasename(parameter));
+            System.push("//database/name", new DatabaseName(parameter));
 
-            System.push("//database/file", parameter.database_file = utility.getdatabasefile(parameter));
+            System.push("//database/file", new DatabaseFile(parameter));
         }
     }
 
