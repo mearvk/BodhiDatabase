@@ -4,19 +4,29 @@ import cases.UseImpl;
 import constants.DatabaseConstants;
 import parameter.Parameter;
 
+import java.io.File;
 import java.util.StringTokenizer;
 
 public class DatabaseReference
 {
-    public String name;
-
-    public String fileURL;
 
     public Parameter parameter;
+
+    public Reference reference;
+
+    public Reference.File file;
+
+    public Reference.Name name;
 
     public DatabaseReference(Parameter parameter)
     {
         this.parameter = parameter;
+
+        this.reference = new Reference(parameter);
+
+        this.name = new Reference.Name(parameter);
+
+        this.file = new Reference.File(parameter);
     }
 
     public static class Reference
@@ -30,21 +40,33 @@ public class DatabaseReference
 
         public static class File
         {
+            public java.io.File file;
+
             public Parameter parameter;
 
             public File(Parameter parameter)
             {
                 this.parameter = parameter;
+
+                this.file = parameter.database_file = Utility.getdatabasefile(parameter);
+
+                system.System.push("//database/file", this.file);
             }
         }
 
         public static class Name
         {
+            public String name;
+
             public Parameter parameter;
 
             public Name(Parameter parameter)
             {
                 this.parameter = parameter;
+
+                this.parameter.database_name = this.name = Utility.getdatabasename(parameter);
+
+                system.System.push("//database/name", this.name);
             }
         }
     }
@@ -75,7 +97,7 @@ public class DatabaseReference
             return token002.trim().toLowerCase();
         }
 
-        public static java.io.File getdatabasefile(Parameter parameter)
+        public static File getdatabasefile(Parameter parameter)
         {
             return new java.io.File(DatabaseConstants.baseURL+"\\"+parameter.database_name +".sql");
         }

@@ -1,17 +1,22 @@
 package components.persistence;
 
 import components.Component;
+import components.parser.handler.ParserCaseHandler;
+import components.persistence.handler.PersistenceCaseHandler;
+import javafx.util.converter.PercentageStringConverter;
+import structures.Queue;
 import structures.SQLString;
 import system.System;
 
 import java.util.LinkedList;
-import java.util.Queue;
 
 public class Persistence extends Component
 {
+    public PersistenceCaseHandler.CreateDatabase create_database;
+
     public ThreadImplementation thread = new ThreadImplementation();
 
-    public LinkedList<SQLString> queue = new LinkedList<SQLString>();
+    public Queue<SQLString> queue = new Queue<SQLString>();
 
     public Persistence()
     {
@@ -29,22 +34,18 @@ public class Persistence extends Component
         @Override
         public void run()
         {
-            LinkedList<SQLString> queue_in = (LinkedList<SQLString>)System.Memory.reference.pull("//persistence/queue");
+            Queue<SQLString> queue = (Queue<SQLString>)System.Memory.reference.pull("//persistence/queue");
 
             while (running)
             {
                 try
                 {
-                    if(queue_in.peek()==null)
+                    if(queue.peek()==null)
                     {
-                        Thread.sleep(25,0); continue;
+                        Thread.sleep(20 ,0); continue;
                     }
 
-                    String sqlString = queue_in.element().value;
-
-                    //
-
-                    //TODO statement type; do 16 cases then dump
+                    PersistenceCaseHandler handler = new PersistenceCaseHandler(queue);
                 }
                 catch(Exception e)
                 {

@@ -1,11 +1,15 @@
 package system;
 
+import components.persistence.Persistence;
 import file.DatabaseReader;
 import file.DatabaseWriter;
 import parameter.Parameter;
+import structures.Queue;
+import structures.SQLString;
 import structures.database.DatabaseReference;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class System
 {
@@ -31,7 +35,12 @@ public class System
 
         public void push(String name, Object object)
         {
-            this.map.put(name, object);
+             this.map.put(name, object);
+        }
+
+        public Boolean non_null(String name)
+        {
+            return Memory.reference.pull(name)==null;
         }
 
         public Boolean exists(String name) throws Exception
@@ -42,6 +51,27 @@ public class System
 
             return false;
         }
+
+        public Boolean exists(String name, String exception) throws Exception
+        {
+            boolean result = Memory.reference.pull(name)==null;
+
+            if(result==true) throw new Exception(exception);
+
+            return false;
+        }
+    }
+
+    public static void persist(Parameter parameter, String exception)
+    {
+        Persistence persistence = (Persistence)System.pull("//persistence");
+
+        persistence.queue.add(new SQLString(parameter.sqlstring));
+    }
+
+    public static Boolean non_null(String name, String exception)
+    {
+        return Memory.reference.non_null(name);
     }
 
     public static Boolean touch(String name) throws Exception

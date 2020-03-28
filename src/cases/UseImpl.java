@@ -71,6 +71,10 @@ public class UseImpl extends UseCase
             System.push("//database/name", new DatabaseReference.Reference.Name(parameter));
 
             System.push("//database/file", new DatabaseReference.Reference.File(parameter));
+
+            //
+
+
         }
     }
 
@@ -79,6 +83,16 @@ public class UseImpl extends UseCase
         public TaskRunner(Parameter parameter) throws Exception
         {
             System.touch("//database");
+
+            System.touch("//database/name");
+
+            System.touch("//database/file");
+
+            //
+
+            DatabaseReference.Reference.Name name = (DatabaseReference.Reference.Name)System.pull("//database/name");
+
+            System.non_null(name.name,"<Name was not set>");
 
             java.lang.System.out.println("Database <" + parameter.database_name + "> selected.");
         }

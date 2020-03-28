@@ -1,6 +1,7 @@
 package cases;
 
 import parameter.Parameter;
+import structures.database.DatabaseReference;
 import system.System;
 
 public class CreateDatabaseImpl extends UseCase
@@ -24,7 +25,8 @@ public class CreateDatabaseImpl extends UseCase
         //
 
         try
-        {   this.step001 = new CreateDatabaseImpl_Step001(this.parameter);
+        {
+            this.step001 = new CreateDatabaseImpl_Step001(this.parameter);
 
             this.step002 = new CreateDatabaseImpl_Step002(this.parameter);
 
@@ -40,7 +42,7 @@ public class CreateDatabaseImpl extends UseCase
     {
         public CreateDatabaseImpl_Step001(Parameter parameter) throws Exception
         {
-            System.Memory.reference.push("//step001", new UseImpl.PreConditionRunner(parameter));
+            System.Memory.reference.push("//step001", new PreConditionRunner(parameter));
         }
     }
 
@@ -48,7 +50,7 @@ public class CreateDatabaseImpl extends UseCase
     {
         public CreateDatabaseImpl_Step002(Parameter parameter) throws Exception
         {
-            System.Memory.reference.push("//step002", new UseImpl.TaskRunner(parameter));
+            System.Memory.reference.push("//step002", new TaskRunner(parameter));
         }
     }
 
@@ -56,7 +58,7 @@ public class CreateDatabaseImpl extends UseCase
     {
         public CreateDatabaseImpl_Step003(Parameter parameter) throws Exception
         {
-            System.Memory.reference.push("//step003", new UseImpl.PostConditionRunner(parameter));
+            System.Memory.reference.push("//step003", new PostConditionRunner(parameter));
         }
     }
 
@@ -64,7 +66,12 @@ public class CreateDatabaseImpl extends UseCase
     {
         public PreConditionRunner(Parameter parameter) throws Exception
         {
-            System.touch("//database");
+            try
+            { System.touch("//database"); }
+            catch (Exception e)
+            {
+                System.push("//database", new DatabaseReference.Reference(parameter));
+            }
         }
     }
 
@@ -72,6 +79,8 @@ public class CreateDatabaseImpl extends UseCase
     {
         public TaskRunner(Parameter parameter) throws Exception
         {
+            System.persist(parameter, "Unable to create database <"+parameter.database_name+">");
+
             java.lang.System.out.println("Database <" + parameter.database_name + "> selected.");
         }
     }

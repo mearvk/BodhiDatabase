@@ -1,4 +1,4 @@
-package structures.database.handler;
+package components.persistence.handler;
 
 import file.DatabaseReader;
 import file.DatabaseWriter;
