@@ -1,33 +1,43 @@
 package components.database;
 
-import structures.database.handler.DatabaseHandler;
+import components.Component;
+import structures.SQLString;
 import parameter.Parameter;
+import structures.database.DatabaseReference;
 
-import java.io.File;
+import java.util.LinkedList;
 
-public class Database
+public class Database extends Component
 {
-    public String name;
+    public DatabaseReference.Reference reference;
 
-    public String sqlstring;
+    public ThreadImplementation thread = new ThreadImplementation();
 
-    public static Database database;
+    public LinkedList<SQLString> queue = new LinkedList<SQLString>();
 
-    public File file;
+    public Database()
+    {
 
-    public DatabaseHandler handler;
+    }
 
     public Database(Parameter parameter)
     {
-        this.file = parameter.database_file;
 
-        this.name = parameter.database_name;
-
-        //this.handler = new DatabaseHandler();
     }
 
-    public Database(String sqlstring)
+    public Database(String bodhi)
     {
-        this.sqlstring = sqlstring;
+
+    }
+
+    public static class ThreadImplementation extends Thread
+    {
+        public Boolean running = true;
+
+        @Override
+        public void run()
+        {
+
+        }
     }
 }

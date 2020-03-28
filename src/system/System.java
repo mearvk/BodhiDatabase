@@ -3,8 +3,7 @@ package system;
 import file.DatabaseReader;
 import file.DatabaseWriter;
 import parameter.Parameter;
-import structures.database.Database;
-import structures.database.handler.DatabaseHandler;
+import structures.database.DatabaseReference;
 
 import java.util.HashMap;
 
@@ -69,7 +68,7 @@ public class System
     {
         public static DatabaseHandler reference = new DatabaseHandler();
 
-        public Database database;
+        public DatabaseReference database;
 
         public DatabaseWriter writer;
 
@@ -77,7 +76,7 @@ public class System
 
         public DatabaseHandler()
         {
-            Database database = (Database)System.pull("//database");
+            DatabaseReference database = (DatabaseReference)System.pull("//database");
 
             this.writer = new DatabaseWriter(database);
 

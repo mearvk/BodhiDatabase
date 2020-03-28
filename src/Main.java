@@ -29,6 +29,8 @@ public class Main
 
         builder.builder_step005 = new SQLBuilder.Builder_Step005();    //step 5. <terminal> component
 
+        builder.builder_step006 = new SQLBuilder.Builder_Step006();    //step 6. <database> component
+
         //
 
 

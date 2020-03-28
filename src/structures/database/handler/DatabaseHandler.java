@@ -3,7 +3,7 @@ package structures.database.handler;
 import file.DatabaseReader;
 import file.DatabaseWriter;
 import parameter.Parameter;
-import structures.database.Database;
+import structures.database.DatabaseReference;
 import system.System;
 
 public class DatabaseHandler
@@ -14,7 +14,7 @@ public class DatabaseHandler
 
     public DatabaseHandler(Parameter parameter)
     {
-        Database database = (Database)System.Memory.reference.pull("//database");
+        DatabaseReference database = (DatabaseReference)System.Memory.reference.pull("//database");
 
         this.writer = new DatabaseWriter(database);
 

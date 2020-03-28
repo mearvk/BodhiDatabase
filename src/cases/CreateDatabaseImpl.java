@@ -1,14 +1,7 @@
 package cases;
 
-import constants.DatabaseConstants;
 import parameter.Parameter;
-import structures.database.Database;
 import system.System;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.util.StringTokenizer;
 
 public class CreateDatabaseImpl extends UseCase
 {

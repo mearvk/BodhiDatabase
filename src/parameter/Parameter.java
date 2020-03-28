@@ -1,7 +1,7 @@
 package parameter;
 
 import cases.UseCase;
-import structures.database.Database;
+import structures.database.DatabaseReference;
 
 import java.io.File;
 
@@ -19,7 +19,7 @@ public class Parameter
 
     public File database_file;
 
-    public Database database;
+    public DatabaseReference database;
 
     public Parameter(UseCase parent, String sqlString)
     {

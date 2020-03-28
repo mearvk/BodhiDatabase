@@ -1,7 +1,7 @@
 package file;
 
 import parameter.Parameter;
-import structures.database.Database;
+import structures.database.DatabaseReference;
 import structures.results.Result;
 
 import java.io.File;
@@ -11,9 +11,9 @@ public class DatabaseReader
 {
     public File file;
 
-    public Database database;
+    public DatabaseReference database;
 
-    public DatabaseReader(Database database)
+    public DatabaseReader(DatabaseReference database)
     {
         this.database = database;
     }

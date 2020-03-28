@@ -1,11 +1,11 @@
 package file;
 
 import parameter.Parameter;
-import structures.database.Database;
+import structures.database.DatabaseReference;
 
 public class DatabaseWriter
 {
-    public Database database;
+    public DatabaseReference database;
 
     public Parameter parameter;
 
@@ -13,7 +13,7 @@ public class DatabaseWriter
 
     public static final Integer DATABASE = 1;
 
-    public DatabaseWriter(Database database)
+    public DatabaseWriter(DatabaseReference database)
     {
         this.database = database;
     }

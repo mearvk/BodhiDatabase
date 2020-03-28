@@ -1,14 +1,8 @@
 package cases;
 
-import constants.DatabaseConstants;
 import parameter.Parameter;
-import structures.database.Database;
-import structures.database.DatabaseFile;
-import structures.database.DatabaseName;
+import structures.database.DatabaseReference;
 import system.System;
-
-import java.io.File;
-import java.util.StringTokenizer;
 
 public class UseImpl extends UseCase
 {
@@ -68,47 +62,15 @@ public class UseImpl extends UseCase
         }
     }
 
-    public static class Utility
-    {
-        UseImpl parent;
-
-        public String sqlstring;
-
-        public Utility(UseImpl parent, String sqlstring)
-        {
-            this.parent = parent;
-
-            this.sqlstring = sqlstring;
-        }
-
-        public static String getdatabasename(Parameter parameter)
-        {
-            String sqlstring = parameter.sqlstring;
-
-            StringTokenizer tokenizer = new StringTokenizer(sqlstring, " ");
-
-            String token001 = tokenizer.nextToken();
-
-            String token002 = tokenizer.nextToken();
-
-            return token002.trim().toLowerCase();
-        }
-
-        public static File getdatabasefile(Parameter parameter)
-        {
-            return new File(DatabaseConstants.baseURL+"\\"+parameter.database_name +".sql");
-        }
-    }
-
     public static class PreConditionRunner
     {
         public PreConditionRunner(Parameter parameter) throws Exception
         {
-            System.push("//database", new Database(parameter));
+            System.push("//database", new DatabaseReference.Reference(parameter));
 
-            System.push("//database/name", new DatabaseName(parameter));
+            System.push("//database/name", new DatabaseReference.Reference.Name(parameter));
 
-            System.push("//database/file", new DatabaseFile(parameter));
+            System.push("//database/file", new DatabaseReference.Reference.File(parameter));
         }
     }
 

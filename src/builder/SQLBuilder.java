@@ -5,6 +5,7 @@ import components.parser.Parser;
 import components.persistence.Persistence;
 import components.processor.Processor;
 import components.terminal.Terminal;
+import components.database.Database;
 
 public class SQLBuilder
 {
@@ -17,6 +18,8 @@ public class SQLBuilder
     public Builder_Step004 builder_step004;
 
     public Builder_Step005 builder_step005;
+
+    public Builder_Step006 builder_step006;
 
 
     public static class Builder_Step001
@@ -69,4 +72,13 @@ public class SQLBuilder
         }
     }
 
+    public static class Builder_Step006
+    {
+        public Builder_Step006()
+        {
+            Database database = new Database();
+
+            database.thread.start();
+        }
+    }
 }
