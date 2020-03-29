@@ -40,7 +40,7 @@ public class TerminalComponent extends Component
         @Override
         public void run()
         {
-            Queue<SQLString> queue = (Queue<SQLString>) System.pull("//terminal/queue");
+            Queue<SQLString> queue = (Queue<SQLString>) System.pull("//terminal/");
 
             while (running)
             {
@@ -53,7 +53,7 @@ public class TerminalComponent extends Component
                         continue;
                     }
 
-                    TerminalCaseHandler handler = new TerminalCaseHandler(queue);
+                    TerminalCaseHandler handler = new TerminalCaseHandler(queue.dequeue());
                 }
                 catch(Exception e)
                 {

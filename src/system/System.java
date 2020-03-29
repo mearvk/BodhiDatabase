@@ -6,6 +6,8 @@ import file.DatabaseWriter;
 import parameter.Parameter;
 import structures.SQLString;
 import structures.database.DatabaseReference;
+import utility.validation.Validation;
+import utility.validation.ValidationHandler;
 
 import java.util.HashMap;
 
@@ -14,6 +16,8 @@ public class System
     public Memory memory = new Memory();
 
     public static DatabaseHandler database = new DatabaseHandler();
+
+    public static ValidationHandler validation = new ValidationHandler();
 
     public static class Memory
     {
@@ -77,6 +81,11 @@ public class System
         return Memory.reference.exists(name);
     }
 
+    public static void validate(String name, Class<?> klass) throws Exception
+    {
+        Validation.reference.push(name, klass);
+    }
+
     public static Boolean put(String name) throws Exception
     {
         return Memory.reference.exists(name);
@@ -90,6 +99,11 @@ public class System
     public static void push(String name, Object object)
     {
         Memory.reference.push(name, object);
+    }
+
+    public static Object validate(String name)
+    {
+        return Memory.reference.pull(name);
     }
 
     public static class DatabaseHandler

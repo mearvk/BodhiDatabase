@@ -2,11 +2,12 @@ package components.terminal.handler;
 
 import structures.Queue;
 import structures.SQLString;
+import system.System;
 
 public class TerminalCaseHandler
 {
-    public TerminalCaseHandler(Queue<SQLString> queue)
+    public TerminalCaseHandler(SQLString string)
     {
-
+        System.validation.validate(string.value, SQLString.class);
     }
 }
