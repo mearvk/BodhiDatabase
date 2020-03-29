@@ -18,9 +18,9 @@ public class TerminalComponent extends Component
 {
     public ThreadImplementation thread = new ThreadImplementation();
 
-    public UIImplementation ui = new UIImplementation();
+    public UserInterface userinterface = new UserInterface();
 
-    public LinkedList<SQLString> queue = new LinkedList<SQLString>();
+    public Queue<SQLString> queue = new Queue<SQLString>();
 
     public TerminalComponent()
     {
@@ -30,7 +30,7 @@ public class TerminalComponent extends Component
 
         System.Memory.reference.push("//terminal/thread", this.thread);
 
-        System.Memory.reference.push("//terminal/ui", this.ui);
+        System.Memory.reference.push("//terminal/userinterface", this.userinterface);
     }
 
     public static class ThreadImplementation extends Thread
@@ -40,7 +40,7 @@ public class TerminalComponent extends Component
         @Override
         public void run()
         {
-            Queue<SQLString> queue = (Queue<SQLString>) System.pull("//terminal/");
+            Queue<SQLString> queue = (Queue<SQLString>)System.pull("//terminal/queue");
 
             while (running)
             {
@@ -63,11 +63,11 @@ public class TerminalComponent extends Component
         }
     }
 
-    public static class UIImplementation
+    public static class UserInterface
     {
         public Builder builder = new Builder(this);
 
-        public UIImplementation()
+        public UserInterface()
         {
             builder.step001 = new Builder.Step001(this.builder);
 
@@ -92,7 +92,7 @@ public class TerminalComponent extends Component
 
             //
 
-            public UIImplementation reference;
+            public UserInterface reference;
 
             public Step001 step001;
 
@@ -102,7 +102,7 @@ public class TerminalComponent extends Component
 
             //
 
-            public Builder(UIImplementation reference)
+            public Builder(UserInterface reference)
             {
                 this.reference = reference;
             }
@@ -163,15 +163,15 @@ public class TerminalComponent extends Component
 
                     builder.jpanel.setBackground(Color.DARK_GRAY);
 
-                    builder.jpanel.setDoubleBuffered(true);
+                    //builder.jpanel.setDoubleBuffered(true);
 
                     //
 
                     builder.textpane.setBackground(Color.DARK_GRAY);
 
-                    builder.textpane.setDoubleBuffered(true);
+                    //builder.textpane.setDoubleBuffered(true);
 
-                    builder.textpane.setText("C:>");
+                    //builder.textpane.setText("C:>");
 
                     //
 

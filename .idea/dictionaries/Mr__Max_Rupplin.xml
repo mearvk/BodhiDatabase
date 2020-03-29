@@ -5,6 +5,7 @@
       <w>createindex</w>
       <w>createtable</w>
       <w>createtableimpl</w>
+      <w>userinterface</w>
     </words>
   </dictionary>
 </component>

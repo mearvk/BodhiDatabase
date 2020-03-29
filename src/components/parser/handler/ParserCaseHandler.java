@@ -33,49 +33,49 @@ public class ParserCaseHandler
 
     public ParserCaseHandler(LinkedList<SQLString> queue)
     {
-        String sqlString = queue.poll().value.toUpperCase();
+        String sqlstring = queue.poll().value.toUpperCase();
 
         try
         {
-            if (sqlString.startsWith("CREATE DATABASE"))
+            if (sqlstring.startsWith("CREATE DATABASE"))
             {
-                this.create_database = new ParserCaseHandler.CreateDatabase(sqlString);
+                this.create_database = new ParserCaseHandler.CreateDatabase(sqlstring);
             }
-            else if (sqlString.startsWith("CREATE INDEX"))
+            else if (sqlstring.startsWith("CREATE INDEX"))
             {
-                this.create_index = new ParserCaseHandler.CreateIndex(sqlString);
+                this.create_index = new ParserCaseHandler.CreateIndex(sqlstring);
             }
-            else if (sqlString.startsWith("CREATE TABLE"))
+            else if (sqlstring.startsWith("CREATE TABLE"))
             {
-                this.create_table = new ParserCaseHandler.CreateTable(sqlString);
+                this.create_table = new ParserCaseHandler.CreateTable(sqlstring);
             }
-            else if (sqlString.startsWith("DELETE FROM"))
+            else if (sqlstring.startsWith("DELETE FROM"))
             {
-                this.delete_from = new ParserCaseHandler.DeleteFrom(sqlString);
+                this.delete_from = new ParserCaseHandler.DeleteFrom(sqlstring);
             }
-            else if (sqlString.startsWith("DROP COLUMN"))
+            else if (sqlstring.startsWith("DROP COLUMN"))
             {
-                this.drop_column = new ParserCaseHandler.DropColumn(sqlString);
+                this.drop_column = new ParserCaseHandler.DropColumn(sqlstring);
             }
-            else if (sqlString.startsWith("DROP DATABASE"))
+            else if (sqlstring.startsWith("DROP DATABASE"))
             {
-                this.drop_database = new ParserCaseHandler.DropDatabase(sqlString);
+                this.drop_database = new ParserCaseHandler.DropDatabase(sqlstring);
             }
-            else if (sqlString.startsWith("INSERT INTO"))
+            else if (sqlstring.startsWith("INSERT INTO"))
             {
-                this.insert_into = new ParserCaseHandler.InsertInto(sqlString);
+                this.insert_into = new ParserCaseHandler.InsertInto(sqlstring);
             }
-            else if (sqlString.startsWith("SELECT"))
+            else if (sqlstring.startsWith("SELECT"))
             {
-                this.select = new ParserCaseHandler.Select(sqlString);
+                this.select = new ParserCaseHandler.Select(sqlstring);
             }
-            else if (sqlString.startsWith("USE"))
+            else if (sqlstring.startsWith("USE"))
             {
-                this.use = new ParserCaseHandler.Use(sqlString);
+                this.use = new ParserCaseHandler.Use(sqlstring);
             }
-            else if (sqlString.startsWith("UPDATE"))
+            else if (sqlstring.startsWith("UPDATE"))
             {
-                this.update = new ParserCaseHandler.Update(sqlString);
+                this.update = new ParserCaseHandler.Update(sqlstring);
             }
             else
             {
