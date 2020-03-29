@@ -2,9 +2,11 @@ package cases;
 
 import constants.DatabaseConstants;
 import contexts.CreateDatabaseImplContext;
+import exceptions.DatabaseAlreadyExistsException;
 import parameter.Parameter;
 import system.System;
 
+import java.io.File;
 import java.util.StringTokenizer;
 
 public class CreateDatabaseImpl extends UseCase
@@ -34,6 +36,10 @@ public class CreateDatabaseImpl extends UseCase
             this.step002 = new CreateDatabaseImpl_Step002(this.parameter);
 
             this.step003 = new CreateDatabaseImpl_Step003(this.parameter);
+        }
+        catch (DatabaseAlreadyExistsException daee)
+        {
+            java.lang.System.out.println(daee.getMessage());
         }
         catch (Exception e)
         {
@@ -69,7 +75,7 @@ public class CreateDatabaseImpl extends UseCase
     {
         public PreConditionRunner(Parameter parameter) throws Exception
         {
-            System.touch("//database", parameter, CreateDatabaseImplContext.class);
+            System.touch("//database", parameter, CreateDatabaseImplContext.PreConditionRunnerContext.class);
         }
     }
 
@@ -77,7 +83,7 @@ public class CreateDatabaseImpl extends UseCase
     {
         public TaskRunner(Parameter parameter) throws Exception
         {
-            System.processor.set("//database", parameter, CreateDatabaseImplContext.class);
+            System.processor.set("//database", parameter, CreateDatabaseImplContext.TaskRunnerContext.class);
         }
     }
 
@@ -85,7 +91,7 @@ public class CreateDatabaseImpl extends UseCase
     {
         public PostConditionRunner(Parameter parameter) throws Exception
         {
-            System.validator.touch("//database", parameter, CreateDatabaseImplContext.class);
+            System.validator.touch("//database", parameter, CreateDatabaseImplContext.PostConditionRunnerContext.class);
         }
     }
 
@@ -98,15 +104,33 @@ public class CreateDatabaseImpl extends UseCase
 
         public static String getDatabaseName(Parameter parameter)
         {
-            String sqlstring = parameter.sqlstring;
+            var sqlstring = parameter.sqlstring;
 
-            StringTokenizer tokenizer = new StringTokenizer(sqlstring, " ");
+            var tokenizer = new StringTokenizer(sqlstring, " ");
 
-            String token001 = tokenizer.nextToken().toLowerCase();
+            var token001 = tokenizer.nextToken().toLowerCase();
 
-            String token002 = tokenizer.nextToken().toLowerCase();
+            var token002 = tokenizer.nextToken().toLowerCase();
 
-            return token002;
+            var token003 = tokenizer.nextToken().toLowerCase();
+
+            return token003;
+        }
+
+        public static String[] getDatabaseNames(Parameter parameter)
+        {
+            var files = new File(DatabaseConstants.baseURL).listFiles();
+
+            var names = new String[files.length];
+
+            for(int i=0; i<files.length; i++)
+            {
+                StringTokenizer tokenizer = new StringTokenizer(files[i].getName(), ".");
+
+                names[i] = tokenizer.nextToken();
+            }
+
+            return names;
         }
     }
 }

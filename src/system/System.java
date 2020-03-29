@@ -1,10 +1,14 @@
 package system;
 
+import cases.CreateDatabaseImpl;
 import cases.UseImpl;
+import components.database.DatabaseComponent;
 import components.memory.Memory;
 import components.persistence.PersistenceComponent;
 import components.processor.ProcessorComponent;
+import contexts.CreateDatabaseImplContext;
 import contexts.UseImplContext;
+import exceptions.DatabaseAlreadyExistsException;
 import file.DatabaseReader;
 import file.DatabaseWriter;
 import parameter.Parameter;
@@ -27,13 +31,6 @@ public class System
     public System()
     {
         System.reference = this;
-    }
-
-    public static void persist(Parameter parameter)
-    {
-        PersistenceComponent persistenceComponent = (PersistenceComponent)System.pull("//persistence");
-
-        persistenceComponent.queue.add(new SQLString(parameter.sqlstring));
     }
 
     public static Boolean non_null(String name, String exception)
@@ -91,6 +88,30 @@ public class System
 
     public static Boolean touch(String bodhi, Parameter parameter, Class<?> klass) throws Exception
     {
+        if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImplContext.PreConditionRunnerContext.class))
+        {
+            var name = CreateDatabaseImpl.Utility.getDatabaseName(parameter);
+
+            var names = CreateDatabaseImpl.Utility.getDatabaseNames(parameter);
+
+            for(int i=0; i<names.length; i++)
+            {
+                if(names[i].equalsIgnoreCase(name)) throw new DatabaseAlreadyExistsException();
+            }
+
+            return true;
+        }
+
+        if(bodhi.equals("") && klass.isAssignableFrom(CreateDatabaseImplContext.TaskRunnerContext.class))
+        {
+
+        }
+
+        if(bodhi.equals("") && klass.isAssignableFrom(CreateDatabaseImplContext.PostConditionRunnerContext.class))
+        {
+
+        }
+
         return System.memory.exists(bodhi);
     }
 
@@ -148,8 +169,6 @@ public class System
 
     public static class DatabaseHandler
     {
-        public static DatabaseHandler reference = new DatabaseHandler();
-
         public DatabaseReference database;
 
         public DatabaseWriter writer;
