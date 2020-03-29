@@ -2,47 +2,38 @@ package components.database;
 
 import components.Component;
 import structures.SQLString;
-import parameter.Parameter;
-import structures.database.DatabaseReference;
-import structures.table.Table;
+import system.System;
 
 import java.util.LinkedList;
 
 public class DatabaseComponent extends Component
 {
-    public DatabaseReference.Reference reference;
+    public DatabaseComponent.Reference reference = new Reference();
 
-    public Table last_table;
+    public DatabaseComponent.Properties properties = new Properties();
 
-    public Table current_table;
-
-    public ThreadImplementation thread = new ThreadImplementation();
+    //public ThreadImplementation thread = new ThreadImplementation();
 
     public LinkedList<SQLString> queue = new LinkedList<SQLString>();
 
     public DatabaseComponent()
     {
+        System.Memory.reference.push("//database", this);
 
+        System.Memory.reference.push("//database/queue", this.queue);
+
+        System.Memory.reference.push("//database/properties", this.properties);
     }
 
-    public DatabaseComponent(Parameter parameter)
+    public static class Properties
     {
+        public String name;
 
+        public String usage;
     }
 
-    public DatabaseComponent(String bodhi)
+    public static class Reference
     {
 
-    }
-
-    public static class ThreadImplementation extends Thread
-    {
-        public Boolean running = true;
-
-        @Override
-        public void run()
-        {
-
-        }
     }
 }

@@ -12,7 +12,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 
 import java.awt.*;
-import java.util.LinkedList;
+
 
 public class TerminalComponent extends Component
 {

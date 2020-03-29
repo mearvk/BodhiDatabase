@@ -1,6 +1,9 @@
 package system;
 
+import cases.UseImpl;
 import components.persistence.PersistenceComponent;
+import context.Context;
+import context.UseImplContext;
 import file.DatabaseReader;
 import file.DatabaseWriter;
 import parameter.Parameter;
@@ -76,14 +79,48 @@ public class System
         return Memory.reference.non_null(name);
     }
 
+    public static void set(String string, Parameter parameter, Context context) throws Exception
+    {
+        if(string.equals("//parameter/name") && context instanceof UseImplContext)
+        {
+            parameter.name = UseImpl.Utility.getDatabaseName(parameter);
+        }
+        if(string.equals("//parameter/file"))
+        {
+            parameter.file = UseImpl.Utility.getDatabaseFile(parameter);
+        }
+    }
+
     public static Boolean touch(String name) throws Exception
     {
         return Memory.reference.exists(name);
     }
 
+    public static Boolean touch(String...names) throws Exception
+    {
+        Boolean result = true;
+
+        for(String name : names)
+        {
+            result = Memory.reference.exists(name) & result;
+        }
+
+        return result;
+    }
+
     public static void validate(String name, Class<?> klass) throws Exception
     {
         Validation.reference.push(name, klass);
+    }
+
+    public static void print(String value) throws Exception
+    {
+        java.lang.System.out.print(value);
+    }
+
+    public static void println(String value) throws Exception
+    {
+        java.lang.System.out.println(value);
     }
 
     public static Boolean put(String name) throws Exception

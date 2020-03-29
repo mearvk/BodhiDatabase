@@ -11,13 +11,13 @@ public class Parameter
 
     public String table_name = "";
 
-    public String database_name = "";
+    public String name = "";
 
     public String database_url = "";
 
     public UseCase parent;
 
-    public File database_file;
+    public File file;
 
     public DatabaseReference database;
 

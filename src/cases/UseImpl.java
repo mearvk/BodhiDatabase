@@ -1,8 +1,13 @@
 package cases;
 
+import components.database.DatabaseComponent;
+import constants.DatabaseConstants;
+import context.UseImplContext;
 import parameter.Parameter;
-import structures.database.DatabaseReference;
 import system.System;
+
+import java.io.File;
+import java.util.StringTokenizer;
 
 public class UseImpl extends UseCase
 {
@@ -66,11 +71,9 @@ public class UseImpl extends UseCase
     {
         public PreConditionRunner(Parameter parameter) throws Exception
         {
-            System.push("//database", new DatabaseReference.Reference(parameter));
+            parameter.name = Utility.getDatabaseName(parameter);
 
-            System.push("//database/name", new DatabaseReference.Reference.Name(parameter));
-
-            System.push("//database/file", new DatabaseReference.Reference.File(parameter));
+            parameter.file = Utility.getDatabaseFile(parameter);
         }
     }
 
@@ -78,19 +81,19 @@ public class UseImpl extends UseCase
     {
         public TaskRunner(Parameter parameter) throws Exception
         {
-            System.touch("//database");
-
-            System.touch("//database/name");
-
-            System.touch("//database/file");
+            System.touch("//database", "//database/properties/name", "//database/properties/file");
 
             //
 
-            DatabaseReference.Reference.Name name = (DatabaseReference.Reference.Name)System.pull("//database/name");
+            DatabaseComponent.Reference database = new DatabaseComponent.Reference();
 
-            System.non_null(name.name,"<Name was not set>");
+            System.push("//database", database);
 
-            java.lang.System.out.println("Database <" + parameter.database_name + "> selected.");
+            System.push("//database/properties/name", parameter.name);
+
+            System.push("//database/properties/file", parameter.file);
+
+            java.lang.System.out.println("Database <" + parameter.name + "> selected.");
         }
     }
 
@@ -98,7 +101,34 @@ public class UseImpl extends UseCase
     {
         public PostConditionRunner(Parameter parameter) throws Exception
         {
+            System.set("//parameter/name", parameter, new UseImplContext());
 
+            System.set("//parameter/file", parameter, new UseImplContext());
+
+            parameter.name = Utility.getDatabaseName(parameter);
+
+            parameter.file = Utility.getDatabaseFile(parameter);
+        }
+    }
+
+    public static class Utility
+    {
+        public static File getDatabaseFile(Parameter parameter)
+        {
+            return new File(DatabaseConstants.baseURL +"\\"+ parameter.name + ".sql");
+        }
+
+        public static String getDatabaseName(Parameter parameter)
+        {
+            String sqlString = parameter.sqlstring;
+
+            StringTokenizer tokenizer = new StringTokenizer(sqlString, " ");
+
+            String token001 = tokenizer.nextToken();
+
+            String token002 = tokenizer.nextToken();
+
+            return token002.toLowerCase();
         }
     }
 }

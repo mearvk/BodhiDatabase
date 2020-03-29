@@ -78,7 +78,7 @@ public class SQLBuilder
         {
             DatabaseComponent databaseComponent = new DatabaseComponent();
 
-            databaseComponent.thread.start();
+            //databaseComponent.thread.start();
         }
     }
 }

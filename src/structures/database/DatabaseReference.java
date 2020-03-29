@@ -47,7 +47,7 @@ public class DatabaseReference
             {
                 this.parameter = parameter;
 
-                this.file = parameter.database_file = Utility.getdatabasefile(parameter);
+                this.file = parameter.file = Utility.getdatabasefile(parameter);
 
                 system.System.push("//database/file", this.file);
             }
@@ -63,7 +63,7 @@ public class DatabaseReference
             {
                 this.parameter = parameter;
 
-                this.parameter.database_name = this.name = Utility.getdatabasename(parameter);
+                this.parameter.name = this.name = Utility.getdatabasename(parameter);
 
                 system.System.push("//database/name", this.name);
             }
@@ -98,7 +98,7 @@ public class DatabaseReference
 
         public static File getdatabasefile(Parameter parameter)
         {
-            return new java.io.File(DatabaseConstants.baseURL+"\\"+parameter.database_name +".sql");
+            return new java.io.File(DatabaseConstants.baseURL+"\\"+parameter.name +".sql");
         }
     }
 
