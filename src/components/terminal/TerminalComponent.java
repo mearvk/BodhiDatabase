@@ -18,9 +18,9 @@ public class TerminalComponent extends Component
 {
     public ThreadImplementation thread = new ThreadImplementation();
 
-    public UserInterface userinterface = new UserInterface();
-
     public Queue<SQLString> queue = new Queue<SQLString>();
+
+    public UserInterface userinterface = new UserInterface();
 
     public TerminalComponent()
     {

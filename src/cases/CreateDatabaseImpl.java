@@ -69,7 +69,7 @@ public class CreateDatabaseImpl extends UseCase
     {
         public PreConditionRunner(Parameter parameter) throws Exception
         {
-            System.validation.touch("//database", parameter, CreateDatabaseImplContext.class);
+            System.touch("//database", parameter, CreateDatabaseImplContext.class);
         }
     }
 
@@ -85,7 +85,7 @@ public class CreateDatabaseImpl extends UseCase
     {
         public PostConditionRunner(Parameter parameter) throws Exception
         {
-            boolean result = System.database.reader.database_exists(parameter);
+            System.validator.touch("//database", parameter, CreateDatabaseImplContext.class);
         }
     }
 

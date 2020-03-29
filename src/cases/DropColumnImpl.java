@@ -40,7 +40,7 @@ public class DropColumnImpl extends UseCase
     {
         public DropColumnImpl_Step001(Parameter parameter) throws Exception
         {
-            System.tattle("//database");
+            System.touch("//database");
         }
     }
 
@@ -56,7 +56,7 @@ public class DropColumnImpl extends UseCase
     {
         public DropColumnImpl_Step003(Parameter parameter) throws Exception
         {
-            System.tattle("//database");
+            System.touch("//database");
         }
     }
 }

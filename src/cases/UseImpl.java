@@ -88,11 +88,11 @@ public class UseImpl extends UseCase
 
             //
 
-            System.tattle("//database");
+            System.touch("//database");
 
-            System.tattle("//database/properties/name");
+            System.touch("//database/properties/name");
 
-            System.tattle("//database/properties/name");
+            System.touch("//database/properties/name");
         }
     }
 

@@ -4,8 +4,6 @@ import cases.UseImpl;
 import components.memory.Memory;
 import components.persistence.PersistenceComponent;
 import components.processor.ProcessorComponent;
-import constants.DatabaseConstants;
-import contexts.CreateDatabaseImplContext;
 import contexts.UseImplContext;
 import file.DatabaseReader;
 import file.DatabaseWriter;
@@ -22,7 +20,7 @@ public class System
 
     public static DatabaseHandler database = new DatabaseHandler();
 
-    public static ValidationComponent validation = new ValidationComponent();
+    public static ValidationComponent validator = new ValidationComponent();
 
     public static ProcessorComponent processor = new ProcessorComponent();
 
@@ -76,7 +74,7 @@ public class System
         }
     }
 
-    public static Boolean tattle(String name) throws Exception
+    public static Boolean touch(String name) throws Exception
     {
         return Memory.reference.exists(name);
     }
@@ -91,7 +89,12 @@ public class System
         return Memory.reference.exists(name);
     }
 
-    public static Boolean tattle(String...names) throws Exception
+    public static Boolean touch(String bodhi, Parameter parameter, Class<?> klass) throws Exception
+    {
+        return System.memory.exists(bodhi);
+    }
+
+    public static Boolean touch(String...names) throws Exception
     {
         Boolean result = true;
 

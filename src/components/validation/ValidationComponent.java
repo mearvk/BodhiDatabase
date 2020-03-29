@@ -1,14 +1,12 @@
 package components.validation;
 
+import contexts.CreateDatabaseImplContext;
 import parameter.Parameter;
-
-import java.util.HashMap;
+import system.System;
 
 public class ValidationComponent
 {
     public static ValidationComponent reference = new ValidationComponent();
-
-    public HashMap<String, Action> map = new HashMap<String, Action>();
 
     public ValidationComponent()
     {
@@ -17,31 +15,16 @@ public class ValidationComponent
 
     public ValidationComponent push(String lookup, Class<?> klass)
     {
-
         return this;
     }
 
-    public ValidationComponent push(String lookup, Action action)
+    public ValidationComponent touch(String bodhi, Parameter parameter, Class<?> klass) throws Exception
     {
-        if (lookup.equals("//validation/sql"))
+        if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImplContext.class))
         {
-
+            System.touch("//database");
         }
 
         return this;
-    }
-
-    public ValidationComponent touch(String name, Parameter parameter, Class<?> klass) throws Exception
-    {
-        return this;
-    }
-
-    public static class Action implements Runnable
-    {
-        @Override
-        public void run()
-        {
-
-        }
     }
 }
