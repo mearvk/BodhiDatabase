@@ -10,7 +10,7 @@ import system.System;
 
 import java.util.LinkedList;
 
-public class Persistence extends Component
+public class PersistenceComponent extends Component
 {
     public PersistenceCaseHandler.CreateDatabase create_database;
 
@@ -18,7 +18,7 @@ public class Persistence extends Component
 
     public Queue<SQLString> queue = new Queue<SQLString>();
 
-    public Persistence()
+    public PersistenceComponent()
     {
         System.Memory.reference.push("//persistence", this);
 

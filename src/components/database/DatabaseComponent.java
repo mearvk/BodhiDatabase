@@ -4,28 +4,33 @@ import components.Component;
 import structures.SQLString;
 import parameter.Parameter;
 import structures.database.DatabaseReference;
+import structures.table.Table;
 
 import java.util.LinkedList;
 
-public class Database extends Component
+public class DatabaseComponent extends Component
 {
     public DatabaseReference.Reference reference;
+
+    public Table last_table;
+
+    public Table current_table;
 
     public ThreadImplementation thread = new ThreadImplementation();
 
     public LinkedList<SQLString> queue = new LinkedList<SQLString>();
 
-    public Database()
+    public DatabaseComponent()
     {
 
     }
 
-    public Database(Parameter parameter)
+    public DatabaseComponent(Parameter parameter)
     {
 
     }
 
-    public Database(String bodhi)
+    public DatabaseComponent(String bodhi)
     {
 
     }

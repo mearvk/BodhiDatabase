@@ -1,11 +1,11 @@
 package builder;
 
-import components.network.Network;
-import components.parser.Parser;
-import components.persistence.Persistence;
-import components.processor.Processor;
-import components.terminal.Terminal;
-import components.database.Database;
+import components.network.NetworkComponent;
+import components.parser.ParserComponent;
+import components.persistence.PersistenceComponent;
+import components.processor.ProcessorComponent;
+import components.terminal.TerminalComponent;
+import components.database.DatabaseComponent;
 
 public class SQLBuilder
 {
@@ -26,7 +26,7 @@ public class SQLBuilder
     {
         public Builder_Step001()
         {
-            Parser parser = new Parser();
+            ParserComponent parser = new ParserComponent();
 
             parser.thread.start();
         }
@@ -36,9 +36,9 @@ public class SQLBuilder
     {
         public Builder_Step002()
         {
-            Persistence persistence = new Persistence();
+            PersistenceComponent persistenceComponent = new PersistenceComponent();
 
-            persistence.thread.start();
+            persistenceComponent.thread.start();
         }
     }
 
@@ -46,7 +46,7 @@ public class SQLBuilder
     {
         public Builder_Step003()
         {
-            Network network = new Network();
+            NetworkComponent network = new NetworkComponent();
 
             network.thread.start();
         }
@@ -56,9 +56,9 @@ public class SQLBuilder
     {
         public Builder_Step004()
         {
-            Processor processor = new Processor();
+            ProcessorComponent processorComponent = new ProcessorComponent();
 
-            processor.thread.start();
+            processorComponent.thread.start();
         }
     }
 
@@ -66,7 +66,7 @@ public class SQLBuilder
     {
         public Builder_Step005()
         {
-            Terminal terminal = new Terminal();
+            TerminalComponent terminal = new TerminalComponent();
 
             terminal.thread.start();
         }
@@ -76,9 +76,9 @@ public class SQLBuilder
     {
         public Builder_Step006()
         {
-            Database database = new Database();
+            DatabaseComponent databaseComponent = new DatabaseComponent();
 
-            database.thread.start();
+            databaseComponent.thread.start();
         }
     }
 }

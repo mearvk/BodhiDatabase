@@ -9,7 +9,6 @@ import java.util.StringTokenizer;
 
 public class DatabaseReference
 {
-
     public Parameter parameter;
 
     public Reference reference;

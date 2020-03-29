@@ -1,15 +1,13 @@
 package system;
 
-import components.persistence.Persistence;
+import components.persistence.PersistenceComponent;
 import file.DatabaseReader;
 import file.DatabaseWriter;
 import parameter.Parameter;
-import structures.Queue;
 import structures.SQLString;
 import structures.database.DatabaseReference;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 
 public class System
 {
@@ -64,9 +62,9 @@ public class System
 
     public static void persist(Parameter parameter)
     {
-        Persistence persistence = (Persistence)System.pull("//persistence");
+        PersistenceComponent persistenceComponent = (PersistenceComponent)System.pull("//persistence");
 
-        persistence.queue.add(new SQLString(parameter.sqlstring));
+        persistenceComponent.queue.add(new SQLString(parameter.sqlstring));
     }
 
     public static Boolean non_null(String name, String exception)
