@@ -1,5 +1,8 @@
 package cases;
 
+import components.database.DatabaseComponent;
+import contexts.CreateDatabaseImplContext;
+import contexts.UseImplContext;
 import parameter.Parameter;
 import system.System;
 
@@ -65,7 +68,29 @@ public class CreateDatabaseImpl extends UseCase
     {
         public PreConditionRunner(Parameter parameter) throws Exception
         {
-            boolean result = System.database.reader.database_exists(parameter);
+            System.set("//database", parameter, CreateDatabaseImplContext.class);
+
+            System.set("//database/properties/name", parameter, CreateDatabaseImplContext.class);
+
+            System.set("//database/properties/file", parameter, CreateDatabaseImplContext.class);
+
+            //
+
+            DatabaseComponent database;
+
+            database = (DatabaseComponent)System.pull("//database");
+
+            database.properties.name = parameter.name = (String) System.pull("//database/properties/name");
+
+            database.properties.file = parameter.file = (String) System.pull("//database/properties/file");
+
+            //
+
+            System.touch("//database");
+
+            System.touch("//database/properties/name");
+
+            System.touch("//database/properties/name");
         }
     }
 

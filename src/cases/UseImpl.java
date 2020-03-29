@@ -2,11 +2,10 @@ package cases;
 
 import components.database.DatabaseComponent;
 import constants.DatabaseConstants;
-import context.UseImplContext;
+import contexts.UseImplContext;
 import parameter.Parameter;
 import system.System;
 
-import java.io.File;
 import java.util.StringTokenizer;
 
 public class UseImpl extends UseCase
@@ -83,9 +82,17 @@ public class UseImpl extends UseCase
 
             database = (DatabaseComponent)System.pull("//database");
 
-            database.properties.name = parameter.name = (String) System.pull("//database/name");;
+            database.properties.name = parameter.name = (String) System.pull("//database/properties/name");
 
-            database.properties.file = parameter.file = (String) System.pull("//database/file");;
+            database.properties.file = parameter.file = (String) System.pull("//database/properties/file");
+
+            //
+
+            System.touch("//database");
+
+            System.touch("//database/properties/name");
+
+            System.touch("//database/properties/name");
         }
     }
 
@@ -94,6 +101,10 @@ public class UseImpl extends UseCase
         public TaskRunner(Parameter parameter) throws Exception
         {
             System.set("//database/selected", "//database", UseImplContext.class);
+
+            //
+
+            System.tprint("//database/selected");
         }
     }
 
@@ -114,15 +125,15 @@ public class UseImpl extends UseCase
 
         public static String getDatabaseName(Parameter parameter)
         {
-            String sqlString = parameter.sqlstring;
+            String sqlstring = parameter.sqlstring;
 
-            StringTokenizer tokenizer = new StringTokenizer(sqlString, " ");
+            StringTokenizer tokenizer = new StringTokenizer(sqlstring, " ");
 
-            String token001 = tokenizer.nextToken();
+            String token001 = tokenizer.nextToken().toLowerCase();
 
-            String token002 = tokenizer.nextToken();
+            String token002 = tokenizer.nextToken().toLowerCase();
 
-            return token002.toLowerCase();
+            return token002;
         }
     }
 }

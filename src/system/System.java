@@ -3,7 +3,7 @@ package system;
 import cases.UseImpl;
 import components.database.DatabaseComponent;
 import components.persistence.PersistenceComponent;
-import context.UseImplContext;
+import contexts.UseImplContext;
 import file.DatabaseReader;
 import file.DatabaseWriter;
 import parameter.Parameter;
@@ -99,18 +99,16 @@ public class System
             System.push(bodhi, "//database");
         }
 
-        if(bodhi.equals("//database/name") && klass.isAssignableFrom(UseImplContext.class))
+        if(bodhi.equals("//database/properties/name") && klass.isAssignableFrom(UseImplContext.class))
         {
             System.push(bodhi, UseImpl.Utility.getDatabaseName(parameter));
-
-            parameter.name = (String) System.pull(bodhi);
         }
 
-        if(bodhi.equals("//database/file") && klass.isAssignableFrom(UseImplContext.class))
+        if(bodhi.equals("//database/properties/file") && klass.isAssignableFrom(UseImplContext.class))
         {
-            System.push(bodhi, UseImpl.Utility.getDatabaseFile(parameter));
+            String name = parameter.name = (String)System.pull("//database/properties/name");
 
-            parameter.name = (String) System.pull(bodhi);
+            System.push(bodhi, UseImpl.Utility.getDatabaseFile(parameter));
         }
     }
 
@@ -119,8 +117,13 @@ public class System
         return Memory.reference.exists(name);
     }
 
-    public static Boolean touchp(String name) throws Exception
+    public static Boolean tprint(String name) throws Exception
     {
+        if(name.equals("//database/selected"))
+        {
+            java.lang.System.out.println("Database <"+(String)System.pull("//database/properties/name")+"> selected.");
+        }
+
         return Memory.reference.exists(name);
     }
 
@@ -168,7 +171,7 @@ public class System
 
     public static void push(String name, String target)
     {
-        Memory.reference.push(name, Memory.reference.pull(target));
+        Memory.reference.push(name, target);
     }
 
     public static Object validate(String name)
