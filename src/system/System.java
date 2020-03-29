@@ -1,71 +1,36 @@
 package system;
 
 import cases.UseImpl;
-import components.database.DatabaseComponent;
+import components.memory.Memory;
 import components.persistence.PersistenceComponent;
+import components.processor.ProcessorComponent;
+import constants.DatabaseConstants;
+import contexts.CreateDatabaseImplContext;
 import contexts.UseImplContext;
 import file.DatabaseReader;
 import file.DatabaseWriter;
 import parameter.Parameter;
 import structures.SQLString;
 import structures.database.DatabaseReference;
-import utility.validation.Validation;
-import utility.validation.ValidationHandler;
-
-import java.util.HashMap;
+import components.validation.ValidationComponent;
 
 public class System
 {
-    public Memory memory = new Memory();
+    public static System reference;
+
+    public static Memory memory = new Memory();
 
     public static DatabaseHandler database = new DatabaseHandler();
 
-    public static ValidationHandler validation = new ValidationHandler();
+    public static ValidationComponent validation = new ValidationComponent();
 
-    public static class Memory
+    public static ProcessorComponent processor = new ProcessorComponent();
+
+    public System()
     {
-        public static Memory reference = new Memory();
-
-        protected HashMap<String, Object> map = new HashMap();
-
-        public Memory()
-        {
-            Memory.reference = this;
-        }
-
-        public Object pull(String name)
-        {
-            return this.map.get(name);
-        }
-
-        public void push(String name, Object object)
-        {
-             this.map.put(name, object);
-        }
-
-        public Boolean non_null(String name)
-        {
-            return Memory.reference.pull(name)==null;
-        }
-
-        public Boolean exists(String name) throws Exception
-        {
-            boolean result = Memory.reference.pull(name)==null;
-
-            if(result==true) throw new Exception();
-
-            return false;
-        }
-
-        public Boolean exists(String name, String exception) throws Exception
-        {
-            boolean result = Memory.reference.pull(name)==null;
-
-            if(result==true) throw new Exception(exception);
-
-            return false;
-        }
+        System.reference = this;
     }
+
 
     public static void persist(Parameter parameter)
     {
@@ -91,7 +56,7 @@ public class System
     {
         if(bodhi.equals("//database") && klass.isAssignableFrom(UseImplContext.class))
         {
-            System.push(bodhi, new DatabaseComponent());
+            System.push(bodhi, "//database");
         }
 
         if(bodhi.equals("//database/selected")  && klass.isAssignableFrom(UseImplContext.class))
@@ -112,7 +77,7 @@ public class System
         }
     }
 
-    public static Boolean touch(String name) throws Exception
+    public static Boolean tattle(String name) throws Exception
     {
         return Memory.reference.exists(name);
     }
@@ -127,7 +92,7 @@ public class System
         return Memory.reference.exists(name);
     }
 
-    public static Boolean touch(String...names) throws Exception
+    public static Boolean tattle(String...names) throws Exception
     {
         Boolean result = true;
 
@@ -141,7 +106,7 @@ public class System
 
     public static void validate(String name, Class<?> klass) throws Exception
     {
-        Validation.reference.push(name, klass);
+        ValidationComponent.reference.push(name, klass);
     }
 
     public static void print(String value) throws Exception

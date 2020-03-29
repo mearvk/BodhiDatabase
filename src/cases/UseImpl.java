@@ -70,11 +70,11 @@ public class UseImpl extends UseCase
     {
         public PreConditionRunner(Parameter parameter) throws Exception
         {
-            System.set("//database", parameter, UseImplContext.class);
+            System.processor.set("//database", parameter, UseImplContext.class);
 
-            System.set("//database/properties/name", parameter, UseImplContext.class);
+            System.processor.set("//database/properties/name", parameter, UseImplContext.class);
 
-            System.set("//database/properties/file", parameter, UseImplContext.class);
+            System.processor.set("//database/properties/file", parameter, UseImplContext.class);
 
             //
 
@@ -88,11 +88,11 @@ public class UseImpl extends UseCase
 
             //
 
-            System.touch("//database");
+            System.tattle("//database");
 
-            System.touch("//database/properties/name");
+            System.tattle("//database/properties/name");
 
-            System.touch("//database/properties/name");
+            System.tattle("//database/properties/name");
         }
     }
 

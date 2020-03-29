@@ -42,7 +42,7 @@ public class InsertIntoImpl extends UseCase
     {
         public InsertIntoImpl_Step001(Parameter parameter) throws Exception
         {
-            System.touch("//database");
+            System.tattle("//database");
         }
     }
 
@@ -58,7 +58,7 @@ public class InsertIntoImpl extends UseCase
     {
         public InsertIntoImpl_Step003(Parameter parameter) throws Exception
         {
-            System.touch("//database");
+            System.tattle("//database");
         }
     }
 

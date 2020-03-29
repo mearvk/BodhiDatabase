@@ -24,13 +24,13 @@ public class TerminalComponent extends Component
 
     public TerminalComponent()
     {
-        System.Memory.reference.push("//terminal", this);
+        System.push("//terminal", this);
 
-        System.Memory.reference.push("//terminal/queue", this.queue);
+        System.push("//terminal/queue", this.queue);
 
-        System.Memory.reference.push("//terminal/thread", this.thread);
+        System.push("//terminal/thread", this.thread);
 
-        System.Memory.reference.push("//terminal/userinterface", this.userinterface);
+        System.push("//terminal/userinterface", this.userinterface);
     }
 
     public static class ThreadImplementation extends Thread

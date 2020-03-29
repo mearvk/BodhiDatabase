@@ -8,6 +8,6 @@ public class TerminalCaseHandler
 {
     public TerminalCaseHandler(SQLString string)
     {
-        System.validation.validate(string.value, SQLString.class);
+
     }
 }

@@ -1,11 +1,11 @@
 package components.processor;
 
 import components.Component;
+import parameter.Parameter;
 import structures.SQLString;
 import system.System;
 
 import java.util.LinkedList;
-import java.util.Queue;
 
 public class ProcessorComponent extends Component
 {
@@ -52,5 +52,10 @@ public class ProcessorComponent extends Component
                 }
             }
         }
+    }
+
+    public void set(String bodhi, Parameter parameter, Class<?> klass)
+    {
+
     }
 }

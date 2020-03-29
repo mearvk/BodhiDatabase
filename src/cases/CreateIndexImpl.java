@@ -40,7 +40,7 @@ public class CreateIndexImpl extends UseCase
     {
         public CreateIndexImpl_Step001(Parameter parameter) throws Exception
         {
-            System.touch("//database");
+            System.tattle("//database");
         }
     }
 
@@ -56,7 +56,7 @@ public class CreateIndexImpl extends UseCase
     {
         public CreateIndexImpl_Step003(Parameter parameter) throws Exception
         {
-            System.touch("//database");
+            System.tattle("//database");
         }
     }
 }
