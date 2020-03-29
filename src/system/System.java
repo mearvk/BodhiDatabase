@@ -1,6 +1,7 @@
 package system;
 
 import cases.UseImpl;
+import components.database.DatabaseComponent;
 import components.persistence.PersistenceComponent;
 import context.Context;
 import context.UseImplContext;
@@ -78,16 +79,26 @@ public class System
     {
         return Memory.reference.non_null(name);
     }
-
-    public static void set(String string, Parameter parameter, Context context) throws Exception
+    public static void set(String bodhi, Parameter parameter, Class klass) throws Exception
     {
-        if(string.equals("//parameter/name") && context instanceof UseImplContext)
+        if(bodhi.equals("//database") && klass.isAssignableFrom(UseImplContext.class))
         {
-            parameter.name = UseImpl.Utility.getDatabaseName(parameter);
+            System.push(bodhi, "//database");
         }
-        if(string.equals("//parameter/file"))
+
+        if(bodhi.equals("//database/selected")  && klass.isAssignableFrom(UseImplContext.class))
         {
-            parameter.file = UseImpl.Utility.getDatabaseFile(parameter);
+            System.push(bodhi, "//database");
+        }
+
+        if(bodhi.equals("//database/name") && klass.isAssignableFrom(UseImplContext.class))
+        {
+            System.push(bodhi, UseImpl.Utility.getDatabaseName(parameter));
+        }
+
+        if(bodhi.equals("//database/file") && klass.isAssignableFrom(UseImplContext.class))
+        {
+            System.push(bodhi, UseImpl.Utility.getDatabaseName(parameter));
         }
     }
 
@@ -136,6 +147,11 @@ public class System
     public static void push(String name, Object object)
     {
         Memory.reference.push(name, object);
+    }
+
+    public static void push(String name, String target)
+    {
+        Memory.reference.push(name, Memory.reference.pull(target));
     }
 
     public static Object validate(String name)

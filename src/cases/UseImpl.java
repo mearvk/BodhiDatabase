@@ -71,9 +71,11 @@ public class UseImpl extends UseCase
     {
         public PreConditionRunner(Parameter parameter) throws Exception
         {
-            parameter.name = Utility.getDatabaseName(parameter);
+            System.set("//database", parameter, UseImplContext.class);
 
-            parameter.file = Utility.getDatabaseFile(parameter);
+            System.set("//database/name", parameter, UseImplContext.class);
+
+            System.set("//database/file", parameter, UseImplContext.class);
         }
     }
 
@@ -81,17 +83,7 @@ public class UseImpl extends UseCase
     {
         public TaskRunner(Parameter parameter) throws Exception
         {
-            System.touch("//database", "//database/properties/name", "//database/properties/file");
-
-            //
-
-            DatabaseComponent.Reference database = new DatabaseComponent.Reference();
-
-            System.push("//database", database);
-
-            System.push("//database/properties/name", parameter.name);
-
-            System.push("//database/properties/file", parameter.file);
+            System.set("//database/select", parameter, UseImplContext.class);
 
             java.lang.System.out.println("Database <" + parameter.name + "> selected.");
         }
@@ -101,13 +93,7 @@ public class UseImpl extends UseCase
     {
         public PostConditionRunner(Parameter parameter) throws Exception
         {
-            System.set("//parameter/name", parameter, new UseImplContext());
 
-            System.set("//parameter/file", parameter, new UseImplContext());
-
-            parameter.name = Utility.getDatabaseName(parameter);
-
-            parameter.file = Utility.getDatabaseFile(parameter);
         }
     }
 
