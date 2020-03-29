@@ -17,7 +17,7 @@ public class Parameter
 
     public UseCase parent;
 
-    public File file;
+    public String file;
 
     public DatabaseReference database;
 

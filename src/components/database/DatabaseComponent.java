@@ -29,7 +29,7 @@ public class DatabaseComponent extends Component
     {
         public String name;
 
-        public String usage;
+        public String file;
     }
 
     public static class Reference

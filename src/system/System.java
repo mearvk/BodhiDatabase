@@ -3,7 +3,6 @@ package system;
 import cases.UseImpl;
 import components.database.DatabaseComponent;
 import components.persistence.PersistenceComponent;
-import context.Context;
 import context.UseImplContext;
 import file.DatabaseReader;
 import file.DatabaseWriter;
@@ -79,11 +78,20 @@ public class System
     {
         return Memory.reference.non_null(name);
     }
-    public static void set(String bodhi, Parameter parameter, Class klass) throws Exception
+
+    public static void set(String property, String ref, Class klass) throws Exception
+    {
+        if(property.equals("//database/selected")  && klass.isAssignableFrom(UseImplContext.class))
+        {
+            System.push(property, ref);
+        }
+    }
+
+    public static void set(String bodhi, Parameter parameter, Class<?> klass) throws Exception
     {
         if(bodhi.equals("//database") && klass.isAssignableFrom(UseImplContext.class))
         {
-            System.push(bodhi, "//database");
+            System.push(bodhi, new DatabaseComponent());
         }
 
         if(bodhi.equals("//database/selected")  && klass.isAssignableFrom(UseImplContext.class))
@@ -94,15 +102,24 @@ public class System
         if(bodhi.equals("//database/name") && klass.isAssignableFrom(UseImplContext.class))
         {
             System.push(bodhi, UseImpl.Utility.getDatabaseName(parameter));
+
+            parameter.name = (String) System.pull(bodhi);
         }
 
         if(bodhi.equals("//database/file") && klass.isAssignableFrom(UseImplContext.class))
         {
-            System.push(bodhi, UseImpl.Utility.getDatabaseName(parameter));
+            System.push(bodhi, UseImpl.Utility.getDatabaseFile(parameter));
+
+            parameter.name = (String) System.pull(bodhi);
         }
     }
 
     public static Boolean touch(String name) throws Exception
+    {
+        return Memory.reference.exists(name);
+    }
+
+    public static Boolean touchp(String name) throws Exception
     {
         return Memory.reference.exists(name);
     }

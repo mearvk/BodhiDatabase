@@ -47,7 +47,7 @@ public class DatabaseReference
             {
                 this.parameter = parameter;
 
-                this.file = parameter.file = Utility.getdatabasefile(parameter);
+                //this.file = parameter.file = Utility.getdatabasefile(parameter);
 
                 system.System.push("//database/file", this.file);
             }
