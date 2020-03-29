@@ -15,7 +15,7 @@ public class CreateTableImpl extends UseCase
 
     public CreateTableImpl(String sqlstring) throws Exception
     {
-        System.Memory.reference.push("//impl/createtable", this);
+        System.push("//impl/createtable", this);
 
         //
 

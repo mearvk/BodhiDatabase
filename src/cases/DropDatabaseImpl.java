@@ -17,7 +17,7 @@ public class DropDatabaseImpl extends UseCase
 
     public DropDatabaseImpl(String sqlString)
     {
-        System.Memory.reference.push("//impl/dropdatabase", this);
+        System.push("//impl/dropdatabase", this);
 
         //
 

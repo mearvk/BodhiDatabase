@@ -17,7 +17,7 @@ public class SelectImpl extends UseCase
 
     public SelectImpl(String sqlString)
     {
-        System.Memory.reference.push("//impl/select", this);
+        System.push("//impl/select", this);
 
         //
 

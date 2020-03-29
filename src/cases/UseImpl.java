@@ -20,7 +20,7 @@ public class UseImpl extends UseCase
 
     public UseImpl(String sqlString)
     {
-        System.Memory.reference.push("//impl/use", this);
+        System.push("//impl/use", this);
 
         //
 
@@ -46,7 +46,7 @@ public class UseImpl extends UseCase
     {
         public UseImpl_Step001(Parameter parameter) throws Exception
         {
-            System.Memory.reference.push("//step001", new PreConditionRunner(parameter));
+            System.push("//step001", new PreConditionRunner(parameter));
         }
     }
 
@@ -54,7 +54,7 @@ public class UseImpl extends UseCase
     {
         public UseImpl_Step002(Parameter parameter) throws Exception
         {
-            System.Memory.reference.push("//step002", new TaskRunner(parameter));
+            System.push("//step002", new TaskRunner(parameter));
         }
     }
 
@@ -62,7 +62,7 @@ public class UseImpl extends UseCase
     {
         public UseImpl_Step003(Parameter parameter) throws Exception
         {
-            System.Memory.reference.push("//step003", new PostConditionRunner(parameter));
+            System.push("//step003", new PostConditionRunner(parameter));
         }
     }
 

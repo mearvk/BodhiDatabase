@@ -14,11 +14,11 @@ public class ParserComponent extends Component
 
     public ParserComponent()
     {
-        System.Memory.reference.push("//parser", this);
+        System.push("//parser", this);
 
-        System.Memory.reference.push("//parser/queue", this.queue);
+        System.push("//parser/queue", this.queue);
 
-        System.Memory.reference.push("//parser/thread", this.thread);
+        System.push("//parser/thread", this.thread);
     }
 }
 

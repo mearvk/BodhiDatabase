@@ -14,7 +14,7 @@ public class DatabaseHandler
 
     public DatabaseHandler(Parameter parameter)
     {
-        DatabaseReference database = (DatabaseReference)System.Memory.reference.pull("//database");
+        DatabaseReference database = (DatabaseReference)System.pull("//database");
 
         this.writer = new DatabaseWriter(database);
 

@@ -18,11 +18,11 @@ public class DatabaseComponent extends Component
 
     public DatabaseComponent()
     {
-        System.Memory.reference.push("//database", this);
+        System.push("//database", this);
 
-        System.Memory.reference.push("//database/queue", this.queue);
+        System.push("//database/queue", this.queue);
 
-        System.Memory.reference.push("//database/properties", this.properties);
+        System.push("//database/properties", this.properties);
     }
 
     public static class Properties

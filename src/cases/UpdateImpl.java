@@ -18,7 +18,7 @@ public class UpdateImpl extends UseCase
 
     public UpdateImpl(String sqlString)
     {
-        System.Memory.reference.push("//impl/update", this);
+        System.push("//impl/update", this);
 
         //
 
@@ -78,7 +78,7 @@ public class UpdateImpl extends UseCase
 
         public static String getDatabaseName(Parameter parameter)
         {
-            DatabaseComponent databaseComponent = (DatabaseComponent)System.Memory.reference.pull("//database");
+            DatabaseComponent databaseComponent = (DatabaseComponent)System.pull("//database");
 
             return databaseComponent.name;
         }

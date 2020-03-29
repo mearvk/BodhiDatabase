@@ -17,7 +17,7 @@ public class InsertIntoImpl extends UseCase
 
     public InsertIntoImpl(String sqlString)
     {
-        System.Memory.reference.push("//impl/insertinto", this);
+        System.push("//impl/insertinto", this);
 
         //
 

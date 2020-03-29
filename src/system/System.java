@@ -31,7 +31,6 @@ public class System
         System.reference = this;
     }
 
-
     public static void persist(Parameter parameter)
     {
         PersistenceComponent persistenceComponent = (PersistenceComponent)System.pull("//persistence");

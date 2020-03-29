@@ -20,11 +20,11 @@ public class PersistenceComponent extends Component
 
     public PersistenceComponent()
     {
-        System.Memory.reference.push("//persistence", this);
+        System.push("//persistence", this);
 
-        System.Memory.reference.push("//persistence/queue", this.queue);
+        System.push("//persistence/queue", this.queue);
 
-        System.Memory.reference.push("//persistence/thread", this.thread);
+        System.push("//persistence/thread", this.thread);
     }
 
     public static class ThreadImplementation extends Thread
@@ -34,7 +34,7 @@ public class PersistenceComponent extends Component
         @Override
         public void run()
         {
-            Queue<SQLString> queue = (Queue<SQLString>)System.Memory.reference.pull("//persistence/queue");
+            Queue<SQLString> queue = (Queue<SQLString>)System.pull("//persistence/queue");
 
             while (running)
             {

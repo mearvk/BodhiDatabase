@@ -15,11 +15,11 @@ public class ProcessorComponent extends Component
 
     public ProcessorComponent()
     {
-        System.Memory.reference.push("//processor", this);
+        System.push("//processor", this);
 
-        System.Memory.reference.push("//processor/queue", this.queue);
+        System.push("//processor/queue", this.queue);
 
-        System.Memory.reference.push("//processor/thread", this.thread);
+        System.push("//processor/thread", this.thread);
     }
 
     public static class ThreadImplementation extends Thread
@@ -29,7 +29,7 @@ public class ProcessorComponent extends Component
         @Override
         public void run()
         {
-            LinkedList<SQLString> queue_in = (LinkedList<SQLString>)System.Memory.reference.pull("//processor/queue");
+            LinkedList<SQLString> queue_in = (LinkedList<SQLString>)System.pull("//processor/queue");
 
             while (running)
             {

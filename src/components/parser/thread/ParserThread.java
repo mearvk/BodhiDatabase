@@ -13,7 +13,7 @@ public class ParserThread extends Thread
     @Override
     public void run()
     {
-        LinkedList<SQLString> queue = (LinkedList<SQLString>) System.Memory.reference.pull("//parser/queue");
+        LinkedList<SQLString> queue = (LinkedList<SQLString>) System.pull("//parser/queue");
 
         while (running)
         {

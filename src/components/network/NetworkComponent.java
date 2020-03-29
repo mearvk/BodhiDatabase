@@ -14,11 +14,11 @@ public class NetworkComponent extends Component
 
     public NetworkComponent()
     {
-        System.Memory.reference.push("//network", this);
+        System.push("//network", this);
 
-        System.Memory.reference.push("//network/queue", this.queue);
+        System.push("//network/queue", this.queue);
 
-        System.Memory.reference.push("//network/thread", this.thread);
+        System.push("//network/thread", this.thread);
     }
 
     public static class ThreadImplementation extends Thread
@@ -28,7 +28,7 @@ public class NetworkComponent extends Component
         @Override
         public void run()
         {
-            LinkedList<SQLString> queue_in = (LinkedList<SQLString>)System.Memory.reference.pull("//network/queue");
+            LinkedList<SQLString> queue_in = (LinkedList<SQLString>)System.pull("//network/queue");
 
             while (running)
             {

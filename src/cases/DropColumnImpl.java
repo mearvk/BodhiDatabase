@@ -15,7 +15,7 @@ public class DropColumnImpl extends UseCase
 
     public DropColumnImpl(String sqlString)
     {
-        System.Memory.reference.push("//impl/dropcolumn", this);
+        System.push("//impl/dropcolumn", this);
 
         //
 
