@@ -34,7 +34,7 @@ public class Main
         }
         catch (Exception e)
         {
-
+            java.lang.System.exit(0);
         }
 
         //

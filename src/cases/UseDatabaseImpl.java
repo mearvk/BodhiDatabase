@@ -20,10 +20,6 @@ public class UseDatabaseImpl extends UseCase
 
     public UseDatabaseImpl(String sqlString) throws Exception
     {
-        System.push("//impl/use", this);
-
-        //
-
         this.parameter = new Parameter(this, sqlString);
 
         //
@@ -46,7 +42,7 @@ public class UseDatabaseImpl extends UseCase
     {
         public UseImpl_Step001(Parameter parameter) throws Exception
         {
-            System.push("//step001", new PreConditionRunner(parameter));
+            System.push("//step001", new PreconditionCheck(parameter));
         }
     }
 
@@ -62,37 +58,15 @@ public class UseDatabaseImpl extends UseCase
     {
         public UseImpl_Step003(Parameter parameter) throws Exception
         {
-            System.push("//step003", new PostConditionRunner(parameter));
+            System.push("//step003", new PostconditionCheck(parameter));
         }
     }
 
-    public static class PreConditionRunner
+    public static class PreconditionCheck
     {
-        public PreConditionRunner(Parameter parameter) throws Exception
+        public PreconditionCheck(Parameter parameter) throws Exception
         {
-            System.processor.set("//database", parameter, UseImplContext.class);
-
-            System.processor.set("//database/properties/name", parameter, UseImplContext.class);
-
-            System.processor.set("//database/properties/file", parameter, UseImplContext.class);
-
-            //
-
-            DatabaseComponent database;
-
-            database = (DatabaseComponent)System.pull("//database");
-
-            database.properties.name = parameter.name = (String) System.pull("//database/properties/name");
-
-            database.properties.file = parameter.file = (String) System.pull("//database/properties/file");
-
-            //
-
-            System.touch("//database");
-
-            System.touch("//database/properties/name");
-
-            System.touch("//database/properties/name");
+            return;
         }
     }
 
@@ -100,17 +74,13 @@ public class UseDatabaseImpl extends UseCase
     {
         public TaskRunner(Parameter parameter) throws Exception
         {
-            System.set("//database/selected", "//database", UseImplContext.class);
-
-            //
-
-            System.touch_print("//database/selected");
+            return;
         }
     }
 
-    public static class PostConditionRunner
+    public static class PostconditionCheck
     {
-        public PostConditionRunner(Parameter parameter) throws Exception
+        public PostconditionCheck(Parameter parameter) throws Exception
         {
             return;
         }

@@ -7,29 +7,7 @@ import java.util.LinkedList;
 
 public class ParserCaseHandler
 {
-    public ParserCaseHandler.CreateDatabase create_database;
-
-    public ParserCaseHandler.CreateIndex create_index;
-
-    public ParserCaseHandler.CreateTable create_table;
-
-    public ParserCaseHandler.DeleteFrom delete_from;
-
-    public ParserCaseHandler.DropColumn drop_column;
-
-    public ParserCaseHandler.DropDatabase drop_database;
-
-    public ParserCaseHandler.InsertInto insert_into;
-
-    public ParserCaseHandler.Select select;
-
-    public ParserCaseHandler.Update update;
-
-    public ParserCaseHandler.Use use;
-
     public ParserCaseHandler.Unknown unknown;
-
-    //
 
     public ParserCaseHandler(LinkedList<SQLString> queue)
     {
@@ -39,43 +17,43 @@ public class ParserCaseHandler
         {
             if (sqlstring.startsWith("CREATE DATABASE"))
             {
-                this.create_database = new ParserCaseHandler.CreateDatabase(sqlstring);
+                new ParserCaseHandler.CreateDatabase(sqlstring);
             }
             else if (sqlstring.startsWith("CREATE INDEX"))
             {
-                this.create_index = new ParserCaseHandler.CreateIndex(sqlstring);
+                new ParserCaseHandler.CreateIndex(sqlstring);
             }
             else if (sqlstring.startsWith("CREATE TABLE"))
             {
-                this.create_table = new ParserCaseHandler.CreateTable(sqlstring);
+                new ParserCaseHandler.CreateTable(sqlstring);
             }
             else if (sqlstring.startsWith("DELETE FROM"))
             {
-                this.delete_from = new ParserCaseHandler.DeleteFrom(sqlstring);
+                new ParserCaseHandler.DeleteFrom(sqlstring);
             }
             else if (sqlstring.startsWith("DROP COLUMN"))
             {
-                this.drop_column = new ParserCaseHandler.DropColumn(sqlstring);
+                new ParserCaseHandler.DropColumn(sqlstring);
             }
             else if (sqlstring.startsWith("DROP DATABASE"))
             {
-                this.drop_database = new ParserCaseHandler.DropDatabase(sqlstring);
+                new ParserCaseHandler.DropDatabase(sqlstring);
             }
             else if (sqlstring.startsWith("INSERT INTO"))
             {
-                this.insert_into = new ParserCaseHandler.InsertInto(sqlstring);
+                new ParserCaseHandler.InsertInto(sqlstring);
             }
             else if (sqlstring.startsWith("SELECT"))
             {
-                this.select = new ParserCaseHandler.Select(sqlstring);
+                new ParserCaseHandler.Select(sqlstring);
             }
             else if (sqlstring.startsWith("USE"))
             {
-                this.use = new ParserCaseHandler.Use(sqlstring);
+                new ParserCaseHandler.Use(sqlstring);
             }
             else if (sqlstring.startsWith("UPDATE"))
             {
-                this.update = new ParserCaseHandler.Update(sqlstring);
+                new ParserCaseHandler.Update(sqlstring);
             }
             else
             {
