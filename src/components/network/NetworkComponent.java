@@ -2,25 +2,25 @@ package components.network;
 
 import components.Component;
 import exceptions.ExceptionQueue;
+import structures.Queue;
 import structures.SQLString;
-import system.System;
-
-import java.util.LinkedList;
 
 public class NetworkComponent extends Component
 {
+    public static NetworkComponent reference;
+
     public ThreadImplementation thread = new ThreadImplementation();
 
     public NetworkComponent() throws Exception
     {
-        System.push("//network", this);
+        NetworkComponent.reference = this;
     }
 
     public static class ThreadImplementation extends Thread
     {
         public Boolean running = true;
 
-        public LinkedList<SQLString> queue = new LinkedList<SQLString>();
+        public Queue<SQLString> queue = new Queue<SQLString>();
 
         @Override
         public void run()
@@ -40,7 +40,7 @@ public class NetworkComponent extends Component
                     }
                     catch (Exception e)
                     {
-                        ExceptionQueue.enqueue(e);
+                         e.addSuppressed(e);
                     }
                 }
             }

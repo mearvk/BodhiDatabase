@@ -4,7 +4,7 @@ import components.network.NetworkComponent;
 import components.parser.ParserComponent;
 import components.persistence.PersistenceComponent;
 import components.processor.ProcessorComponent;
-import components.terminal.TerminalComponent;
+import components.terminal.Terminal;
 import components.database.DatabaseComponent;
 
 public class SQLBuilder
@@ -66,7 +66,7 @@ public class SQLBuilder
     {
         public Builder_Step005() throws Exception
         {
-            TerminalComponent terminal = new TerminalComponent();
+            Terminal terminal = new Terminal();
 
             terminal.thread.start();
         }

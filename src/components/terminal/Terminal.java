@@ -2,7 +2,6 @@ package components.terminal;
 
 
 import components.Component;
-import components.terminal.handler.TerminalCaseHandler;
 import exceptions.ExceptionQueue;
 import structures.Queue;
 import structures.SQLString;
@@ -15,61 +14,29 @@ import javax.swing.JMenu;
 import java.awt.*;
 
 
-public class TerminalComponent extends Component
+public class Terminal extends Component
 {
-    public ThreadImplementation thread = new ThreadImplementation();
+    public Thread thread = new Thread();
 
-    public Queue<SQLString> queue = new Queue<SQLString>();
+    public static Terminal reference;
 
     public UserInterface userinterface = new UserInterface();
 
-    public TerminalComponent() throws Exception
+    public Terminal() throws Exception
     {
-        System.push("//terminal", this);
-
-        System.push("//terminal/queue", this.queue);
-
-        System.push("//terminal/thread", this.thread);
-
-        System.push("//terminal/userinterface", this.userinterface);
+        Terminal.reference = this;
     }
 
-    public static class ThreadImplementation extends Thread
+    public static class Thread extends java.lang.Thread
     {
+        public Queue<SQLString> queue = new Queue<SQLString>();
+
         public Boolean running = true;
 
         @Override
         public void run()
         {
-            Queue<SQLString> queue = null;
 
-            try
-            {
-                queue = (Queue<SQLString>) System.pull("//terminal/queue");
-
-                while (running)
-                {
-                    try
-                    {
-                        if (queue.peek() == null)
-                        {
-                            Thread.sleep(20, 0);
-
-                            continue;
-                        }
-
-                        TerminalCaseHandler handler = new TerminalCaseHandler(queue.dequeue());
-                    }
-                    catch (Exception e)
-                    {
-                        e.printStackTrace();
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-
-            }
         }
     }
 
