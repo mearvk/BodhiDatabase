@@ -56,9 +56,9 @@ public class SQLBuilder
     {
         public Builder_Step004() throws Exception
         {
-            ProcessorComponent processorComponent = new ProcessorComponent();
+            ProcessorComponent processor = new ProcessorComponent();
 
-            processorComponent.thread.start();
+            processor.thread.start();
         }
     }
 

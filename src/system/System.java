@@ -91,7 +91,9 @@ public class System
 
             for(int i=0; i<names.length; i++)
             {
-                if(names[i].equalsIgnoreCase(name)) throw new DatabaseExistsAlreadyException("Database exists already");
+                if(names[i].equalsIgnoreCase(name))
+
+                    new Exception().addSuppressed(new DatabaseExistsAlreadyException("Database exists already"));
             }
 
             return true;
@@ -149,18 +151,11 @@ public class System
 
     public static void push(String name, Object object) throws Exception
     {
-        if(name==null) throw new NullPointerException();
-
-        if(object==null) throw new NullPointerException();
-
-
         Memory.reference.push(name, object);
     }
 
     public static void push(String name, String target) throws Exception
     {
-        if(name==null) throw new NullPointerException();
-
         Memory.reference.push(name, target);
     }
 }

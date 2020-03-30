@@ -11,7 +11,7 @@ public class ExceptionQueue extends java.lang.Exception
 
     public static void enqueue(Exception e)
     {
-        e.printStackTrace();
+        System.err.println(e.getMessage());
     }
 
     public static void enqueue(String message)
