@@ -76,7 +76,7 @@ public class UpdateImpl extends UseCase
             this.sqlString = sqlString;
         }
 
-        public static String getDatabaseName(Parameter parameter)
+        public static String getDatabaseName(Parameter parameter) throws Exception
         {
             DatabaseComponent databaseComponent = (DatabaseComponent)System.pull("//database");
 

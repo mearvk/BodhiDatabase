@@ -179,7 +179,7 @@ public class System
             }
             catch (Exception e)
             {
-                ExceptionQueue.push(e.getMessage());
+                ExceptionQueue.enqueue(e.getMessage());
             }
         }
 

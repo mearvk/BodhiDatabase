@@ -208,7 +208,7 @@ public class TerminalComponent extends Component
             }
             catch (Exception e)
             {
-                ExceptionQueue.push(e.getMessage());
+                ExceptionQueue.enqueue(e.getMessage());
             }
 
             return super.getPreferredSize();
@@ -232,7 +232,7 @@ public class TerminalComponent extends Component
             }
             catch (Exception e)
             {
-                ExceptionQueue.push(e.getMessage());
+                ExceptionQueue.enqueue(e.getMessage());
             }
 
             return super.getPreferredSize();

@@ -41,7 +41,7 @@ public class ParserThread extends Thread
         }
         catch (Exception e)
         {
-            ExceptionQueue.push(e.getMessage());
+            ExceptionQueue.enqueue(e.getMessage());
         }
     }
 }

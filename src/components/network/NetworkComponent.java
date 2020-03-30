@@ -1,6 +1,7 @@
 package components.network;
 
 import components.Component;
+import exceptions.ExceptionQueue;
 import structures.SQLString;
 import system.System;
 
@@ -28,27 +29,36 @@ public class NetworkComponent extends Component
         @Override
         public void run()
         {
-            LinkedList<SQLString> queue_in = (LinkedList<SQLString>)System.pull("//network/queue");
+            LinkedList<SQLString> queue = null;
 
-            while (running)
+            try
             {
-                try
+                queue = (LinkedList<SQLString>) System.pull("//network/queue");
+
+                while (running)
                 {
-                    if(queue_in.peek()==null)
+                    try
                     {
-                        Thread.sleep(25,0); continue;
+                        if (queue.peek() == null)
+                        {
+                            Thread.sleep(25, 0);
+
+                            continue;
+                        }
+
+                        SQLString sql_string = queue.element();
+
+                        //
+
+                        //TODO statement type; do 16 cases then dump
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-
-                    SQLString sql_string = queue_in.element();
-
-                    //
-
-                    //TODO statement type; do 16 cases then dump
                 }
-                catch(Exception e)
-                {
-                    e.printStackTrace();
-                }
+            }
+            catch (Exception e)
+            {
+                ExceptionQueue.enqueue(e.getMessage());
             }
         }
     }

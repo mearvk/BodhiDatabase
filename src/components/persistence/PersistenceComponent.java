@@ -3,6 +3,7 @@ package components.persistence;
 import components.Component;
 import components.parser.handler.ParserCaseHandler;
 import components.persistence.handler.PersistenceCaseHandler;
+import exceptions.ExceptionQueue;
 import javafx.util.converter.PercentageStringConverter;
 import structures.Queue;
 import structures.SQLString;
@@ -34,23 +35,34 @@ public class PersistenceComponent extends Component
         @Override
         public void run()
         {
-            Queue<SQLString> queue = (Queue<SQLString>)System.pull("//persistence/queue");
+            Queue<SQLString> queue = null;
 
-            while (running)
+            try
             {
-                try
-                {
-                    if(queue.peek()==null)
-                    {
-                        Thread.sleep(20 ,0); continue;
-                    }
+                queue = (Queue<SQLString>) System.pull("//persistence/queue");
 
-                    PersistenceCaseHandler handler = new PersistenceCaseHandler(queue);
-                }
-                catch(Exception e)
+                while (running)
                 {
-                    e.printStackTrace();
+                    try
+                    {
+                        if (queue.peek() == null)
+                        {
+                            Thread.sleep(20, 0);
+
+                            continue;
+                        }
+
+                        PersistenceCaseHandler handler = new PersistenceCaseHandler(queue);
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                ExceptionQueue.enqueue(e.getMessage());
             }
         }
     }

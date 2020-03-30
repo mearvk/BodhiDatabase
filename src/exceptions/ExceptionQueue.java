@@ -9,17 +9,17 @@ public class ExceptionQueue extends java.lang.Exception
         ExceptionQueue.reference = this;
     }
 
-    public static void push(String message)
+    public static void enqueue(String message)
     {
         System.out.println(message);
     }
 
-    public static void push(String message, String bodhi)
+    public static void enqueue(String message, String bodhi)
     {
         System.out.println(message);
     }
 
-    public static void push(String message, String bodhi, String target)
+    public static void enqueue(String message, String bodhi, String target)
     {
         System.out.println(message);
     }
