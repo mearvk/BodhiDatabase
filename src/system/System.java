@@ -2,17 +2,15 @@ package system;
 
 import cases.CreateDatabaseImpl;
 import cases.UseImpl;
-import components.database.DatabaseComponent;
 import components.memory.Memory;
-import components.persistence.PersistenceComponent;
 import components.processor.ProcessorComponent;
 import contexts.CreateDatabaseImplContext;
 import contexts.UseImplContext;
-import exceptions.DatabaseAlreadyExistsException;
+import exceptions.DatabaseException;
+import exceptions.ExceptionQueue;
 import file.DatabaseReader;
 import file.DatabaseWriter;
 import parameter.Parameter;
-import structures.SQLString;
 import structures.database.DatabaseReference;
 import components.validation.ValidationComponent;
 
@@ -28,15 +26,14 @@ public class System
 
     public static ProcessorComponent processor = new ProcessorComponent();
 
+    //
+
     public System()
     {
         System.reference = this;
     }
 
-    public static Boolean non_null(String name, String exception)
-    {
-        return Memory.reference.non_null(name);
-    }
+    //
 
     public static void set(String property, String ref, Class klass) throws Exception
     {
@@ -76,7 +73,7 @@ public class System
         return Memory.reference.exists(name);
     }
 
-    public static Boolean tprint(String name) throws Exception
+    public static Boolean touch_print(String name) throws Exception
     {
         if(name.equals("//database/selected"))
         {
@@ -96,7 +93,7 @@ public class System
 
             for(int i=0; i<names.length; i++)
             {
-                if(names[i].equalsIgnoreCase(name)) throw new DatabaseAlreadyExistsException();
+                if(names[i].equalsIgnoreCase(name)) throw new DatabaseException();
             }
 
             return true;
@@ -147,7 +144,7 @@ public class System
         return Memory.reference.exists(name);
     }
 
-    public static Object pull(String name)
+    public static Object pull(String name) throws Exception
     {
         return Memory.reference.pull(name);
     }
@@ -162,11 +159,6 @@ public class System
         Memory.reference.push(name, target);
     }
 
-    public static Object validate(String name)
-    {
-        return Memory.reference.pull(name);
-    }
-
     public static class DatabaseHandler
     {
         public DatabaseReference database;
@@ -177,11 +169,18 @@ public class System
 
         public DatabaseHandler()
         {
-            DatabaseReference database = (DatabaseReference)System.pull("//database");
+            try
+            {
+                DatabaseReference database = (DatabaseReference) System.pull("//database");
 
-            this.writer = new DatabaseWriter(database);
+                this.writer = new DatabaseWriter(database);
 
-            this.reader = new DatabaseReader(database);
+                this.reader = new DatabaseReader(database);
+            }
+            catch (Exception e)
+            {
+                ExceptionQueue.push(e.getMessage());
+            }
         }
 
         protected boolean integrity()

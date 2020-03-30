@@ -104,7 +104,7 @@ public class UseImpl extends UseCase
 
             //
 
-            System.tprint("//database/selected");
+            System.touch_print("//database/selected");
         }
     }
 

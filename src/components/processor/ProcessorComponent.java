@@ -26,30 +26,35 @@ public class ProcessorComponent extends Component
     {
         public Boolean running = true;
 
+        public LinkedList<SQLString> queue = null;
+
         @Override
         public void run()
         {
-            LinkedList<SQLString> queue_in = (LinkedList<SQLString>)System.pull("//processor/queue");
-
-            while (running)
+            try
             {
-                try
-                {
-                    if(queue_in.peek()==null)
-                    {
-                        Thread.sleep(25,0); continue;
+                queue = (LinkedList<SQLString>) System.pull("//processor/queue");
+
+                while (running) {
+                    try {
+                        if (queue.peek() == null) {
+                            Thread.sleep(25, 0);
+                            continue;
+                        }
+
+                        SQLString sql_string = queue.element();
+
+                        //
+
+                        //TODO statement type; do 16 cases then dump
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-
-                    SQLString sql_string = queue_in.element();
-
-                    //
-
-                    //TODO statement type; do 16 cases then dump
                 }
-                catch(Exception e)
-                {
-                    e.printStackTrace();
-                }
+            }
+            catch (Exception e)
+            {
+
             }
         }
     }

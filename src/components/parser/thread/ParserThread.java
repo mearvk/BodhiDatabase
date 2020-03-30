@@ -1,6 +1,7 @@
 package components.parser.thread;
 
 import components.parser.handler.ParserCaseHandler;
+import exceptions.ExceptionQueue;
 import structures.SQLString;
 import system.System;
 
@@ -13,25 +14,34 @@ public class ParserThread extends Thread
     @Override
     public void run()
     {
-        LinkedList<SQLString> queue = (LinkedList<SQLString>) System.pull("//parser/queue");
+        LinkedList<SQLString> queue = null;
 
-        while (running)
+        try
         {
-            try
+            queue = (LinkedList<SQLString>) System.pull("//parser/queue");
+
+            while (running)
             {
-                if(queue.peek()==null)
+                try
                 {
-                    Thread.sleep(20,0);
+                    if (queue.peek() == null)
+                    {
+                        Thread.sleep(20, 0);
 
-                    continue;
+                        continue;
+                    }
+
+                    ParserCaseHandler handler = new ParserCaseHandler(queue);
                 }
-
-                ParserCaseHandler handler = new ParserCaseHandler(queue);
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
             }
-            catch(Exception e)
-            {
-                e.printStackTrace();
-            }
+        }
+        catch (Exception e)
+        {
+            ExceptionQueue.push(e.getMessage());
         }
     }
 }

@@ -3,6 +3,7 @@ package components.terminal;
 
 import components.Component;
 import components.terminal.handler.TerminalCaseHandler;
+import exceptions.ExceptionQueue;
 import structures.Queue;
 import structures.SQLString;
 import system.System;
@@ -40,25 +41,34 @@ public class TerminalComponent extends Component
         @Override
         public void run()
         {
-            Queue<SQLString> queue = (Queue<SQLString>)System.pull("//terminal/queue");
+            Queue<SQLString> queue = null;
 
-            while (running)
+            try
             {
-                try
+                queue = (Queue<SQLString>) System.pull("//terminal/queue");
+
+                while (running)
                 {
-                    if(queue.peek()==null)
+                    try
                     {
-                        Thread.sleep(20,0);
+                        if (queue.peek() == null)
+                        {
+                            Thread.sleep(20, 0);
 
-                        continue;
+                            continue;
+                        }
+
+                        TerminalCaseHandler handler = new TerminalCaseHandler(queue.dequeue());
                     }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
 
-                    TerminalCaseHandler handler = new TerminalCaseHandler(queue.dequeue());
-                }
-                catch(Exception e)
-                {
-                    e.printStackTrace();
-                }
             }
         }
     }
@@ -186,13 +196,22 @@ public class TerminalComponent extends Component
         @Override
         public Dimension getPreferredSize()
         {
-            JPanel jpanel = (JPanel)System.pull("//jpanel");
+            try
+            {
+                JPanel jpanel = (JPanel)System.pull("//jpanel");
 
-            int w = jpanel.getWidth()-20;
+                int w = jpanel.getWidth()-20;
 
-            int h = jpanel.getHeight()-20;
+                int h = jpanel.getHeight()-20;
 
-            return new Dimension(w,h);
+                return new Dimension(w,h);
+            }
+            catch (Exception e)
+            {
+                ExceptionQueue.push(e.getMessage());
+            }
+
+            return super.getPreferredSize();
         }
     }
 
@@ -201,13 +220,22 @@ public class TerminalComponent extends Component
         @Override
         public Dimension getPreferredSize()
         {
-            Frame frame = (Frame)System.pull("//jframe");
+            try
+            {
+                Frame frame = (Frame)System.pull("//jframe");
 
-            int w = frame.getWidth()-20;
+                int w = frame.getWidth()-20;
 
-            int h = frame.getHeight()-20;
+                int h = frame.getHeight()-20;
 
-            return new Dimension(w,h);
+                return new Dimension(w,h);
+            }
+            catch (Exception e)
+            {
+                ExceptionQueue.push(e.getMessage());
+            }
+
+            return super.getPreferredSize();
         }
     }
 }
