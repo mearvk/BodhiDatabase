@@ -5,17 +5,17 @@ import system.System;
 
 import java.util.StringTokenizer;
 
-public class SelectImpl extends UseCase
+public class SelectFromTableImpl extends UseCase
 {
-    public SelectImpl.SelectImpl_Step001 step001;
+    public SelectFromTableImpl.SelectImpl_Step001 step001;
 
-    public SelectImpl.SelectImpl_Step002 step002;
+    public SelectFromTableImpl.SelectImpl_Step002 step002;
 
-    public SelectImpl.SelectImpl_Step003 step003;
+    public SelectFromTableImpl.SelectImpl_Step003 step003;
 
     public Parameter parameter;
 
-    public SelectImpl(String sqlString) throws Exception
+    public SelectFromTableImpl(String sqlString) throws Exception
     {
         System.push("//impl/select", this);
 
@@ -26,11 +26,11 @@ public class SelectImpl extends UseCase
         //
 
         try
-        {   this.step001 = new SelectImpl.SelectImpl_Step001(this.parameter);
+        {   this.step001 = new SelectFromTableImpl.SelectImpl_Step001(this.parameter);
 
-            this.step002 = new SelectImpl.SelectImpl_Step002(this.parameter);
+            this.step002 = new SelectFromTableImpl.SelectImpl_Step002(this.parameter);
 
-            this.step003 = new SelectImpl.SelectImpl_Step003(this.parameter);
+            this.step003 = new SelectFromTableImpl.SelectImpl_Step003(this.parameter);
         }
         catch (Exception e)
         {

@@ -188,7 +188,7 @@ public class PersistenceCaseHandler
         public InsertInto(String sqlString)
         {
             try
-            { InsertIntoImpl runner = new InsertIntoImpl(this.sqlString = sqlString); }
+            { InsertIntoTableImpl runner = new InsertIntoTableImpl(this.sqlString = sqlString); }
             catch (Exception e)
             {
                 //TODO
@@ -203,7 +203,7 @@ public class PersistenceCaseHandler
         public Select(String sqlString)
         {
             try
-            { SelectImpl runner = new SelectImpl(this.sqlString = sqlString); }
+            { SelectFromTableImpl runner = new SelectFromTableImpl(this.sqlString = sqlString); }
             catch (Exception e)
             {
 
@@ -218,7 +218,7 @@ public class PersistenceCaseHandler
         public Update(String sqlString)
         {
             try
-            { UpdateImpl runner = new UpdateImpl(this.sqlString = sqlString); }
+            { UpdateTableImpl runner = new UpdateTableImpl(this.sqlString = sqlString); }
             catch (Exception e)
             {
                 //TODO
@@ -233,7 +233,7 @@ public class PersistenceCaseHandler
         public Use(String sqlString)
         {
             try
-            { UseImpl runner = new UseImpl(this.sqlString = sqlString); }
+            { UseDatabaseImpl runner = new UseDatabaseImpl(this.sqlString = sqlString); }
             catch(Exception e)
             {
                 //TODO

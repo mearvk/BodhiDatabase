@@ -6,17 +6,17 @@ import system.System;
 
 import java.util.StringTokenizer;
 
-public class UpdateImpl extends UseCase
+public class UpdateTableImpl extends UseCase
 {
-    public UpdateImpl.UpdateImpl_Step001 step001;
+    public UpdateTableImpl.UpdateImpl_Step001 step001;
 
-    public UpdateImpl.UpdateImpl_Step002 step002;
+    public UpdateTableImpl.UpdateImpl_Step002 step002;
 
-    public UpdateImpl.UpdateImpl_Step003 step003;
+    public UpdateTableImpl.UpdateImpl_Step003 step003;
 
     public Parameter parameter;
 
-    public UpdateImpl(String sqlString) throws Exception
+    public UpdateTableImpl(String sqlString) throws Exception
     {
         System.push("//impl/update", this);
 
@@ -27,11 +27,11 @@ public class UpdateImpl extends UseCase
         //
 
         try
-        {   this.step001 = new UpdateImpl.UpdateImpl_Step001(this.parameter);
+        {   this.step001 = new UpdateTableImpl.UpdateImpl_Step001(this.parameter);
 
-            this.step002 = new UpdateImpl.UpdateImpl_Step002(this.parameter);
+            this.step002 = new UpdateTableImpl.UpdateImpl_Step002(this.parameter);
 
-            this.step003 = new UpdateImpl.UpdateImpl_Step003(this.parameter);
+            this.step003 = new UpdateTableImpl.UpdateImpl_Step003(this.parameter);
         }
         catch (Exception e)
         {

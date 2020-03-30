@@ -5,17 +5,17 @@ import system.System;
 
 import java.util.StringTokenizer;
 
-public class InsertIntoImpl extends UseCase
+public class InsertIntoTableImpl extends UseCase
 {
-    public InsertIntoImpl.InsertIntoImpl_Step001 step001;
+    public InsertIntoTableImpl.InsertIntoImpl_Step001 step001;
 
-    public InsertIntoImpl.InsertIntoImpl_Step002 step002;
+    public InsertIntoTableImpl.InsertIntoImpl_Step002 step002;
 
-    public InsertIntoImpl.InsertIntoImpl_Step003 step003;
+    public InsertIntoTableImpl.InsertIntoImpl_Step003 step003;
 
     public Parameter parameter;
 
-    public InsertIntoImpl(String sqlString) throws Exception
+    public InsertIntoTableImpl(String sqlString) throws Exception
     {
         System.push("//impl/insertinto", this);
 
@@ -26,11 +26,11 @@ public class InsertIntoImpl extends UseCase
         //
 
         try
-        {   this.step001 = new InsertIntoImpl.InsertIntoImpl_Step001(this.parameter);
+        {   this.step001 = new InsertIntoTableImpl.InsertIntoImpl_Step001(this.parameter);
 
-            this.step002 = new InsertIntoImpl.InsertIntoImpl_Step002(this.parameter);
+            this.step002 = new InsertIntoTableImpl.InsertIntoImpl_Step002(this.parameter);
 
-            this.step003 = new InsertIntoImpl.InsertIntoImpl_Step003(this.parameter);
+            this.step003 = new InsertIntoTableImpl.InsertIntoImpl_Step003(this.parameter);
         }
         catch (Exception e)
         {

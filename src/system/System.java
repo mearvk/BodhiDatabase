@@ -1,7 +1,7 @@
 package system;
 
 import cases.CreateDatabaseImpl;
-import cases.UseImpl;
+import cases.UseDatabaseImpl;
 import components.memory.Memory;
 import components.processor.ProcessorComponent;
 import contexts.CreateDatabaseImplContext;
@@ -55,14 +55,14 @@ public class System
 
         if(bodhi.equals("//database/properties/name") && klass.isAssignableFrom(UseImplContext.class))
         {
-            System.push(bodhi, UseImpl.Utility.getDatabaseName(parameter));
+            System.push(bodhi, UseDatabaseImpl.Utility.getDatabaseName(parameter));
         }
 
         if(bodhi.equals("//database/properties/file") && klass.isAssignableFrom(UseImplContext.class))
         {
             String name = parameter.name = (String)System.pull("//database/properties/name");
 
-            System.push(bodhi, UseImpl.Utility.getDatabaseFile(parameter));
+            System.push(bodhi, UseDatabaseImpl.Utility.getDatabaseFile(parameter));
         }
     }
 

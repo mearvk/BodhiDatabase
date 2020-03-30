@@ -8,17 +8,17 @@ import system.System;
 
 import java.util.StringTokenizer;
 
-public class UseImpl extends UseCase
+public class UseDatabaseImpl extends UseCase
 {
-    public UseImpl.UseImpl_Step001 step001;
+    public UseDatabaseImpl.UseImpl_Step001 step001;
 
-    public UseImpl.UseImpl_Step002 step002;
+    public UseDatabaseImpl.UseImpl_Step002 step002;
 
-    public UseImpl.UseImpl_Step003 step003;
+    public UseDatabaseImpl.UseImpl_Step003 step003;
 
     public Parameter parameter;
 
-    public UseImpl(String sqlString) throws Exception
+    public UseDatabaseImpl(String sqlString) throws Exception
     {
         System.push("//impl/use", this);
 
@@ -30,11 +30,11 @@ public class UseImpl extends UseCase
 
         try
         {
-            this.step001 = new UseImpl.UseImpl_Step001(this.parameter);
+            this.step001 = new UseDatabaseImpl.UseImpl_Step001(this.parameter);
 
-            this.step002 = new UseImpl.UseImpl_Step002(this.parameter);
+            this.step002 = new UseDatabaseImpl.UseImpl_Step002(this.parameter);
 
-            this.step003 = new UseImpl.UseImpl_Step003(this.parameter);
+            this.step003 = new UseDatabaseImpl.UseImpl_Step003(this.parameter);
         }
         catch (Exception e)
         {
