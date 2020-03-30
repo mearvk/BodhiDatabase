@@ -13,7 +13,7 @@ public class DeleteFromImpl extends UseCase
 
     public Parameter parameter;
 
-    public DeleteFromImpl(String sqlString)
+    public DeleteFromImpl(String sqlString) throws Exception
     {
         System.push("//impl/createtable", this);
 
@@ -72,7 +72,7 @@ public class DeleteFromImpl extends UseCase
     {
         public TaskRunner(Parameter parameter) throws Exception
         {
-            System.database.writer.delete_from(parameter);
+            //System.database.writer.delete_from(parameter);
         }
     }
 

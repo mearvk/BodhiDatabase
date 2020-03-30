@@ -24,7 +24,7 @@ public class SQLBuilder
 
     public static class Builder_Step001
     {
-        public Builder_Step001()
+        public Builder_Step001() throws Exception
         {
             ParserComponent parser = new ParserComponent();
 
@@ -34,7 +34,7 @@ public class SQLBuilder
 
     public static class Builder_Step002
     {
-        public Builder_Step002()
+        public Builder_Step002() throws Exception
         {
             PersistenceComponent persistenceComponent = new PersistenceComponent();
 
@@ -44,7 +44,7 @@ public class SQLBuilder
 
     public static class Builder_Step003
     {
-        public Builder_Step003()
+        public Builder_Step003() throws Exception
         {
             NetworkComponent network = new NetworkComponent();
 
@@ -54,7 +54,7 @@ public class SQLBuilder
 
     public static class Builder_Step004
     {
-        public Builder_Step004()
+        public Builder_Step004() throws Exception
         {
             ProcessorComponent processorComponent = new ProcessorComponent();
 
@@ -64,7 +64,7 @@ public class SQLBuilder
 
     public static class Builder_Step005
     {
-        public Builder_Step005()
+        public Builder_Step005() throws Exception
         {
             TerminalComponent terminal = new TerminalComponent();
 
@@ -74,7 +74,7 @@ public class SQLBuilder
 
     public static class Builder_Step006
     {
-        public Builder_Step006()
+        public Builder_Step006() throws Exception
         {
             DatabaseComponent databaseComponent = new DatabaseComponent();
 

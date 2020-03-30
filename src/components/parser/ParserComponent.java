@@ -12,7 +12,7 @@ public class ParserComponent extends Component
 
     public Queue<SQLString> queue = new Queue<SQLString>();
 
-    public ParserComponent()
+    public ParserComponent() throws Exception
     {
         System.push("//parser", this);
 

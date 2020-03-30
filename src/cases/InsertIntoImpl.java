@@ -15,7 +15,7 @@ public class InsertIntoImpl extends UseCase
 
     public Parameter parameter;
 
-    public InsertIntoImpl(String sqlString)
+    public InsertIntoImpl(String sqlString) throws Exception
     {
         System.push("//impl/insertinto", this);
 
@@ -50,7 +50,7 @@ public class InsertIntoImpl extends UseCase
     {
         public InsertIntoImpl_Step002(Parameter parameter) throws Exception
         {
-            System.database.writer.insert_into(parameter);
+            //System.database.writer.insert_into(parameter);
         }
     }
 

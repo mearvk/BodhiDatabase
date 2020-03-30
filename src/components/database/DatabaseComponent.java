@@ -16,7 +16,7 @@ public class DatabaseComponent extends Component
 
     public LinkedList<SQLString> queue = new LinkedList<SQLString>();
 
-    public DatabaseComponent()
+    public DatabaseComponent() throws Exception
     {
         System.push("//database", this);
 

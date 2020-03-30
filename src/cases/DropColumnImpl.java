@@ -13,7 +13,7 @@ public class DropColumnImpl extends UseCase
 
     public Parameter parameter;
 
-    public DropColumnImpl(String sqlString)
+    public DropColumnImpl(String sqlString) throws Exception
     {
         System.push("//impl/dropcolumn", this);
 
@@ -48,7 +48,7 @@ public class DropColumnImpl extends UseCase
     {
         public DropColumnImpl_Step002(Parameter parameter) throws Exception
         {
-            System.database.writer.drop_columns(parameter);
+            //System.database.writer.drop_columns(parameter);
         }
     }
 

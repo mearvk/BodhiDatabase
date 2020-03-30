@@ -1,15 +1,11 @@
 package components.persistence;
 
 import components.Component;
-import components.parser.handler.ParserCaseHandler;
 import components.persistence.handler.PersistenceCaseHandler;
 import exceptions.ExceptionQueue;
-import javafx.util.converter.PercentageStringConverter;
 import structures.Queue;
 import structures.SQLString;
 import system.System;
-
-import java.util.LinkedList;
 
 public class PersistenceComponent extends Component
 {
@@ -19,7 +15,7 @@ public class PersistenceComponent extends Component
 
     public Queue<SQLString> queue = new Queue<SQLString>();
 
-    public PersistenceComponent()
+    public PersistenceComponent() throws Exception
     {
         System.push("//persistence", this);
 

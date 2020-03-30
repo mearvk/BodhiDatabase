@@ -15,7 +15,7 @@ public class DropDatabaseImpl extends UseCase
 
     public Parameter parameter;
 
-    public DropDatabaseImpl(String sqlString)
+    public DropDatabaseImpl(String sqlString) throws Exception
     {
         System.push("//impl/dropdatabase", this);
 
@@ -50,7 +50,7 @@ public class DropDatabaseImpl extends UseCase
     {
         public DropDatabaseImpl_Step002(Parameter parameter) throws Exception
         {
-            System.database.writer.drop_database(parameter);
+            //System.database.writer.drop_database(parameter);
         }
     }
 

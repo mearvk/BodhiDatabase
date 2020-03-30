@@ -11,23 +11,31 @@ public class Main
 
     public Main()
     {
-        System system = new System();
+        try
+        {
+            System system = new System();
 
-        //
+            //
 
-        SQLBuilder builder = new SQLBuilder();
+            SQLBuilder builder = new SQLBuilder();
 
-        builder.builder_step001 = new SQLBuilder.Builder_Step001();    //step 1. <parser> component
+            builder.builder_step001 = new SQLBuilder.Builder_Step001();    //step 1. <parser> component
 
-        builder.builder_step002 = new SQLBuilder.Builder_Step002();    //step 2. <persistence> component
+            builder.builder_step002 = new SQLBuilder.Builder_Step002();    //step 2. <persistence> component
 
-        builder.builder_step003 = new SQLBuilder.Builder_Step003();    //step 3. <network> component
+            builder.builder_step003 = new SQLBuilder.Builder_Step003();    //step 3. <network> component
 
-        builder.builder_step004 = new SQLBuilder.Builder_Step004();    //step 4. <processor> component
+            builder.builder_step004 = new SQLBuilder.Builder_Step004();    //step 4. <processor> component
 
-        builder.builder_step005 = new SQLBuilder.Builder_Step005();    //step 5. <terminal> component
+            builder.builder_step005 = new SQLBuilder.Builder_Step005();    //step 5. <terminal> component
 
-        builder.builder_step006 = new SQLBuilder.Builder_Step006();    //step 6. <database> component
+            builder.builder_step006 = new SQLBuilder.Builder_Step006();    //step 6. <database> component
+
+        }
+        catch (Exception e)
+        {
+
+        }
 
         //
 

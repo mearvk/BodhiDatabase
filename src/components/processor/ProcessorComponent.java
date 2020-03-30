@@ -13,7 +13,7 @@ public class ProcessorComponent extends Component
 
     public LinkedList<SQLString> queue = new LinkedList<SQLString>();
 
-    public ProcessorComponent()
+    public ProcessorComponent() throws Exception
     {
         System.push("//processor", this);
 

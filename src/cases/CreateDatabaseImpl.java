@@ -19,7 +19,7 @@ public class CreateDatabaseImpl extends UseCase
 
     public Parameter parameter;
 
-    public CreateDatabaseImpl(String sqlString)
+    public CreateDatabaseImpl(String sqlString) throws Exception
     {
         System.push("//impl/createdatabase", this);
 
@@ -91,7 +91,7 @@ public class CreateDatabaseImpl extends UseCase
     {
         public PostConditionRunner(Parameter parameter) throws Exception
         {
-            System.validator.touch("//database", parameter, CreateDatabaseImplContext.PostConditionRunnerContext.class);
+            System.touch("//database", parameter, CreateDatabaseImplContext.PostConditionRunnerContext.class);
         }
     }
 

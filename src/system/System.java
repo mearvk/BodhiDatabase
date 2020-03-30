@@ -7,11 +7,7 @@ import components.processor.ProcessorComponent;
 import contexts.CreateDatabaseImplContext;
 import contexts.UseImplContext;
 import exceptions.DatabaseException;
-import exceptions.ExceptionQueue;
-import file.DatabaseReader;
-import file.DatabaseWriter;
 import parameter.Parameter;
-import structures.database.DatabaseReference;
 import components.validation.ValidationComponent;
 
 public class System
@@ -20,17 +16,19 @@ public class System
 
     public static Memory memory = new Memory();
 
-    public static DatabaseHandler database = new DatabaseHandler();
+    //public static DatabaseHandler database = new DatabaseHandler();
 
-    public static ValidationComponent validator = new ValidationComponent();
+    //public static ValidationComponent validator = new ValidationComponent();
 
-    public static ProcessorComponent processor = new ProcessorComponent();
+    public static ProcessorComponent processor;
 
     //
 
-    public System()
+    public System() throws Exception
     {
         System.reference = this;
+
+        System.processor = new ProcessorComponent();
     }
 
     //
@@ -149,71 +147,21 @@ public class System
         return Memory.reference.pull(name);
     }
 
-    public static void push(String name, Object object)
+    public static void push(String name, Object object) throws Exception
     {
+        if(name==null) throw new NullPointerException();
+
+        if(object==null) throw new NullPointerException();
+
+
         Memory.reference.push(name, object);
     }
 
-    public static void push(String name, String target)
+    public static void push(String name, String target) throws Exception
     {
+        if(name==null) throw new NullPointerException();
+
         Memory.reference.push(name, target);
     }
-
-    public static class DatabaseHandler
-    {
-        public DatabaseReference database;
-
-        public DatabaseWriter writer;
-
-        public DatabaseReader reader;
-
-        public DatabaseHandler()
-        {
-            try
-            {
-                DatabaseReference database = (DatabaseReference) System.pull("//database");
-
-                this.writer = new DatabaseWriter(database);
-
-                this.reader = new DatabaseReader(database);
-            }
-            catch (Exception e)
-            {
-                ExceptionQueue.enqueue(e.getMessage());
-            }
-        }
-
-        protected boolean integrity()
-        {
-            //TODO reader checks integrity
-
-            return true;
-        }
-
-        public DatabaseHandler delete_from(Parameter parameter)
-        {
-            return this;
-        }
-
-        public DatabaseHandler table_exists(Parameter parameter)
-        {
-            return this;
-        }
-
-        public DatabaseHandler database_exists(Parameter parameter)
-        {
-            return this;
-        }
-
-        public DatabaseHandler createTable(Parameter parameter)
-        {
-            return this;
-        }
-
-        public DatabaseHandler verifyTable(Parameter parameter)
-        {
-            return this;
-        }
-    }
-
 }
+

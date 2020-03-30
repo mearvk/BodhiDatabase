@@ -23,7 +23,7 @@ public class TerminalComponent extends Component
 
     public UserInterface userinterface = new UserInterface();
 
-    public TerminalComponent()
+    public TerminalComponent() throws Exception
     {
         System.push("//terminal", this);
 
@@ -77,7 +77,7 @@ public class TerminalComponent extends Component
     {
         public Builder builder = new Builder(this);
 
-        public UserInterface()
+        public UserInterface() throws Exception
         {
             builder.step001 = new Builder.Step001(this.builder);
 
@@ -121,7 +121,7 @@ public class TerminalComponent extends Component
 
             public static class Step001
             {
-                public Step001(Builder builder)
+                public Step001(Builder builder) throws Exception
                 {
                     System.push("//jframe", builder.jframe = new JFrame());
 

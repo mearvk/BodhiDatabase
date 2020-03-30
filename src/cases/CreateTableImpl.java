@@ -73,7 +73,7 @@ public class CreateTableImpl extends UseCase
     {
         public TaskRunner(Parameter parameter) throws Exception
         {
-            System.database.writer.table_persist(parameter);
+
         }
     }
 

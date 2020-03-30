@@ -16,7 +16,7 @@ public class UpdateImpl extends UseCase
 
     public Parameter parameter;
 
-    public UpdateImpl(String sqlString)
+    public UpdateImpl(String sqlString) throws Exception
     {
         System.push("//impl/update", this);
 

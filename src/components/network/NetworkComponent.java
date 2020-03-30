@@ -13,7 +13,7 @@ public class NetworkComponent extends Component
 
     public LinkedList<SQLString> queue = new LinkedList<SQLString>();
 
-    public NetworkComponent()
+    public NetworkComponent() throws Exception
     {
         System.push("//network", this);
 

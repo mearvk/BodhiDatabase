@@ -13,7 +13,7 @@ public class CreateIndexImpl extends UseCase
 
     public Parameter parameter;
 
-    public CreateIndexImpl(String sqlString)
+    public CreateIndexImpl(String sqlString) throws Exception
     {
         System.push("//impl/createindex", this);
 

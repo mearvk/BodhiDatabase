@@ -15,7 +15,7 @@ public class SelectImpl extends UseCase
 
     public Parameter parameter;
 
-    public SelectImpl(String sqlString)
+    public SelectImpl(String sqlString) throws Exception
     {
         System.push("//impl/select", this);
 
@@ -50,7 +50,7 @@ public class SelectImpl extends UseCase
     {
         public SelectImpl_Step002(Parameter parameter) throws Exception
         {
-            System.push("//result", System.database.reader.select(parameter));
+            //System.push("//result", System.database.reader.select(parameter));
         }
     }
 

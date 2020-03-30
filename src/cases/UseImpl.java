@@ -18,7 +18,7 @@ public class UseImpl extends UseCase
 
     public Parameter parameter;
 
-    public UseImpl(String sqlString)
+    public UseImpl(String sqlString) throws Exception
     {
         System.push("//impl/use", this);
 
