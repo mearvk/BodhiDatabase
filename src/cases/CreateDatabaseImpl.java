@@ -9,6 +9,8 @@ import system.System;
 import java.io.File;
 import java.util.StringTokenizer;
 
+import static java.lang.Boolean.TRUE;
+
 public class CreateDatabaseImpl extends UseCase
 {
     public CreateDatabaseImpl_Step001 step001;
@@ -31,15 +33,15 @@ public class CreateDatabaseImpl extends UseCase
 
         try
         {
+            System.push("//continue", true);
+
+            //
+
             this.step001 = new CreateDatabaseImpl_Step001(this.parameter);
 
             this.step002 = new CreateDatabaseImpl_Step002(this.parameter);
 
             this.step003 = new CreateDatabaseImpl_Step003(this.parameter);
-        }
-        catch (DatabaseExistsAlreadyException daee)
-        {
-            daee.printStackTrace();
         }
         catch (Exception e)
         {
@@ -51,7 +53,7 @@ public class CreateDatabaseImpl extends UseCase
     {
         public CreateDatabaseImpl_Step001(Parameter parameter) throws Exception
         {
-            System.push("//step001", new PreConditionRunner(parameter));
+            PreconditionCheck check = new PreconditionCheck(parameter);
         }
     }
 
@@ -59,7 +61,7 @@ public class CreateDatabaseImpl extends UseCase
     {
         public CreateDatabaseImpl_Step002(Parameter parameter) throws Exception
         {
-            System.push("//step002", new TaskRunner(parameter));
+            TaskRunner runner = new TaskRunner(parameter);
         }
     }
 
@@ -67,15 +69,21 @@ public class CreateDatabaseImpl extends UseCase
     {
         public CreateDatabaseImpl_Step003(Parameter parameter) throws Exception
         {
-            System.push("//step003", new PostConditionRunner(parameter));
+            PostconditionCheck check = new PostconditionCheck(parameter);
         }
     }
 
-    public static class PreConditionRunner
+    public static class PreconditionCheck
     {
-        public PreConditionRunner(Parameter parameter) throws Exception
+        public PreconditionCheck(Parameter parameter) throws Exception
         {
-            System.touch("//database", parameter, CreateDatabaseImplContext.PreConditionRunnerContext.class);
+            System.set("//continue");
+
+            System.set("//database", parameter, CreateDatabaseImplContext.PreconditionCheckContext.class);
+
+            System.set("//database{name}", parameter, CreateDatabaseImplContext.PreconditionCheckContext.class);
+
+            System.touch("//continue");
         }
     }
 
@@ -83,15 +91,25 @@ public class CreateDatabaseImpl extends UseCase
     {
         public TaskRunner(Parameter parameter) throws Exception
         {
-            System.processor.set("//database", parameter, CreateDatabaseImplContext.TaskRunnerContext.class);
+            System.touch("//continue");
+
+            System.set("//database", parameter, CreateDatabaseImplContext.TaskRunnerContext.class);
+
+            System.touch("//continue");
         }
     }
 
-    public static class PostConditionRunner
+    public static class PostconditionCheck
     {
-        public PostConditionRunner(Parameter parameter) throws Exception
+        public PostconditionCheck(Parameter parameter) throws Exception
         {
-            System.touch("//database", parameter, CreateDatabaseImplContext.PostConditionRunnerContext.class);
+            System.touch("//continue");
+
+            System.set("//database", parameter, CreateDatabaseImplContext.PostconditionCheckContext.class);
+
+            System.set("//database{name}", parameter, CreateDatabaseImplContext.PostconditionCheckContext.class);
+
+            System.touch("//continue");
         }
     }
 

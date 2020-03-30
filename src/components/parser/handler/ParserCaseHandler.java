@@ -12,7 +12,7 @@ public class ParserCaseHandler
 
     public ParserCaseHandler(Queue<SQLString> queue)
     {
-        String sqlstring = queue.dequeue().value;
+         String sqlstring = queue.dequeue().value;
 
         try
         {

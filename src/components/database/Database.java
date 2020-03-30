@@ -3,11 +3,6 @@ package components.database;
 import cases.UseDatabaseImpl;
 import components.Component;
 import parameter.Parameter;
-import structures.SQLString;
-import system.System;
-
-import javax.xml.crypto.Data;
-import java.util.LinkedList;
 
 public class Database extends Component
 {
@@ -15,7 +10,7 @@ public class Database extends Component
 
     public String name;
 
-    public String file;
+    public String url;
 
     public static Database reference;
 
@@ -30,7 +25,7 @@ public class Database extends Component
 
         Database.reference.name = UseDatabaseImpl.Utility.getDatabaseName(parameter);
 
-        Database.reference.file = UseDatabaseImpl.Utility.getDatabaseFile(parameter);
+        Database.reference.url = UseDatabaseImpl.Utility.getDatabaseUrl(parameter);
     }
 
     public static class Properties

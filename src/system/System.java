@@ -1,7 +1,6 @@
 package system;
 
 import cases.CreateDatabaseImpl;
-import cases.UseDatabaseImpl;
 import components.database.Database;
 import components.memory.Memory;
 import components.processor.Processor;
@@ -10,8 +9,6 @@ import contexts.UseDatabaseImplContext;
 import exceptions.DatabaseExistsAlreadyException;
 import parameter.Parameter;
 import components.validation.ValidationComponent;
-
-import java.nio.file.attribute.UserDefinedFileAttributeView;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
@@ -41,6 +38,22 @@ public class System
 
     //
 
+    public static void set(String bodhi) throws Exception
+    {
+        if(bodhi.equals("//continue"))
+        {
+            System.push(bodhi, true);
+        }
+    }
+
+    public static void unset(String bodhi) throws Exception
+    {
+        if(bodhi.equals("//continue"))
+        {
+            System.nullify(bodhi);
+        }
+    }
+
     public static void set(String property, String ref, Class klass) throws Exception
     {
         if(property.equals("//database/selected")  && klass.isAssignableFrom(UseDatabaseImplContext.class))
@@ -49,7 +62,12 @@ public class System
         }
     }
 
-    public static void set(String bodhi, Parameter parameter, Class<?> klass) throws Exception
+    public static void unset(String bodhi, Parameter parameter, Class<?> klass) throws Exception
+    {
+
+    }
+
+    public static Object set(String bodhi, Parameter parameter, Class<?> klass) throws Exception
     {
         //
 
@@ -66,7 +84,7 @@ public class System
 
             System.push("//database/{name}", Database.reference.name);
 
-            System.push("//database/{file}", Database.reference.file);
+            System.push("//database/{file}", Database.reference.url);
 
             System.push("//database/{ready}", TRUE);
         }
@@ -78,37 +96,56 @@ public class System
 
         //
 
-        if(bodhi.equals("//database") && klass.isAssignableFrom(UseDatabaseImplContext.class))
+        if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImplContext.PreconditionCheckContext.class))
         {
-            System.push(bodhi, "//database");
+            //
         }
 
-        if(bodhi.equals("//database/selected")  && klass.isAssignableFrom(UseDatabaseImplContext.class))
+        if(bodhi.equals("//database{name}") && klass.isAssignableFrom(CreateDatabaseImplContext.PreconditionCheckContext.class))
         {
-            System.push(bodhi, "//database");
+             String pname = CreateDatabaseImpl.Utility.getDatabaseName(parameter).trim();
+
+             String dname = ((String)System.pull(bodhi)).trim();
+
+             if(pname.equals(dname)) return new Exception();
+
+             String[] fnames = CreateDatabaseImpl.Utility.getDatabaseNames(parameter);
+
+             for(int i=0; i<fnames.length; i++)
+             {
+                 if(fnames[i].equals(pname)) return new Exception();
+             }
         }
 
-        if(bodhi.equals("//database/properties/name") && klass.isAssignableFrom(UseDatabaseImplContext.class))
+        if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImplContext.TaskRunnerContext.class))
         {
-            System.push(bodhi, UseDatabaseImpl.Utility.getDatabaseName(parameter));
+            System.push("//database/{ready}", FALSE);
+
+            System.push("//database", new Database(parameter));
+
+            System.push("//database/{name}", Database.reference.name);
+
+            System.push("//database/{file}", Database.reference.url);
+
+            System.push("//database/{ready}", TRUE);
         }
 
-        if(bodhi.equals("//database/properties/file") && klass.isAssignableFrom(UseDatabaseImplContext.class))
+        if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImplContext.PostconditionCheckContext.class))
         {
-            String name = parameter.name = (String)System.pull("//database/properties/name");
-
-            System.push(bodhi, UseDatabaseImpl.Utility.getDatabaseFile(parameter));
+            System.push("//database/{ready}", TRUE);
         }
+
+        return null;
     }
 
-    public static Boolean touch(String name) throws Exception
+    public static Boolean touch(String bodhi) throws Exception
     {
-        return Memory.reference.exists(name);
+        return Memory.reference.exists(bodhi);
     }
 
     public static Boolean touch(String bodhi, Parameter parameter, Class<?> klass) throws Exception
     {
-        if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImplContext.PreConditionRunnerContext.class))
+        if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImplContext.PreconditionCheckContext.class))
         {
             var name = CreateDatabaseImpl.Utility.getDatabaseName(parameter);
 
@@ -129,7 +166,7 @@ public class System
 
         }
 
-        if(bodhi.equals("") && klass.isAssignableFrom(CreateDatabaseImplContext.PostConditionRunnerContext.class))
+        if(bodhi.equals("") && klass.isAssignableFrom(CreateDatabaseImplContext.PostconditionCheckContext.class))
         {
 
         }
@@ -187,6 +224,11 @@ public class System
     public static void push(String name, String target) throws Exception
     {
         Memory.reference.push(name, target);
+    }
+
+    public static void nullify(String name) throws Exception
+    {
+        Memory.reference.push(name, null);
     }
 }
 
