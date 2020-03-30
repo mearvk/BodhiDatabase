@@ -1,10 +1,8 @@
 package components.processor;
 
 import components.Component;
-import components.parser.ParserComponent;
 import parameter.Parameter;
 import structures.SQLString;
-import system.System;
 
 import java.util.LinkedList;
 

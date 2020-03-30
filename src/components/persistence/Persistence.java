@@ -7,25 +7,21 @@ import structures.Queue;
 import structures.SQLString;
 import system.System;
 
-public class PersistenceComponent extends Component
+public class Persistence extends Component
 {
-    public PersistenceCaseHandler.CreateDatabase create_database;
-
-    public ThreadImplementation thread = new ThreadImplementation();
+    public Thread thread = new Thread();
 
     public Queue<SQLString> queue = new Queue<SQLString>();
 
-    public PersistenceComponent() throws Exception
+    public Persistence() throws Exception
     {
         System.push("//persistence", this);
-
-        System.push("//persistence/queue", this.queue);
-
-        System.push("//persistence/thread", this.thread);
     }
 
-    public static class ThreadImplementation extends Thread
+    public static class Thread extends java.lang.Thread
     {
+        public Queue<SQLString> queue = new Queue<SQLString>();
+
         public Boolean running = true;
 
         @Override
@@ -43,7 +39,7 @@ public class PersistenceComponent extends Component
                     {
                         if (queue.peek() == null)
                         {
-                            Thread.sleep(20, 0);
+                            java.lang.Thread.sleep(20, 0);
 
                             continue;
                         }

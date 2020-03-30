@@ -6,15 +6,15 @@ import exceptions.ExceptionQueue;
 import structures.Queue;
 import structures.SQLString;
 
-public class ParserComponent extends Component
+public class Parser extends Component
 {
-    public static ParserComponent reference;
+    public static Parser reference;
 
     public ParserThread thread = new ParserThread();
 
-    public ParserComponent() throws Exception
+    public Parser() throws Exception
     {
-        ParserComponent.reference = this;
+        Parser.reference = this;
     }
 
     public static class ParserThread extends Thread
@@ -39,7 +39,7 @@ public class ParserComponent extends Component
                             continue;
                         }
 
-                        ParserCaseHandler handler = new ParserCaseHandler(this.queue);
+                        new ParserCaseHandler(this.queue);
                     }
                     catch (Exception e)
                     {

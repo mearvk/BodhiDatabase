@@ -1,6 +1,7 @@
 package components.parser.handler;
 
 import cases.*;
+import structures.Queue;
 import structures.SQLString;
 
 import java.util.LinkedList;
@@ -9,9 +10,9 @@ public class ParserCaseHandler
 {
     public ParserCaseHandler.Unknown unknown;
 
-    public ParserCaseHandler(LinkedList<SQLString> queue)
+    public ParserCaseHandler(Queue<SQLString> queue)
     {
-        String sqlstring = queue.poll().value.toUpperCase();
+        String sqlstring = queue.dequeue().value;
 
         try
         {

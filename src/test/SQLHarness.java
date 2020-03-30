@@ -1,10 +1,9 @@
 package test;
 
-import components.parser.ParserComponent;
+import components.parser.Parser;
 import exceptions.ExceptionQueue;
 import structures.Queue;
 import structures.SQLString;
-import system.System;
 
 public class SQLHarness
 {
@@ -26,7 +25,7 @@ public class SQLHarness
         {
             try
             {
-                Queue<SQLString> queue = ParserComponent.reference.thread.queue;
+                Queue<SQLString> queue = Parser.reference.thread.queue;
 
                 queue.add(new SQLString("CREATE DATABASE company"));
 
@@ -47,7 +46,7 @@ public class SQLHarness
         {
             try
             {
-                Queue<SQLString> queue = ParserComponent.reference.thread.queue;
+                Queue<SQLString> queue = Parser.reference.thread.queue;
 
                 queue.add(new SQLString("CREATE DATABASE weather"));
 
@@ -68,7 +67,7 @@ public class SQLHarness
         {
             try
             {
-                Queue<SQLString> queue = ParserComponent.reference.thread.queue;
+                Queue<SQLString> queue = Parser.reference.thread.queue;
 
                 queue.add(new SQLString("CREATE DATABASE equipment"));
 
@@ -89,7 +88,7 @@ public class SQLHarness
         {
             try
             {
-                Queue<SQLString> queue = ParserComponent.reference.thread.queue;;
+                Queue<SQLString> queue = Parser.reference.thread.queue;;
 
                 queue.add(new SQLString("CREATE DATABASE alcohol"));
 
@@ -110,7 +109,7 @@ public class SQLHarness
         {
             try
             {
-                Queue<SQLString> queue = ParserComponent.reference.thread.queue;
+                Queue<SQLString> queue = Parser.reference.thread.queue;
 
                 queue.add(new SQLString("CREATE DATABASE hospital"));
 
