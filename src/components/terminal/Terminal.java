@@ -20,7 +20,7 @@ public class Terminal extends Component
 
     public static Terminal reference;
 
-    public UserInterface userinterface = new UserInterface();
+    //public UserInterface userinterface = new UserInterface();
 
     public Terminal() throws Exception
     {

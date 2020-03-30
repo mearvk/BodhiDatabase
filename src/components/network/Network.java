@@ -5,15 +5,15 @@ import exceptions.ExceptionQueue;
 import structures.Queue;
 import structures.SQLString;
 
-public class NetworkComponent extends Component
+public class Network extends Component
 {
-    public static NetworkComponent reference;
+    public static Network reference;
 
     public ThreadImplementation thread = new ThreadImplementation();
 
-    public NetworkComponent() throws Exception
+    public Network() throws Exception
     {
-        NetworkComponent.reference = this;
+        Network.reference = this;
     }
 
     public static class ThreadImplementation extends Thread

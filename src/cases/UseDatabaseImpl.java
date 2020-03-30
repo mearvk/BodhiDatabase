@@ -1,10 +1,7 @@
 package cases;
 
-import components.database.DatabaseComponent;
 import constants.DatabaseConstants;
-import contexts.UseImplContext;
 import parameter.Parameter;
-import system.System;
 
 import java.util.StringTokenizer;
 
@@ -42,7 +39,7 @@ public class UseDatabaseImpl extends UseCase
     {
         public UseImpl_Step001(Parameter parameter) throws Exception
         {
-            System.push("//step001", new PreconditionCheck(parameter));
+            PreconditionCheck check = new PreconditionCheck(parameter);
         }
     }
 
@@ -50,7 +47,7 @@ public class UseDatabaseImpl extends UseCase
     {
         public UseImpl_Step002(Parameter parameter) throws Exception
         {
-            System.push("//step002", new TaskRunner(parameter));
+            TaskRunner runner = new TaskRunner(parameter);
         }
     }
 
@@ -58,7 +55,7 @@ public class UseDatabaseImpl extends UseCase
     {
         public UseImpl_Step003(Parameter parameter) throws Exception
         {
-            System.push("//step003", new PostconditionCheck(parameter));
+            PostconditionCheck check = new PostconditionCheck(parameter);
         }
     }
 

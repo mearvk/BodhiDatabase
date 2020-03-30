@@ -6,18 +6,18 @@ import structures.SQLString;
 
 import java.util.LinkedList;
 
-public class ProcessorComponent extends Component
+public class Processor extends Component
 {
-    public static ProcessorComponent reference;
+    public static Processor reference;
 
-    public ThreadImplementation thread= new ThreadImplementation();
+    public Thread thread= new Thread();
 
-    public ProcessorComponent() throws Exception
+    public Processor() throws Exception
     {
-        ProcessorComponent.reference = this;
+        Processor.reference = this;
     }
 
-    public static class ThreadImplementation extends Thread
+    public static class Thread extends java.lang.Thread
     {
         public Boolean running = true;
 
@@ -34,7 +34,7 @@ public class ProcessorComponent extends Component
                     {
                         if (this.queue.peek() == null)
                         {
-                            Thread.sleep(25, 0);
+                            java.lang.Thread.sleep(25, 0);
 
                             continue;
                         }

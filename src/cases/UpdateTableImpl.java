@@ -1,6 +1,6 @@
 package cases;
 
-import components.database.DatabaseComponent;
+import components.database.Database;
 import parameter.Parameter;
 import system.System;
 
@@ -78,9 +78,9 @@ public class UpdateTableImpl extends UseCase
 
         public static String getDatabaseName(Parameter parameter) throws Exception
         {
-            DatabaseComponent databaseComponent = (DatabaseComponent)System.pull("//database");
+            Database database = (Database)System.pull("//database");
 
-            return databaseComponent.name;
+            return database.name;
         }
 
         public static String getTableName(Parameter parameter)

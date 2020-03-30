@@ -3,7 +3,7 @@ package system;
 import cases.CreateDatabaseImpl;
 import cases.UseDatabaseImpl;
 import components.memory.Memory;
-import components.processor.ProcessorComponent;
+import components.processor.Processor;
 import contexts.CreateDatabaseImplContext;
 import contexts.UseImplContext;
 import exceptions.DatabaseExistsAlreadyException;
@@ -20,7 +20,7 @@ public class System
 
     //public static ValidationComponent validator = new ValidationComponent();
 
-    public static ProcessorComponent processor;
+    public static Processor processor;
 
     //
 
@@ -28,7 +28,7 @@ public class System
     {
         System.reference = this;
 
-        System.processor = new ProcessorComponent();
+        System.processor = new Processor();
     }
 
     //

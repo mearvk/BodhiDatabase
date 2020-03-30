@@ -11,8 +11,6 @@ public class Persistence extends Component
 {
     public Thread thread = new Thread();
 
-    public Queue<SQLString> queue = new Queue<SQLString>();
-
     public Persistence() throws Exception
     {
         System.push("//persistence", this);
@@ -27,24 +25,20 @@ public class Persistence extends Component
         @Override
         public void run()
         {
-            Queue<SQLString> queue = null;
-
             try
             {
-                queue = (Queue<SQLString>) System.pull("//persistence/queue");
-
                 while (running)
                 {
                     try
                     {
-                        if (queue.peek() == null)
+                        if (this.queue.peek() == null)
                         {
                             java.lang.Thread.sleep(20, 0);
 
                             continue;
                         }
 
-                        PersistenceCaseHandler handler = new PersistenceCaseHandler(queue);
+                        else new PersistenceCaseHandler(this.queue);
                     }
                     catch (Exception e)
                     {

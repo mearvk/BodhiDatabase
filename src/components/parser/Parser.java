@@ -38,8 +38,7 @@ public class Parser extends Component
 
                             continue;
                         }
-
-                        new ParserCaseHandler(this.queue);
+                        else new ParserCaseHandler(this.queue);
                     }
                     catch (Exception e)
                     {

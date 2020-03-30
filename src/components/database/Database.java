@@ -6,17 +6,13 @@ import system.System;
 
 import java.util.LinkedList;
 
-public class DatabaseComponent extends Component
+public class Database extends Component
 {
-    public DatabaseComponent.Reference reference = new Reference();
-
-    public DatabaseComponent.Properties properties = new Properties();
-
-    //public ThreadImplementation thread = new ThreadImplementation();
+    public Database.Properties properties = new Properties();
 
     public LinkedList<SQLString> queue = new LinkedList<SQLString>();
 
-    public DatabaseComponent() throws Exception
+    public Database() throws Exception
     {
         System.push("//database", this);
 

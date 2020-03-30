@@ -1,11 +1,11 @@
 package builder;
 
-import components.network.NetworkComponent;
+import components.network.Network;
 import components.parser.Parser;
 import components.persistence.Persistence;
-import components.processor.ProcessorComponent;
+import components.processor.Processor;
 import components.terminal.Terminal;
-import components.database.DatabaseComponent;
+import components.database.Database;
 
 public class SQLBuilder
 {
@@ -26,9 +26,7 @@ public class SQLBuilder
     {
         public Builder_Step001() throws Exception
         {
-            Parser parser = new Parser();
-
-            parser.thread.start();
+            Database database = new Database();
         }
     }
 
@@ -36,9 +34,9 @@ public class SQLBuilder
     {
         public Builder_Step002() throws Exception
         {
-            Persistence persistence = new Persistence();
+            Parser parser = new Parser();
 
-            persistence.thread.start();
+            parser.thread.start();
         }
     }
 
@@ -46,9 +44,9 @@ public class SQLBuilder
     {
         public Builder_Step003() throws Exception
         {
-            NetworkComponent network = new NetworkComponent();
+            Persistence persistence = new Persistence();
 
-            network.thread.start();
+            persistence.thread.start();
         }
     }
 
@@ -56,7 +54,7 @@ public class SQLBuilder
     {
         public Builder_Step004() throws Exception
         {
-            ProcessorComponent processor = new ProcessorComponent();
+            Processor processor = new Processor();
 
             processor.thread.start();
         }
@@ -76,9 +74,9 @@ public class SQLBuilder
     {
         public Builder_Step006() throws Exception
         {
-            DatabaseComponent databaseComponent = new DatabaseComponent();
+            Network network = new Network();
 
-            //databaseComponent.thread.start();
+            network.thread.start();
         }
     }
 }
