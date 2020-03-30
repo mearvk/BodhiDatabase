@@ -6,7 +6,7 @@ import components.memory.Memory;
 import components.processor.ProcessorComponent;
 import contexts.CreateDatabaseImplContext;
 import contexts.UseImplContext;
-import exceptions.DatabaseException;
+import exceptions.DatabaseExistsAlreadyException;
 import parameter.Parameter;
 import components.validation.ValidationComponent;
 
@@ -91,7 +91,7 @@ public class System
 
             for(int i=0; i<names.length; i++)
             {
-                if(names[i].equalsIgnoreCase(name)) throw new DatabaseException();
+                if(names[i].equalsIgnoreCase(name)) throw new DatabaseExistsAlreadyException("Database exists already");
             }
 
             return true;

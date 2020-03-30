@@ -62,7 +62,7 @@ public class ParserCaseHandler
         }
         catch (Exception e)
         {
-            this.unknown = new ParserCaseHandler.Unknown();
+            new ParserCaseHandler.Unknown();
         }
     }
 

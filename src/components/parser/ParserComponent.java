@@ -1,24 +1,57 @@
 package components.parser;
 
 import components.Component;
-import components.parser.thread.ParserThread;
+import components.parser.handler.ParserCaseHandler;
+import exceptions.ExceptionQueue;
 import structures.Queue;
 import structures.SQLString;
-import system.System;
 
 public class ParserComponent extends Component
 {
-    public ParserThread thread = new ParserThread();
+    public static ParserComponent reference;
 
-    public Queue<SQLString> queue = new Queue<SQLString>();
+    public ParserThread thread = new ParserThread();
 
     public ParserComponent() throws Exception
     {
-        System.push("//parser", this);
+        ParserComponent.reference = this;
+    }
 
-        System.push("//parser/queue", this.queue);
+    public static class ParserThread extends Thread
+    {
+        public Boolean running = true;
 
-        System.push("//parser/thread", this.thread);
+        public Queue<SQLString> queue = new Queue<SQLString>();
+
+        @Override
+        public void run()
+        {
+            try
+            {
+                while (running)
+                {
+                    try
+                    {
+                        if (this.queue.peek() == null)
+                        {
+                            Thread.sleep(20, 0);
+
+                            continue;
+                        }
+
+                        ParserCaseHandler handler = new ParserCaseHandler(this.queue);
+                    }
+                    catch (Exception e)
+                    {
+                        ExceptionQueue.enqueue(e);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                ExceptionQueue.enqueue(e.getMessage());
+            }
+        }
     }
 }
 

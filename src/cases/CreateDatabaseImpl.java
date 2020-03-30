@@ -2,7 +2,7 @@ package cases;
 
 import constants.DatabaseConstants;
 import contexts.CreateDatabaseImplContext;
-import exceptions.DatabaseException;
+import exceptions.DatabaseExistsAlreadyException;
 import parameter.Parameter;
 import system.System;
 
@@ -37,7 +37,7 @@ public class CreateDatabaseImpl extends UseCase
 
             this.step003 = new CreateDatabaseImpl_Step003(this.parameter);
         }
-        catch (DatabaseException daee)
+        catch (DatabaseExistsAlreadyException daee)
         {
             daee.printStackTrace();
         }

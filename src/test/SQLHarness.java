@@ -1,5 +1,7 @@
 package test;
 
+import components.parser.ParserComponent;
+import exceptions.ExceptionQueue;
 import structures.Queue;
 import structures.SQLString;
 import system.System;
@@ -24,7 +26,7 @@ public class SQLHarness
         {
             try
             {
-                Queue<SQLString> queue = (Queue<SQLString>) System.pull("//parser/queue");
+                Queue<SQLString> queue = ParserComponent.reference.thread.queue;
 
                 queue.add(new SQLString("CREATE DATABASE company"));
 
@@ -34,7 +36,7 @@ public class SQLHarness
             }
             catch (Exception e)
             {
-                java.lang.System.err.println(e);
+                ExceptionQueue.enqueue(e);
             }
         }
     }
@@ -45,7 +47,7 @@ public class SQLHarness
         {
             try
             {
-                Queue<SQLString> queue = (Queue<SQLString>) System.pull("//parser/queue");
+                Queue<SQLString> queue = ParserComponent.reference.thread.queue;
 
                 queue.add(new SQLString("CREATE DATABASE weather"));
 
@@ -55,7 +57,7 @@ public class SQLHarness
             }
             catch (Exception e)
             {
-                java.lang.System.err.println(e);
+                ExceptionQueue.enqueue(e);
             }
         }
     }
@@ -66,7 +68,7 @@ public class SQLHarness
         {
             try
             {
-                Queue<SQLString> queue = (Queue<SQLString>) System.pull("//parser/queue");
+                Queue<SQLString> queue = ParserComponent.reference.thread.queue;
 
                 queue.add(new SQLString("CREATE DATABASE equipment"));
 
@@ -76,7 +78,7 @@ public class SQLHarness
             }
             catch (Exception e)
             {
-                java.lang.System.err.println(e);
+                ExceptionQueue.enqueue(e);
             }
         }
     }
@@ -87,7 +89,7 @@ public class SQLHarness
         {
             try
             {
-                Queue<SQLString> queue = (Queue<SQLString>) System.pull("//parser/queue");
+                Queue<SQLString> queue = ParserComponent.reference.thread.queue;;
 
                 queue.add(new SQLString("CREATE DATABASE alcohol"));
 
@@ -97,7 +99,7 @@ public class SQLHarness
             }
             catch (Exception e)
             {
-                java.lang.System.err.println(e);
+                ExceptionQueue.enqueue(e);
             }
         }
     }
@@ -108,7 +110,7 @@ public class SQLHarness
         {
             try
             {
-                Queue<SQLString> queue = (Queue<SQLString>) System.pull("//parser/queue");
+                Queue<SQLString> queue = ParserComponent.reference.thread.queue;
 
                 queue.add(new SQLString("CREATE DATABASE hospital"));
 
@@ -118,7 +120,7 @@ public class SQLHarness
             }
             catch(Exception e)
             {
-                java.lang.System.err.println(e);
+                ExceptionQueue.enqueue(e);
             }
         }
     }
