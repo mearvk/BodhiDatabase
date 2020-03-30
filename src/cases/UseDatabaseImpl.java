@@ -1,17 +1,21 @@
 package cases;
 
+import components.database.Database;
+import contexts.UseDatabaseImplContext;
+import system.*;
 import constants.DatabaseConstants;
 import parameter.Parameter;
+import system.System;
 
 import java.util.StringTokenizer;
 
 public class UseDatabaseImpl extends UseCase
 {
-    public UseDatabaseImpl.UseImpl_Step001 step001;
+    public UseDatabaseImpl_Step001 step001;
 
-    public UseDatabaseImpl.UseImpl_Step002 step002;
+    public UseDatabaseImpl_Step002 step002;
 
-    public UseDatabaseImpl.UseImpl_Step003 step003;
+    public UseDatabaseImpl_Step003 step003;
 
     public Parameter parameter;
 
@@ -23,11 +27,11 @@ public class UseDatabaseImpl extends UseCase
 
         try
         {
-            this.step001 = new UseDatabaseImpl.UseImpl_Step001(this.parameter);
+            this.step001 = new UseDatabaseImpl_Step001(this.parameter);
 
-            this.step002 = new UseDatabaseImpl.UseImpl_Step002(this.parameter);
+            this.step002 = new UseDatabaseImpl_Step002(this.parameter);
 
-            this.step003 = new UseDatabaseImpl.UseImpl_Step003(this.parameter);
+            this.step003 = new UseDatabaseImpl_Step003(this.parameter);
         }
         catch (Exception e)
         {
@@ -35,25 +39,25 @@ public class UseDatabaseImpl extends UseCase
         }
     }
 
-    public static class UseImpl_Step001
+    public static class UseDatabaseImpl_Step001
     {
-        public UseImpl_Step001(Parameter parameter) throws Exception
+        public UseDatabaseImpl_Step001(Parameter parameter) throws Exception
         {
             PreconditionCheck check = new PreconditionCheck(parameter);
         }
     }
 
-    public static class UseImpl_Step002
+    public static class UseDatabaseImpl_Step002
     {
-        public UseImpl_Step002(Parameter parameter) throws Exception
+        public UseDatabaseImpl_Step002(Parameter parameter) throws Exception
         {
             TaskRunner runner = new TaskRunner(parameter);
         }
     }
 
-    public static class UseImpl_Step003
+    public static class UseDatabaseImpl_Step003
     {
-        public UseImpl_Step003(Parameter parameter) throws Exception
+        public UseDatabaseImpl_Step003(Parameter parameter) throws Exception
         {
             PostconditionCheck check = new PostconditionCheck(parameter);
         }
@@ -63,7 +67,7 @@ public class UseDatabaseImpl extends UseCase
     {
         public PreconditionCheck(Parameter parameter) throws Exception
         {
-            return;
+            System.set("//database", parameter, UseDatabaseImplContext.PreconditionCheckContext.class);
         }
     }
 
@@ -71,7 +75,7 @@ public class UseDatabaseImpl extends UseCase
     {
         public TaskRunner(Parameter parameter) throws Exception
         {
-            return;
+            System.set("//database", parameter, UseDatabaseImplContext.TaskRunnerContext.class);
         }
     }
 
@@ -79,7 +83,7 @@ public class UseDatabaseImpl extends UseCase
     {
         public PostconditionCheck(Parameter parameter) throws Exception
         {
-            return;
+            System.set("//database", parameter, UseDatabaseImplContext.PostconditionCheckContext.class);
         }
     }
 

@@ -2,13 +2,19 @@ package system;
 
 import cases.CreateDatabaseImpl;
 import cases.UseDatabaseImpl;
+import components.database.Database;
 import components.memory.Memory;
 import components.processor.Processor;
 import contexts.CreateDatabaseImplContext;
-import contexts.UseImplContext;
+import contexts.UseDatabaseImplContext;
 import exceptions.DatabaseExistsAlreadyException;
 import parameter.Parameter;
 import components.validation.ValidationComponent;
+
+import java.nio.file.attribute.UserDefinedFileAttributeView;
+
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 
 public class System
 {
@@ -21,6 +27,8 @@ public class System
     //public static ValidationComponent validator = new ValidationComponent();
 
     public static Processor processor;
+
+    private Database database;
 
     //
 
@@ -35,7 +43,7 @@ public class System
 
     public static void set(String property, String ref, Class klass) throws Exception
     {
-        if(property.equals("//database/selected")  && klass.isAssignableFrom(UseImplContext.class))
+        if(property.equals("//database/selected")  && klass.isAssignableFrom(UseDatabaseImplContext.class))
         {
             System.push(property, ref);
         }
@@ -43,22 +51,49 @@ public class System
 
     public static void set(String bodhi, Parameter parameter, Class<?> klass) throws Exception
     {
-        if(bodhi.equals("//database") && klass.isAssignableFrom(UseImplContext.class))
+        //
+
+        if(bodhi.equals("//database") && klass.isAssignableFrom(UseDatabaseImplContext.PreconditionCheckContext.class))
+        {
+            System.push("//database/{ready}", FALSE);
+        }
+
+        if(bodhi.equals("//database") && klass.isAssignableFrom(UseDatabaseImplContext.TaskRunnerContext.class))
+        {
+            System.push("//database/{ready}", FALSE);
+
+            System.push("//database", new Database(parameter));
+
+            System.push("//database/{name}", Database.reference.name);
+
+            System.push("//database/{file}", Database.reference.file);
+
+            System.push("//database/{ready}", TRUE);
+        }
+
+        if(bodhi.equals("//database") && klass.isAssignableFrom(UseDatabaseImplContext.PostconditionCheckContext.class))
+        {
+            System.push("//database/{ready}", TRUE);
+        }
+
+        //
+
+        if(bodhi.equals("//database") && klass.isAssignableFrom(UseDatabaseImplContext.class))
         {
             System.push(bodhi, "//database");
         }
 
-        if(bodhi.equals("//database/selected")  && klass.isAssignableFrom(UseImplContext.class))
+        if(bodhi.equals("//database/selected")  && klass.isAssignableFrom(UseDatabaseImplContext.class))
         {
             System.push(bodhi, "//database");
         }
 
-        if(bodhi.equals("//database/properties/name") && klass.isAssignableFrom(UseImplContext.class))
+        if(bodhi.equals("//database/properties/name") && klass.isAssignableFrom(UseDatabaseImplContext.class))
         {
             System.push(bodhi, UseDatabaseImpl.Utility.getDatabaseName(parameter));
         }
 
-        if(bodhi.equals("//database/properties/file") && klass.isAssignableFrom(UseImplContext.class))
+        if(bodhi.equals("//database/properties/file") && klass.isAssignableFrom(UseDatabaseImplContext.class))
         {
             String name = parameter.name = (String)System.pull("//database/properties/name");
 
@@ -68,16 +103,6 @@ public class System
 
     public static Boolean touch(String name) throws Exception
     {
-        return Memory.reference.exists(name);
-    }
-
-    public static Boolean touch_print(String name) throws Exception
-    {
-        if(name.equals("//database/selected"))
-        {
-            java.lang.System.out.println("Database <"+(String)System.pull("//database/properties/name")+"> selected.");
-        }
-
         return Memory.reference.exists(name);
     }
 
@@ -147,6 +172,11 @@ public class System
     public static Object pull(String name) throws Exception
     {
         return Memory.reference.pull(name);
+    }
+
+    public static void push(String name, Class<?> klass) throws Exception
+    {
+
     }
 
     public static void push(String name, Object object) throws Exception

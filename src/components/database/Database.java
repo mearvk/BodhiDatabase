@@ -1,24 +1,36 @@
 package components.database;
 
+import cases.UseDatabaseImpl;
 import components.Component;
+import parameter.Parameter;
 import structures.SQLString;
 import system.System;
 
+import javax.xml.crypto.Data;
 import java.util.LinkedList;
 
 public class Database extends Component
 {
-    public Database.Properties properties = new Properties();
+    public Parameter parameter;
 
-    public LinkedList<SQLString> queue = new LinkedList<SQLString>();
+    public String name;
+
+    public String file;
+
+    public static Database reference;
 
     public Database() throws Exception
     {
-        System.push("//database", this);
+        Database.reference = this;
+    }
 
-        System.push("//database/queue", this.queue);
+    public Database(Parameter parameter) throws Exception
+    {
+        Database.reference = this;
 
-        System.push("//database/properties", this.properties);
+        Database.reference.name = UseDatabaseImpl.Utility.getDatabaseName(parameter);
+
+        Database.reference.file = UseDatabaseImpl.Utility.getDatabaseFile(parameter);
     }
 
     public static class Properties
