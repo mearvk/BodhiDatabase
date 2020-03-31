@@ -13,7 +13,10 @@ import structures.SQLString;
 import system.System;
 import utility.validation.Utility;
 
-import java.io.*;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.File;
+import java.io.FileWriter;
 
 public class Persistence extends Component
 {
@@ -35,19 +38,11 @@ public class Persistence extends Component
 
     }
 
-    public void write(String bodhi, Parameter parameter, Class<?> klass)
-    {
-        if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImplContext.TaskRunnerContext.class))
-        {
-            this.writer.writeJson(bodhi, CreateDatabaseImpl.Utility.getDatabaseName(parameter), klass);
-        }
-    }
-
     public void read(String bodhi, Parameter parameter, Class<?> klass)
     {
         if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImplContext.TaskRunnerContext.class))
         {
-            this.reader.readJson(bodhi, CreateDatabaseImpl.Utility.getDatabaseName(parameter), klass);
+            this.reader.readXML(bodhi, CreateDatabaseImpl.Utility.getDatabaseName(parameter), klass);
         }
     }
 
@@ -94,70 +89,19 @@ public class Persistence extends Component
 
     public class SQLWriter
     {
-        public void writeJson(String bodhi, String dbname, Class<?> klass)
+        public void writeXML(String bodhi, Parameter parameter, Class<?> klass)
         {
-            if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImplContext.TaskRunnerContext.class)) {
-
-                try
-                {
-                    JSONObject meta = new JSONObject();
-
-                    meta.put("type", "SQL");
-
-                    meta.put("name", dbname + ".sql");
-
-                    meta.put("version", "1.0");
-
-                    //
-
-                    JSONObject database = new JSONObject();
-
-                    database.put("database", meta);
-
-                    //
-
-                    FileWriter filewriter = new FileWriter(DatabaseConstants.baseURL + "\\" + dbname + ".sql",false);
-
-                    filewriter.write(database.toString());
-
-                    filewriter.flush();
-
-                    filewriter.close();
-
-                    filewriter = null;
-                }
-                catch (Exception e)
-                {
-                    ExceptionQueue equeue;
-
-                    equeue = new ExceptionQueue();
-
-                    equeue.enqueue(e, e.getMessage());
-                }
+            if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImplContext.TaskRunnerContext.class))
+            {
+                Utility.XMLWriter writer = new Utility.XMLWriter(CreateDatabaseImpl.Utility.getDatabaseFile(parameter), CreateDatabaseImpl.Utility.getDatabaseName(parameter), CreateDatabaseImplContext.TaskRunnerContext.class);
             }
         }
     }
 
     public class SQLReader
     {
-        public JSONObject readJson(String bodhi, String dbname, Class<?> klass)
+        public Object readXML(String bodhi, String dbname, Class<?> klass)
         {
-            if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImplContext.TaskRunnerContext.class))
-            {
-                try
-                {
-                    Utility.JSONReader reader;
-
-                    reader = new Utility.JSONReader(new BufferedReader(new FileReader(DatabaseConstants.baseURL+"\\"+dbname+".sql")));
-
-                    return new JSONObject(reader.buffer.toString());
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-            }
-
             return null;
         }
     }

@@ -136,9 +136,9 @@ public class System
 
             persistence = new Persistence();
 
-            persistence.writer.writeJson("//database", CreateDatabaseImpl.Utility.getDatabaseName(parameter), CreateDatabaseImplContext.TaskRunnerContext.class);
+            persistence.writer.writeXML("//database", parameter, CreateDatabaseImplContext.TaskRunnerContext.class);
 
-            persistence.reader.readJson("//database", CreateDatabaseImpl.Utility.getDatabaseName(parameter), CreateDatabaseImplContext.TaskRunnerContext.class);
+            //persistence.reader.readXML("//database", CreateDatabaseImpl.Utility.getDatabaseName(parameter), CreateDatabaseImplContext.TaskRunnerContext.class);
         }
 
         if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImplContext.PostconditionCheckContext.class))
