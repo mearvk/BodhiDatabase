@@ -73,9 +73,21 @@ public class System
 
     public static Object set(final String bodhi, final Parameter parameter, final Class<?> klass) throws Exception
     {
-        //
-
         if(bodhi.equals("//database") && klass.isAssignableFrom(CreateTableImpl.PreconditionCheck.class))
+        {
+            System.touch("//database");
+
+            System.touch("//database{name}");
+        }
+
+        if(bodhi.equals("//database{name}") && klass.isAssignableFrom(CreateTableImpl.PreconditionCheck.class))
+        {
+            System.touch("//database");
+
+            System.touch("//database{name}");
+        }
+
+        if(bodhi.equals("//database") && klass.isAssignableFrom(CreateTableImpl.TaskRunner.class))
         {
             Table table;
 

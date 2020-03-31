@@ -18,6 +18,14 @@ import java.io.FileWriter;
 
 public class Utility
 {
+    public static class XMLReader
+    {
+        public XMLReader(String fileURL, String dbname, Class<?> klass)
+        {
+
+        }
+    }
+
     public static class XMLWriter
     {
         public XMLWriter(String fileURL, String dbname, Class<?> klass)
