@@ -1,8 +1,10 @@
 package components.database;
 
+import cases.CreateTableImpl;
 import cases.UseDatabaseImpl;
 import components.Component;
 import parameter.Parameter;
+import system.System;
 
 public class Database extends Component
 {
@@ -38,5 +40,26 @@ public class Database extends Component
     public static class Reference
     {
 
+    }
+
+    public static class Table
+    {
+        public String name;
+
+        public String url;
+
+        public Table(Parameter parameter, Class<?> klass) throws Exception
+        {
+            if(klass.isAssignableFrom(CreateTableImpl.TaskRunner.class))
+            {
+                System.touch("//database");
+
+                System.touch("//database{name}");
+
+                String name = this.name = CreateTableImpl.Utility.getTableName(parameter);
+
+                String url = this.url = CreateTableImpl.Utility.getDatabaseFile(parameter);
+            }
+        }
     }
 }

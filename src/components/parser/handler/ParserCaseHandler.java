@@ -99,7 +99,11 @@ public class ParserCaseHandler
             { CreateIndexImpl runner = new CreateIndexImpl(this.sqlString = sqlString); }
             catch(Exception e)
             {
+                ExceptionQueue equeue;
 
+                equeue = new ExceptionQueue();
+
+                equeue.enqueue(e, e.getMessage());
             }
         }
     }
@@ -114,7 +118,11 @@ public class ParserCaseHandler
             { CreateTableImpl runner = new CreateTableImpl(this.sqlString = sqlString); }
             catch(Exception e)
             {
-                //TODO
+                ExceptionQueue equeue;
+
+                equeue = new ExceptionQueue();
+
+                equeue.enqueue(e, e.getMessage());
             }
 
             this.sqlString = sqlString;
@@ -131,7 +139,11 @@ public class ParserCaseHandler
             { DeleteFromImpl runner = new DeleteFromImpl(this.sqlString = sqlString); }
             catch (Exception e)
             {
-                //TODO
+                ExceptionQueue equeue;
+
+                equeue = new ExceptionQueue();
+
+                equeue.enqueue(e, e.getMessage());
             }
         }
     }
@@ -146,7 +158,11 @@ public class ParserCaseHandler
             { DropColumnImpl runner = new DropColumnImpl(this.sqlString = sqlString); }
             catch (Exception e)
             {
-                //TODO
+                ExceptionQueue equeue;
+
+                equeue = new ExceptionQueue();
+
+                equeue.enqueue(e, e.getMessage());
             }
         }
     }
@@ -161,7 +177,11 @@ public class ParserCaseHandler
             { DropDatabaseImpl runner = new DropDatabaseImpl(this.sqlString = sqlString); }
             catch (Exception e)
             {
-                //TODO
+                ExceptionQueue equeue;
+
+                equeue = new ExceptionQueue();
+
+                equeue.enqueue(e, e.getMessage());
             }
         }
     }
@@ -176,7 +196,11 @@ public class ParserCaseHandler
             { InsertIntoTableImpl runner = new InsertIntoTableImpl(this.sqlString = sqlString); }
             catch (Exception e)
             {
-                //TODO
+                ExceptionQueue equeue;
+
+                equeue = new ExceptionQueue();
+
+                equeue.enqueue(e, e.getMessage());
             }
         }
     }
@@ -191,7 +215,11 @@ public class ParserCaseHandler
             { SelectFromTableImpl runner = new SelectFromTableImpl(this.sqlString = sqlString); }
             catch (Exception e)
             {
+                ExceptionQueue equeue;
 
+                equeue = new ExceptionQueue();
+
+                equeue.enqueue(e, e.getMessage());
             }
         }
     }
@@ -206,8 +234,11 @@ public class ParserCaseHandler
             { UpdateTableImpl runner = new UpdateTableImpl(this.sqlString = sqlString); }
             catch (Exception e)
             {
-                //TODO
-            }
+                ExceptionQueue equeue;
+
+                equeue = new ExceptionQueue();
+
+                equeue.enqueue(e, e.getMessage());            }
         }
     }
 
@@ -221,8 +252,11 @@ public class ParserCaseHandler
             { UseDatabaseImpl runner = new UseDatabaseImpl(this.sqlString = sqlString); }
             catch(Exception e)
             {
-                //TODO
-            }
+                ExceptionQueue equeue;
+
+                equeue = new ExceptionQueue();
+
+                equeue.enqueue(e, e.getMessage());            }
         }
     }
 

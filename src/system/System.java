@@ -89,15 +89,24 @@ public class System
 
         if(bodhi.equals("//database") && klass.isAssignableFrom(CreateTableImpl.TaskRunner.class))
         {
-            Table table;
+            Database database = new Database();
 
-            System.push("//database", new Database(parameter));
+            Database.Table table = new Database.Table(parameter, CreateTableImpl.TaskRunner.class);
 
-            System.push("//database/table", table = new Table(parameter));
+            System.push("//database", database);
+
+            System.push("//database/table", table);
 
             System.push("//database/table{name}", table.name);
 
             System.push("//database/table{file}", table.url);
+        }
+
+        if(bodhi.equals("//database{name}") && klass.isAssignableFrom(CreateTableImpl.PostconditionCheck.class))
+        {
+            System.touch("//database");
+
+            System.touch("//database{name}", CreateTableImpl.Utility.getDatabaseName(parameter));
         }
 
         if(bodhi.equals("//database") && klass.isAssignableFrom(UseDatabaseImplContext.PreconditionCheckContext.class))
@@ -172,6 +181,15 @@ public class System
         }
 
         return System.reference;
+    }
+
+    public static Boolean touch(String bodhi, String reference) throws Exception
+    {
+        Object object1 = Memory.reference.pull(bodhi);
+
+        Object object2 = Memory.reference.pull(reference);
+
+        return object1.equals(object2);
     }
 
     public static Boolean touch(String bodhi) throws Exception

@@ -1,7 +1,11 @@
 package cases;
 
+import constants.DatabaseConstants;
 import parameter.Parameter;
 import system.System;
+
+import java.io.File;
+import java.util.StringTokenizer;
 
 public class CreateTableImpl extends UseCase
 {
@@ -85,6 +89,60 @@ public class CreateTableImpl extends UseCase
                 System.set("//database/table{name}", parameter, TaskRunner.class);
 
             System.touch("//continue");
+        }
+    }
+
+    public static class Utility
+    {
+        public static String getDatabaseFile(Parameter parameter)
+        {
+            return DatabaseConstants.baseURL +"\\"+ getDatabaseName(parameter) + ".sql";
+        }
+
+        public static String getDatabaseName(Parameter parameter)
+        {
+            var sqlstring = parameter.sqlstring;
+
+            var tokenizer = new StringTokenizer(sqlstring, " ");
+
+            var token001 = tokenizer.nextToken().toLowerCase();
+
+            var token002 = tokenizer.nextToken().toLowerCase();
+
+            var token003 = tokenizer.nextToken().toLowerCase();
+
+            return token003;
+        }
+
+        public static String[] getExistingDatabaseNames(Parameter parameter)
+        {
+            var files = new File(DatabaseConstants.baseURL).listFiles();
+
+            var names = new String[files.length];
+
+            for(int i=0; i<files.length; i++)
+            {
+                StringTokenizer tokenizer = new StringTokenizer(files[i].getName(), ".");
+
+                names[i] = tokenizer.nextToken();
+            }
+
+            return names;
+        }
+
+        public static String getTableName(Parameter parameter)
+        {
+            var sqlstring = parameter.sqlstring;
+
+            var tokenizer = new StringTokenizer(sqlstring, " ");
+
+            var token001 = tokenizer.nextToken().toLowerCase();
+
+            var token002 = tokenizer.nextToken().toLowerCase();
+
+            var token003 = tokenizer.nextToken().toLowerCase();
+
+            return token003;
         }
     }
 }
