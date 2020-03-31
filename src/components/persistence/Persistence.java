@@ -2,18 +2,39 @@ package components.persistence;
 
 import components.Component;
 import components.persistence.handler.PersistenceCaseHandler;
+import contexts.CreateDatabaseImplContext;
 import exceptions.ExceptionQueue;
+import parameter.Parameter;
 import structures.Queue;
 import structures.SQLString;
 import system.System;
 
 public class Persistence extends Component
 {
-    public Thread thread = new Thread();
+    public static Persistence reference;
+
+    public SQLWriter writer = new SQLWriter();
+
+    public SQLReader reader = new SQLReader();
 
     public Persistence() throws Exception
     {
         System.push("//persistence", this);
+
+        Persistence.reference = this;
+    }
+
+    public void write(String bodhi, Class<?> klass)
+    {
+
+    }
+
+    public void write(String bodhi, Parameter parameter, Class<?> klass)
+    {
+        if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImplContext.TaskRunnerContext.class))
+        {
+            this.writer.writeJson(bodhi, parameter, klass);
+        }
     }
 
     public static class Thread extends java.lang.Thread

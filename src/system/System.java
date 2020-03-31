@@ -3,6 +3,7 @@ package system;
 import cases.CreateDatabaseImpl;
 import components.database.Database;
 import components.memory.Memory;
+import components.persistence.Persistence;
 import components.processor.Processor;
 import contexts.CreateDatabaseImplContext;
 import contexts.UseDatabaseImplContext;
@@ -120,15 +121,21 @@ public class System
 
         if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImplContext.TaskRunnerContext.class))
         {
-            System.push("//database/{ready}", FALSE);
+            Database database;
 
-            System.push("//database", new Database(parameter));
+            System.push("//database", database = new Database(parameter));
 
-            System.push("//database/{name}", Database.reference.name);
+            System.push("//database/{name}", database.name);
 
-            System.push("//database/{file}", Database.reference.url);
+            System.push("//database/{file}", database.url);
 
-            System.push("//database/{ready}", TRUE);
+            //
+
+            Persistence writer;
+
+            writer = new Persistence();
+
+            writer.write("//database", parameter, CreateDatabaseImplContext.TaskRunnerContext.class);
         }
 
         if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImplContext.PostconditionCheckContext.class))

@@ -46,7 +46,7 @@ public class SQLBuilder
         {
             Persistence persistence = new Persistence();
 
-            persistence.thread.start();
+            //persistence.thread.start();
         }
     }
 
