@@ -5,8 +5,6 @@ import system.System;
 
 public class CreateTableImpl extends UseCase
 {
-
-
     public CreateTableImpl(String sqlstring) throws Exception
     {
         System.pre("//continue");

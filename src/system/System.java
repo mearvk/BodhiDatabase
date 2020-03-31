@@ -1,6 +1,7 @@
 package system;
 
 import cases.CreateDatabaseImpl;
+import cases.CreateTableImpl;
 import components.database.Database;
 import components.memory.Memory;
 import components.persistence.Persistence;
@@ -11,6 +12,7 @@ import contexts.UseDatabaseImplContext;
 import messaging.MessageQueue;
 import parameter.Parameter;
 import components.validation.ValidationComponent;
+import structures.table.Table;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
@@ -73,6 +75,19 @@ public class System
     {
         //
 
+        if(bodhi.equals("//database") && klass.isAssignableFrom(CreateTableImpl.PreconditionCheck.class))
+        {
+            Table table;
+
+            System.push("//database", new Database(parameter));
+
+            System.push("//database/table", table = new Table(parameter));
+
+            System.push("//database/table{name}", table.name);
+
+            System.push("//database/table{file}", table.url);
+        }
+
         if(bodhi.equals("//database") && klass.isAssignableFrom(UseDatabaseImplContext.PreconditionCheckContext.class))
         {
             System.push("//database/{ready}", FALSE);
@@ -80,15 +95,13 @@ public class System
 
         if(bodhi.equals("//database") && klass.isAssignableFrom(UseDatabaseImplContext.TaskRunnerContext.class))
         {
-            System.push("//database/{ready}", FALSE);
+            Database database;
 
-            System.push("//database", new Database(parameter));
+            System.push("//database", database = new Database(parameter));
 
-            System.push("//database/{name}", Database.reference.name);
+            System.push("//database/{name}", database.name);
 
-            System.push("//database/{file}", Database.reference.url);
-
-            System.push("//database/{ready}", TRUE);
+            System.push("//database/{file}", database.url);
         }
 
         if(bodhi.equals("//database") && klass.isAssignableFrom(UseDatabaseImplContext.PostconditionCheckContext.class))
