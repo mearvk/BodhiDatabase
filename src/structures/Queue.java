@@ -11,6 +11,6 @@ public class Queue<SQLString> extends LinkedList<SQLString>
 
     public SQLString dequeue()
     {
-        return this.getFirst();
+        return this.poll();
     }
 }

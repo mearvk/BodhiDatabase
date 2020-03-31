@@ -42,9 +42,9 @@ public class Main
 
         SQLHarness harness = new SQLHarness();
 
-        //harness.test_001 = new SQLHarness.Test_001();              //step 1. run test harness #1
+        harness.test_001 = new SQLHarness.Test_001();              //step 1. run test harness #1
 
-        harness.test_002 = new SQLHarness.Test_002();              //step 2. run test harness #2
+        //harness.test_002 = new SQLHarness.Test_002();              //step 2. run test harness #2
 
         //harness.test_003 = new SQLHarness.Test_003();              //step 3. run test harness #3
 
