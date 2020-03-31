@@ -21,28 +21,19 @@ public class CreateDatabaseImpl extends UseCase
     {
         Parameter parameter;
 
-        try
-        {
-            parameter = new Parameter(this, sqlstring);
+        parameter = new Parameter(this, sqlstring);
 
-            System.pre("//continue");
+        //
 
-            //
+        System.pre("//continue");
 
-            this.step001 = new CreateDatabaseImpl_Step001(parameter);
+        //
 
-            this.step002 = new CreateDatabaseImpl_Step002(parameter);
+        this.step001 = new CreateDatabaseImpl_Step001(parameter);
 
-            this.step003 = new CreateDatabaseImpl_Step003(parameter);
-        }
-        catch (Exception e)
-        {
-            ExceptionQueue queue;
+        this.step002 = new CreateDatabaseImpl_Step002(parameter);
 
-            queue = new ExceptionQueue();
-
-            queue.enqueue(e, e.getMessage());
-        }
+        this.step003 = new CreateDatabaseImpl_Step003(parameter);
     }
 
     public static class CreateDatabaseImpl_Step001

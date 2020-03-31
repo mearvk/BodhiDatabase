@@ -1,6 +1,7 @@
 package components.parser.handler;
 
 import cases.*;
+import exceptions.ExceptionQueue;
 import structures.Queue;
 import structures.SQLString;
 
@@ -74,10 +75,16 @@ public class ParserCaseHandler
         public CreateDatabase(String sqlString) throws Exception
         {
             try
-            { CreateDatabaseImpl runner = new CreateDatabaseImpl(this.sqlString = sqlString); }
+            {
+                CreateDatabaseImpl runner = new CreateDatabaseImpl(this.sqlString = sqlString);
+            }
             catch (Exception e)
             {
-                //TODO
+                ExceptionQueue equeue;
+
+                equeue = new ExceptionQueue();
+
+                equeue.enqueue(e, e.getMessage());
             }
         }
     }

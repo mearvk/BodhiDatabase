@@ -6,6 +6,7 @@ import components.memory.Memory;
 import components.processor.Processor;
 import contexts.CreateDatabaseImplContext;
 import contexts.UseDatabaseImplContext;
+import messaging.MessageQueue;
 import parameter.Parameter;
 import components.validation.ValidationComponent;
 
@@ -112,7 +113,7 @@ public class System
             {
                 if(names[i].equals(name))
                 {
-                    System.nullify("//continue");
+                    System.nullify("//continue","Database <"+name+"> exists already; see file <"+name+".sql>");
                 }
             }
         }
@@ -218,6 +219,17 @@ public class System
     public static void nullify(String name) throws Exception
     {
         Memory.reference.push(name, null);
+    }
+
+    public static void nullify(String bodhi, String cause) throws Exception
+    {
+        Memory.reference.push(bodhi, null);
+
+        MessageQueue mqueue;
+
+        mqueue = new MessageQueue();
+
+        mqueue.enqueue(cause);
     }
 }
 
