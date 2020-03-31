@@ -48,7 +48,11 @@ public class Persistence extends Component
             }
             catch (Exception e)
             {
-                ExceptionQueue.enqueue(e.getMessage());
+                ExceptionQueue queue;
+
+                queue = new ExceptionQueue();
+
+                queue.enqueue(e, e.getMessage());
             }
         }
     }

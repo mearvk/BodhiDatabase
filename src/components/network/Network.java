@@ -46,7 +46,11 @@ public class Network extends Component
             }
             catch (Exception e)
             {
-                ExceptionQueue.enqueue(e);
+                ExceptionQueue queue;
+
+                queue = new ExceptionQueue();
+
+                queue.enqueue(e, e.getMessage());
             }
         }
     }

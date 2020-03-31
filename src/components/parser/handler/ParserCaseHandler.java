@@ -4,8 +4,6 @@ import cases.*;
 import structures.Queue;
 import structures.SQLString;
 
-import java.util.LinkedList;
-
 public class ParserCaseHandler
 {
     public ParserCaseHandler.Unknown unknown;

@@ -6,7 +6,6 @@ import components.memory.Memory;
 import components.processor.Processor;
 import contexts.CreateDatabaseImplContext;
 import contexts.UseDatabaseImplContext;
-import exceptions.DatabaseExistsAlreadyException;
 import parameter.Parameter;
 import components.validation.ValidationComponent;
 
@@ -38,7 +37,7 @@ public class System
 
     //
 
-    public static void set(String bodhi) throws Exception
+    public static void pre(String bodhi) throws Exception
     {
         if(bodhi.equals("//continue"))
         {
@@ -67,7 +66,7 @@ public class System
 
     }
 
-    public static Object set(String bodhi, Parameter parameter, Class<?> klass) throws Exception
+    public static Object set(final String bodhi, final Parameter parameter, final Class<?> klass) throws Exception
     {
         //
 
@@ -98,23 +97,24 @@ public class System
 
         if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImplContext.PreconditionCheckContext.class))
         {
-            //
+            System.push("//database{name}", CreateDatabaseImpl.Utility.getDatabaseName(parameter));
+
+            System.push("//database{file}", CreateDatabaseImpl.Utility.getDatabaseFile(parameter));
         }
 
         if(bodhi.equals("//database{name}") && klass.isAssignableFrom(CreateDatabaseImplContext.PreconditionCheckContext.class))
         {
-             String pname = CreateDatabaseImpl.Utility.getDatabaseName(parameter).trim();
+            String name = CreateDatabaseImpl.Utility.getDatabaseName(parameter).trim();
 
-             String dname = ((String)System.pull(bodhi)).trim();
+            String[] names = CreateDatabaseImpl.Utility.getExistingDatabaseNames(parameter);
 
-             if(pname.equals(dname)) return new Exception();
-
-             String[] fnames = CreateDatabaseImpl.Utility.getDatabaseNames(parameter);
-
-             for(int i=0; i<fnames.length; i++)
-             {
-                 if(fnames[i].equals(pname)) return new Exception();
-             }
+            for(int i=0; i<names.length; i++)
+            {
+                if(names[i].equals(name))
+                {
+                    System.nullify("//continue");
+                }
+            }
         }
 
         if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImplContext.TaskRunnerContext.class))
@@ -135,7 +135,7 @@ public class System
             System.push("//database/{ready}", TRUE);
         }
 
-        return null;
+        return System.reference;
     }
 
     public static Boolean touch(String bodhi) throws Exception
@@ -147,18 +147,7 @@ public class System
     {
         if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImplContext.PreconditionCheckContext.class))
         {
-            var name = CreateDatabaseImpl.Utility.getDatabaseName(parameter);
-
-            var names = CreateDatabaseImpl.Utility.getDatabaseNames(parameter);
-
-            for(int i=0; i<names.length; i++)
-            {
-                if(names[i].equalsIgnoreCase(name))
-
-                    new Exception().addSuppressed(new DatabaseExistsAlreadyException("Database exists already"));
-            }
-
-            return true;
+            //
         }
 
         if(bodhi.equals("") && klass.isAssignableFrom(CreateDatabaseImplContext.TaskRunnerContext.class))

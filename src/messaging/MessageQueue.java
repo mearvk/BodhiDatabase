@@ -1,18 +1,17 @@
-package exceptions;
+package messaging;
 
-import components.parser.handler.ParserCaseHandler;
 import structures.Queue;
 import structures.SQLString;
 
-public class ExceptionQueue extends java.lang.Exception
+public class MessageQueue extends java.lang.Exception
 {
-    public static ExceptionQueue reference = new ExceptionQueue();
+    public static MessageQueue reference = new MessageQueue();
 
     public Queue<String> queue = new Queue<>();
 
-    public ExceptionQueue()
+    public MessageQueue()
     {
-        ExceptionQueue.reference = this;
+        MessageQueue.reference = this;
     }
 
     public void enqueue(Exception e)
@@ -60,9 +59,9 @@ public class ExceptionQueue extends java.lang.Exception
                     }
                     catch (Exception e)
                     {
-                        ExceptionQueue queue;
+                        exceptions.ExceptionQueue queue;
 
-                        queue = new ExceptionQueue();
+                        queue = new exceptions.ExceptionQueue();
 
                         queue.enqueue(e, e.getMessage());
                     }
@@ -70,9 +69,9 @@ public class ExceptionQueue extends java.lang.Exception
             }
             catch (Exception e)
             {
-                ExceptionQueue queue;
+                exceptions.ExceptionQueue queue;
 
-                queue = new ExceptionQueue();
+                queue = new exceptions.ExceptionQueue();
 
                 queue.enqueue(e, e.getMessage());
             }

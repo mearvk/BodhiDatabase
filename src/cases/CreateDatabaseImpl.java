@@ -2,14 +2,12 @@ package cases;
 
 import constants.DatabaseConstants;
 import contexts.CreateDatabaseImplContext;
-import exceptions.DatabaseExistsAlreadyException;
+import exceptions.ExceptionQueue;
 import parameter.Parameter;
 import system.System;
 
 import java.io.File;
 import java.util.StringTokenizer;
-
-import static java.lang.Boolean.TRUE;
 
 public class CreateDatabaseImpl extends UseCase
 {
@@ -19,33 +17,31 @@ public class CreateDatabaseImpl extends UseCase
 
     public CreateDatabaseImpl_Step003 step003;
 
-    public Parameter parameter;
-
-    public CreateDatabaseImpl(String sqlString) throws Exception
+    public CreateDatabaseImpl(String sqlstring) throws Exception
     {
-        System.push("//impl/createdatabase", this);
-
-        //
-
-        this.parameter = new Parameter(this, sqlString);
-
-        //
+        Parameter parameter;
 
         try
         {
-            System.push("//continue", true);
+            parameter = new Parameter(this, sqlstring);
+
+            System.pre("//continue");
 
             //
 
-            this.step001 = new CreateDatabaseImpl_Step001(this.parameter);
+            this.step001 = new CreateDatabaseImpl_Step001(parameter);
 
-            this.step002 = new CreateDatabaseImpl_Step002(this.parameter);
+            this.step002 = new CreateDatabaseImpl_Step002(parameter);
 
-            this.step003 = new CreateDatabaseImpl_Step003(this.parameter);
+            this.step003 = new CreateDatabaseImpl_Step003(parameter);
         }
         catch (Exception e)
         {
-            return;
+            ExceptionQueue queue;
+
+            queue = new ExceptionQueue();
+
+            queue.enqueue(e, e.getMessage());
         }
     }
 
@@ -77,11 +73,11 @@ public class CreateDatabaseImpl extends UseCase
     {
         public PreconditionCheck(Parameter parameter) throws Exception
         {
-            System.set("//continue");
+            System.touch("//continue");
 
-            System.set("//database", parameter, CreateDatabaseImplContext.PreconditionCheckContext.class);
+                System.set("//database", parameter, CreateDatabaseImplContext.PreconditionCheckContext.class);
 
-            System.set("//database{name}", parameter, CreateDatabaseImplContext.PreconditionCheckContext.class);
+                System.set("//database{name}", parameter, CreateDatabaseImplContext.PreconditionCheckContext.class);
 
             System.touch("//continue");
         }
@@ -93,7 +89,7 @@ public class CreateDatabaseImpl extends UseCase
         {
             System.touch("//continue");
 
-            System.set("//database", parameter, CreateDatabaseImplContext.TaskRunnerContext.class);
+                System.set("//database", parameter, CreateDatabaseImplContext.TaskRunnerContext.class);
 
             System.touch("//continue");
         }
@@ -105,9 +101,9 @@ public class CreateDatabaseImpl extends UseCase
         {
             System.touch("//continue");
 
-            System.set("//database", parameter, CreateDatabaseImplContext.PostconditionCheckContext.class);
+                System.set("//database", parameter, CreateDatabaseImplContext.PostconditionCheckContext.class);
 
-            System.set("//database{name}", parameter, CreateDatabaseImplContext.PostconditionCheckContext.class);
+                System.set("//database{name}", parameter, CreateDatabaseImplContext.PostconditionCheckContext.class);
 
             System.touch("//continue");
         }
@@ -135,7 +131,7 @@ public class CreateDatabaseImpl extends UseCase
             return token003;
         }
 
-        public static String[] getDatabaseNames(Parameter parameter)
+        public static String[] getExistingDatabaseNames(Parameter parameter)
         {
             var files = new File(DatabaseConstants.baseURL).listFiles();
 

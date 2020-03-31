@@ -42,13 +42,21 @@ public class Parser extends Component
                     }
                     catch (Exception e)
                     {
-                        ExceptionQueue.enqueue(e);
+                        ExceptionQueue queue;
+
+                        queue = new ExceptionQueue();
+
+                        queue.enqueue(e, e.getMessage());
                     }
                 }
             }
             catch (Exception e)
             {
-                ExceptionQueue.enqueue(e.getMessage());
+                ExceptionQueue queue;
+
+                queue = new ExceptionQueue();
+
+                queue.enqueue(e, e.getMessage());
             }
         }
     }

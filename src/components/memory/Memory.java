@@ -17,9 +17,9 @@ public class Memory
     {
         boolean result = this.map.get(name)==null;
 
-        if(result==true) return this.map.get(name);
+        if(result==false) return this.map.get(name);
 
-        throw new NullPointerException();
+        else throw new Exception();
     }
 
     public void push(String name, Object object)
@@ -32,13 +32,13 @@ public class Memory
         return Memory.reference.pull(name)==null;
     }
 
-    public Boolean exists(String name) throws Exception
+    public Boolean exists(String bodhi) throws Exception
     {
-        boolean result = Memory.reference.pull(name)==null;
+        boolean result = Memory.reference.pull(bodhi)==null;
 
         if(result==true) throw new Exception();
 
-        return false;
+        return true;
     }
 
     public Boolean exists(String name, String exception) throws Exception

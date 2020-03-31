@@ -175,7 +175,11 @@ public class Terminal extends Component
             }
             catch (Exception e)
             {
-                ExceptionQueue.enqueue(e.getMessage());
+                ExceptionQueue queue;
+
+                queue = new ExceptionQueue();
+
+                queue.enqueue(e, e.getMessage());
             }
 
             return super.getPreferredSize();
@@ -199,7 +203,11 @@ public class Terminal extends Component
             }
             catch (Exception e)
             {
-                ExceptionQueue.enqueue(e.getMessage());
+                ExceptionQueue queue;
+
+                queue = new ExceptionQueue();
+
+                queue.enqueue(e, e.getMessage());
             }
 
             return super.getPreferredSize();
