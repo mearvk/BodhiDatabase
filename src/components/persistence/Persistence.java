@@ -94,49 +94,46 @@ public class Persistence extends Component
 
     public class SQLWriter
     {
-        public void writeJson(String bodhi, String dbname, Class<?> context)
+        public void writeJson(String bodhi, String dbname, Class<?> klass)
         {
-            try
-            {
-                JSONObject db = new JSONObject();
+            if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImplContext.TaskRunnerContext.class)) {
 
-                db.put("type", "database");
+                try
+                {
+                    JSONObject meta = new JSONObject();
 
-                db.put("name", dbname+".sql");
+                    meta.put("type", "SQL");
 
-                db.put("version", "1.0");
+                    meta.put("name", dbname + ".sql");
 
-                //
+                    meta.put("version", "1.0");
 
-                //JSONObject dbobject = new JSONObject();
+                    //
 
-                //dbobject.put(dbname, db);
+                    JSONObject database = new JSONObject();
 
-                //
+                    database.put("database", meta);
 
-                //JSONArray dblist = new JSONArray();
+                    //
 
-                //dblist.put(dbobject);
+                    FileWriter filewriter = new FileWriter(DatabaseConstants.baseURL + "\\" + dbname + ".sql",false);
 
-                //
+                    filewriter.write(database.toString());
 
-                FileWriter filewriter = new FileWriter(DatabaseConstants.baseURL+"\\"+dbname+".sql");
+                    filewriter.flush();
 
-                filewriter.write(db.toString());
+                    filewriter.close();
 
-                filewriter.flush();
+                    filewriter = null;
+                }
+                catch (Exception e)
+                {
+                    ExceptionQueue equeue;
 
-                filewriter.close();
+                    equeue = new ExceptionQueue();
 
-                filewriter = null;
-            }
-            catch (Exception e)
-            {
-                ExceptionQueue equeue;
-
-                equeue = new ExceptionQueue();
-
-                equeue.enqueue(e, e.getMessage());
+                    equeue.enqueue(e, e.getMessage());
+                }
             }
         }
     }
