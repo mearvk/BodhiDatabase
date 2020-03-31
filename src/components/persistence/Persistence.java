@@ -6,12 +6,12 @@ import components.persistence.handler.PersistenceCaseHandler;
 import constants.DatabaseConstants;
 import contexts.CreateDatabaseImplContext;
 import exceptions.ExceptionQueue;
-import messaging.MessageQueue;
 import org.json.*;
 import parameter.Parameter;
 import structures.Queue;
 import structures.SQLString;
 import system.System;
+import utility.validation.Utility;
 
 import java.io.*;
 
@@ -143,39 +143,25 @@ public class Persistence extends Component
 
     public class SQLReader
     {
-        public void readJson(String bodhi, String dbname, Class<?> context)
+        public JSONObject readJson(String bodhi, String dbname, Class<?> klass)
         {
-            JSONTokener tokener;
-
-            try
+            if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImplContext.TaskRunnerContext.class))
             {
-                BufferedReader reader = new BufferedReader(new FileReader(DatabaseConstants.baseURL+"\\"+dbname+".sql"));
-
-                StringBuffer buffer = new StringBuffer();
-
-                String line = "";
-
-                while((line=reader.readLine())!=null)
+                try
                 {
-                    buffer.append(line);
+                    Utility.JSONReader reader;
+
+                    reader = new Utility.JSONReader(new BufferedReader(new FileReader(DatabaseConstants.baseURL+"\\"+dbname+".sql")));
+
+                    return new JSONObject(reader.buffer.toString());
                 }
-
-                //
-
-                MessageQueue mqueue;
-
-                mqueue = new MessageQueue();
-
-                mqueue.enqueue(buffer);
-
-                //
-
-                JSONObject json = new JSONObject(buffer.toString());
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
             }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
+
+            return null;
         }
     }
 }
