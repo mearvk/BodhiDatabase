@@ -24,6 +24,11 @@ public class MessageQueue extends java.lang.Exception
         this.queue.enqueue(message);
     }
 
+    public void enqueue(StringBuffer message)
+    {
+        System.out.println(message);
+    }
+
     public void enqueue(String message)
     {
         System.out.println(message);

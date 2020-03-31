@@ -5,6 +5,7 @@ import components.database.Database;
 import components.memory.Memory;
 import components.persistence.Persistence;
 import components.processor.Processor;
+import constants.DatabaseConstants;
 import contexts.CreateDatabaseImplContext;
 import contexts.UseDatabaseImplContext;
 import messaging.MessageQueue;
@@ -114,7 +115,7 @@ public class System
             {
                 if(names[i].equals(name))
                 {
-                    System.nullify("//continue","Database <"+name+"> exists already; see file <"+name+".sql>");
+                    System.nullify("//continue","Database <"+name+"> exists already; see file <"+ DatabaseConstants.baseURL+"\\"+name+".sql>");
                 }
             }
         }
@@ -131,11 +132,13 @@ public class System
 
             //
 
-            Persistence writer;
+            Persistence persistence;
 
-            writer = new Persistence();
+            persistence = new Persistence();
 
-            writer.write("//database", parameter, CreateDatabaseImplContext.TaskRunnerContext.class);
+            persistence.writer.writeJson("//database", CreateDatabaseImpl.Utility.getDatabaseName(parameter), CreateDatabaseImplContext.TaskRunnerContext.class);
+
+            persistence.reader.readJson("//database", CreateDatabaseImpl.Utility.getDatabaseName(parameter), CreateDatabaseImplContext.TaskRunnerContext.class);
         }
 
         if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImplContext.PostconditionCheckContext.class))

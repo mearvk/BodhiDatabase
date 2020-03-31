@@ -1,13 +1,19 @@
 package components.persistence;
 
+import cases.CreateDatabaseImpl;
 import components.Component;
 import components.persistence.handler.PersistenceCaseHandler;
+import constants.DatabaseConstants;
 import contexts.CreateDatabaseImplContext;
 import exceptions.ExceptionQueue;
+import messaging.MessageQueue;
+import org.json.*;
 import parameter.Parameter;
 import structures.Queue;
 import structures.SQLString;
 import system.System;
+
+import java.io.*;
 
 public class Persistence extends Component
 {
@@ -33,7 +39,7 @@ public class Persistence extends Component
     {
         if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImplContext.TaskRunnerContext.class))
         {
-            this.writer.writeJson(bodhi, parameter, klass);
+            this.writer.writeJson(bodhi, CreateDatabaseImpl.Utility.getDatabaseName(parameter), klass);
         }
     }
 
@@ -41,7 +47,7 @@ public class Persistence extends Component
     {
         if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImplContext.TaskRunnerContext.class))
         {
-            this.reader.readJson(bodhi, parameter, klass);
+            this.reader.readJson(bodhi, CreateDatabaseImpl.Utility.getDatabaseName(parameter), klass);
         }
     }
 
@@ -82,6 +88,93 @@ public class Persistence extends Component
                 queue = new ExceptionQueue();
 
                 queue.enqueue(e, e.getMessage());
+            }
+        }
+    }
+
+    public class SQLWriter
+    {
+        public void writeJson(String bodhi, String dbname, Class<?> context)
+        {
+            try
+            {
+                JSONObject db = new JSONObject();
+
+                db.put("type", "database");
+
+                db.put("name", dbname+".sql");
+
+                db.put("version", "1.0");
+
+                //
+
+                //JSONObject dbobject = new JSONObject();
+
+                //dbobject.put(dbname, db);
+
+                //
+
+                //JSONArray dblist = new JSONArray();
+
+                //dblist.put(dbobject);
+
+                //
+
+                FileWriter filewriter = new FileWriter(DatabaseConstants.baseURL+"\\"+dbname+".sql");
+
+                filewriter.write(db.toString());
+
+                filewriter.flush();
+
+                filewriter.close();
+
+                filewriter = null;
+            }
+            catch (Exception e)
+            {
+                ExceptionQueue equeue;
+
+                equeue = new ExceptionQueue();
+
+                equeue.enqueue(e, e.getMessage());
+            }
+        }
+    }
+
+    public class SQLReader
+    {
+        public void readJson(String bodhi, String dbname, Class<?> context)
+        {
+            JSONTokener tokener;
+
+            try
+            {
+                BufferedReader reader = new BufferedReader(new FileReader(DatabaseConstants.baseURL+"\\"+dbname+".sql"));
+
+                StringBuffer buffer = new StringBuffer();
+
+                String line = "";
+
+                while((line=reader.readLine())!=null)
+                {
+                    buffer.append(line);
+                }
+
+                //
+
+                MessageQueue mqueue;
+
+                mqueue = new MessageQueue();
+
+                mqueue.enqueue(buffer);
+
+                //
+
+                JSONObject json = new JSONObject(buffer.toString());
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
             }
         }
     }
