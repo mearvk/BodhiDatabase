@@ -1,8 +1,5 @@
 package cases;
 
-import components.database.Database;
-import contexts.UseDatabaseImplContext;
-import system.*;
 import constants.DatabaseConstants;
 import parameter.Parameter;
 import system.System;
@@ -67,7 +64,7 @@ public class UseDatabaseImpl extends UseCase
     {
         public PreconditionCheck(Parameter parameter) throws Exception
         {
-            System.set("//database", parameter, UseDatabaseImplContext.PreconditionCheckContext.class);
+            System.set("//database", parameter, UseDatabaseImpl.PreconditionCheck.class);
         }
     }
 
@@ -75,7 +72,7 @@ public class UseDatabaseImpl extends UseCase
     {
         public TaskRunner(Parameter parameter) throws Exception
         {
-            System.set("//database", parameter, UseDatabaseImplContext.TaskRunnerContext.class);
+            System.set("//database", parameter, UseDatabaseImpl.PreconditionCheck.class);
         }
     }
 
@@ -83,7 +80,7 @@ public class UseDatabaseImpl extends UseCase
     {
         public PostconditionCheck(Parameter parameter) throws Exception
         {
-            System.set("//database", parameter, UseDatabaseImplContext.PostconditionCheckContext.class);
+            System.set("//database", parameter, UseDatabaseImpl.PreconditionCheck.class);
         }
     }
 

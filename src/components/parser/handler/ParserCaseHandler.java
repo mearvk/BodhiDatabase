@@ -70,13 +70,11 @@ public class ParserCaseHandler
 
     public static class CreateDatabase extends UseCase
     {
-        public String sqlString;
-
-        public CreateDatabase(String sqlString) throws Exception
+        public CreateDatabase(String sqlstring) throws Exception
         {
             try
             {
-                CreateDatabaseImpl runner = new CreateDatabaseImpl(this.sqlString = sqlString);
+                CreateDatabaseImpl runner = new CreateDatabaseImpl(sqlstring);
             }
             catch (Exception e)
             {
@@ -91,12 +89,12 @@ public class ParserCaseHandler
 
     public static class CreateIndex extends UseCase
     {
-        public String sqlString;
-
-        public CreateIndex(String sqlString) throws Exception
+        public CreateIndex(String sqlstring) throws Exception
         {
             try
-            { CreateIndexImpl runner = new CreateIndexImpl(this.sqlString = sqlString); }
+            {
+                CreateIndexImpl runner = new CreateIndexImpl(sqlstring);
+            }
             catch(Exception e)
             {
                 ExceptionQueue equeue;
@@ -110,12 +108,12 @@ public class ParserCaseHandler
 
     public static class CreateTable extends UseCase
     {
-        public String sqlString;
-
-        public CreateTable(String sqlString) throws Exception
+        public CreateTable(String sqlstring) throws Exception
         {
             try
-            { CreateTableImpl runner = new CreateTableImpl(this.sqlString = sqlString); }
+            {
+                CreateTableImpl runner = new CreateTableImpl(sqlstring);
+            }
             catch(Exception e)
             {
                 ExceptionQueue equeue;
@@ -124,19 +122,17 @@ public class ParserCaseHandler
 
                 equeue.enqueue(e, e.getMessage());
             }
-
-            this.sqlString = sqlString;
         }
     }
 
     public static class DeleteFrom extends UseCase
     {
-        public String sqlString;
-
-        public DeleteFrom(String sqlString) throws Exception
+        public DeleteFrom(String sqlstring) throws Exception
         {
             try
-            { DeleteFromImpl runner = new DeleteFromImpl(this.sqlString = sqlString); }
+            {
+                DeleteFromImpl runner = new DeleteFromImpl(sqlstring);
+            }
             catch (Exception e)
             {
                 ExceptionQueue equeue;
@@ -150,12 +146,12 @@ public class ParserCaseHandler
 
     public static class DropColumn extends UseCase
     {
-        public String sqlString;
-
-        public DropColumn(String sqlString) throws Exception
+        public DropColumn(String sqlstring) throws Exception
         {
             try
-            { DropColumnImpl runner = new DropColumnImpl(this.sqlString = sqlString); }
+            {
+                DropColumnImpl runner = new DropColumnImpl(sqlstring);
+            }
             catch (Exception e)
             {
                 ExceptionQueue equeue;
@@ -169,12 +165,12 @@ public class ParserCaseHandler
 
     public static class DropDatabase extends UseCase
     {
-        public String sqlString;
-
-        public DropDatabase(String sqlString) throws Exception
+        public DropDatabase(String sqlstring) throws Exception
         {
             try
-            { DropDatabaseImpl runner = new DropDatabaseImpl(this.sqlString = sqlString); }
+            {
+                DropDatabaseImpl runner = new DropDatabaseImpl(sqlstring);
+            }
             catch (Exception e)
             {
                 ExceptionQueue equeue;
@@ -188,12 +184,12 @@ public class ParserCaseHandler
 
     public static class InsertInto extends UseCase
     {
-        public String sqlString;
-
-        public InsertInto(String sqlString)
+        public InsertInto(String sqlstring)
         {
             try
-            { InsertIntoTableImpl runner = new InsertIntoTableImpl(this.sqlString = sqlString); }
+            {
+                InsertIntoTableImpl runner = new InsertIntoTableImpl(sqlstring);
+            }
             catch (Exception e)
             {
                 ExceptionQueue equeue;
@@ -207,12 +203,12 @@ public class ParserCaseHandler
 
     public static class Select extends UseCase
     {
-        public String sqlString;
-
-        public Select(String sqlString)
+        public Select(String sqlstring)
         {
             try
-            { SelectFromTableImpl runner = new SelectFromTableImpl(this.sqlString = sqlString); }
+            {
+                SelectFromTableImpl runner = new SelectFromTableImpl(sqlstring); 
+            }
             catch (Exception e)
             {
                 ExceptionQueue equeue;
@@ -226,12 +222,12 @@ public class ParserCaseHandler
 
     public static class Update extends UseCase
     {
-        public String sqlString;
-
-        public Update(String sqlString)
+        public Update(String sqlstring)
         {
             try
-            { UpdateTableImpl runner = new UpdateTableImpl(this.sqlString = sqlString); }
+            {
+                UpdateTableImpl runner = new UpdateTableImpl(sqlstring);
+            }
             catch (Exception e)
             {
                 ExceptionQueue equeue;
@@ -244,12 +240,12 @@ public class ParserCaseHandler
 
     public static class Use extends UseCase
     {
-        public String sqlString;
-
-        public Use(String sqlString)
+        public Use(String sqlstring)
         {
             try
-            { UseDatabaseImpl runner = new UseDatabaseImpl(this.sqlString = sqlString); }
+            {
+                UseDatabaseImpl runner = new UseDatabaseImpl(sqlstring);
+            }
             catch(Exception e)
             {
                 ExceptionQueue equeue;

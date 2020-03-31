@@ -3,6 +3,7 @@ package components.database;
 import cases.CreateTableImpl;
 import cases.UseDatabaseImpl;
 import components.Component;
+import components.parser.handler.ParserCaseHandler;
 import parameter.Parameter;
 import system.System;
 
@@ -21,13 +22,21 @@ public class Database extends Component
         Database.reference = this;
     }
 
-    public Database(Parameter parameter) throws Exception
+    public Database(String sqlstring) throws Exception
     {
-        Database.reference = this;
 
-        Database.reference.name = UseDatabaseImpl.Utility.getDatabaseName(parameter);
+    }
 
-        Database.reference.url = UseDatabaseImpl.Utility.getDatabaseUrl(parameter);
+    public Database(Parameter parameter, Class<?> klass) throws Exception
+    {
+        if(klass.isAssignableFrom(CreateTableImpl.TaskRunner.class))
+        {
+            Database.reference = this;
+
+            Database.reference.name = CreateTableImpl.Utility.getDatabaseName(parameter);
+
+            Database.reference.url = CreateTableImpl.Utility.getDatabaseFile(parameter);
+        }
     }
 
     public static class Properties

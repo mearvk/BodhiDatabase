@@ -1,22 +1,15 @@
 package components.persistence;
 
 import cases.CreateDatabaseImpl;
+import cases.CreateTableImpl;
 import components.Component;
 import components.persistence.handler.PersistenceCaseHandler;
-import constants.DatabaseConstants;
-import contexts.CreateDatabaseImplContext;
 import exceptions.ExceptionQueue;
-import org.json.*;
 import parameter.Parameter;
 import structures.Queue;
 import structures.SQLString;
 import system.System;
 import utility.validation.Utility;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.File;
-import java.io.FileWriter;
 
 public class Persistence extends Component
 {
@@ -40,7 +33,7 @@ public class Persistence extends Component
 
     public void read(String bodhi, Parameter parameter, Class<?> klass)
     {
-        if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImplContext.TaskRunnerContext.class))
+        if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImpl.TaskRunner.class))
         {
             this.reader.readXML(bodhi, CreateDatabaseImpl.Utility.getDatabaseName(parameter), klass);
         }
@@ -91,9 +84,22 @@ public class Persistence extends Component
     {
         public void writeXML(String bodhi, Parameter parameter, Class<?> klass)
         {
-            if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImplContext.TaskRunnerContext.class))
+            if(bodhi.equals("//database") && klass.isAssignableFrom(CreateTableImpl.TaskRunner.class))
             {
-                Utility.XMLWriter writer = new Utility.XMLWriter(CreateDatabaseImpl.Utility.getDatabaseFile(parameter), CreateDatabaseImpl.Utility.getDatabaseName(parameter), CreateDatabaseImplContext.TaskRunnerContext.class);
+                Utility.XMLWriter writer;
+
+                writer = new Utility.XMLWriter();
+
+                writer.writeTable(CreateTableImpl.Utility.getDatabaseFile(parameter), CreateTableImpl.Utility.getDatabaseName(parameter), CreateTableImpl.TaskRunner.class);
+            }
+
+            if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImpl.TaskRunner.class))
+            {
+                Utility.XMLWriter writer;
+
+                writer = new Utility.XMLWriter();
+
+                writer.writeDatabase(CreateDatabaseImpl.Utility.getDatabaseFile(parameter), CreateDatabaseImpl.Utility.getDatabaseName(parameter), CreateDatabaseImpl.TaskRunner.class);
             }
         }
     }

@@ -1,7 +1,6 @@
 package cases;
 
 import constants.DatabaseConstants;
-import contexts.CreateDatabaseImplContext;
 import parameter.Parameter;
 import system.System;
 
@@ -65,9 +64,9 @@ public class CreateDatabaseImpl extends UseCase
         {
             System.touch("//continue");
 
-                System.set("//database", parameter, CreateDatabaseImplContext.PreconditionCheckContext.class);
+                System.set("//database", parameter, CreateDatabaseImpl.PreconditionCheck.class);
 
-                System.set("//database{name}", parameter, CreateDatabaseImplContext.PreconditionCheckContext.class);
+                System.set("//database{name}", parameter, CreateDatabaseImpl.PreconditionCheck.class);
 
             System.touch("//continue");
         }
@@ -79,7 +78,9 @@ public class CreateDatabaseImpl extends UseCase
         {
             System.touch("//continue");
 
-                System.set("//database", parameter, CreateDatabaseImplContext.TaskRunnerContext.class);
+                System.set("//database", parameter, CreateDatabaseImpl.TaskRunner.class);
+
+
 
             System.touch("//continue");
         }
@@ -91,9 +92,9 @@ public class CreateDatabaseImpl extends UseCase
         {
             System.touch("//continue");
 
-                System.set("//database", parameter, CreateDatabaseImplContext.PostconditionCheckContext.class);
+                System.set("//database", parameter, CreateDatabaseImpl.PostconditionCheck.class);
 
-                System.set("//database{name}", parameter, CreateDatabaseImplContext.PostconditionCheckContext.class);
+                System.set("//database{name}", parameter, CreateDatabaseImpl.PostconditionCheck.class);
 
             System.touch("//continue");
         }

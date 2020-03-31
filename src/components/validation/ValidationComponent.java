@@ -1,6 +1,6 @@
 package components.validation;
 
-import contexts.CreateDatabaseImplContext;
+import cases.CreateDatabaseImpl;
 import parameter.Parameter;
 import system.System;
 
@@ -20,7 +20,7 @@ public class ValidationComponent
 
     public ValidationComponent touch(String bodhi, Parameter parameter, Class<?> klass) throws Exception
     {
-        if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImplContext.class))
+        if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImpl.class))
         {
             System.touch("//database");
         }

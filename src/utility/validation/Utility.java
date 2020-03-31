@@ -1,8 +1,8 @@
 package utility.validation;
 
 
-import constants.DatabaseConstants;
-import contexts.CreateDatabaseImplContext;
+import cases.CreateDatabaseImpl;
+import cases.CreateTableImpl;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -20,7 +20,7 @@ public class Utility
 {
     public static class XMLReader
     {
-        public XMLReader(String fileURL, String dbname, Class<?> klass)
+        public XMLReader()
         {
 
         }
@@ -28,9 +28,22 @@ public class Utility
 
     public static class XMLWriter
     {
-        public XMLWriter(String fileURL, String dbname, Class<?> klass)
+        public XMLWriter()
         {
-            if(klass.isAssignableFrom(CreateDatabaseImplContext.TaskRunnerContext.class))
+
+        }
+
+        public void writeTable(String fileURL, String dbname, Class<?> klass)
+        {
+            if(klass.isAssignableFrom(CreateTableImpl.TaskRunner.class))
+            {
+
+            }
+        }
+
+        public void writeDatabase(String fileURL, String dbname, Class<?> klass)
+        {
+            if(klass.isAssignableFrom(CreateDatabaseImpl.TaskRunner.class))
             {
                 //File file=null;
 
