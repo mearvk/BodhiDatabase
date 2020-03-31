@@ -1,4 +1,11 @@
 package components.persistence;
 
-public class SQLReader {
+import parameter.Parameter;
+
+public class SQLReader
+{
+    public void readJson(String bodhi, Parameter parameter, Class<?> context)
+    {
+        //TODO
+    }
 }

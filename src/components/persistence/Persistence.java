@@ -37,6 +37,14 @@ public class Persistence extends Component
         }
     }
 
+    public void read(String bodhi, Parameter parameter, Class<?> klass)
+    {
+        if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImplContext.TaskRunnerContext.class))
+        {
+            this.reader.readJson(bodhi, parameter, klass);
+        }
+    }
+
     public static class Thread extends java.lang.Thread
     {
         public Queue<SQLString> queue = new Queue<SQLString>();
