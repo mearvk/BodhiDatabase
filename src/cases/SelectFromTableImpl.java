@@ -7,14 +7,6 @@ import java.util.StringTokenizer;
 
 public class SelectFromTableImpl extends UseCase
 {
-    public SelectFromTableImpl.SelectImpl_Step001 step001;
-
-    public SelectFromTableImpl.SelectImpl_Step002 step002;
-
-    public SelectFromTableImpl.SelectImpl_Step003 step003;
-
-    public Parameter parameter;
-
     public SelectFromTableImpl(String sqlString) throws Exception
     {
         System.pre("//continue");
@@ -25,40 +17,70 @@ public class SelectFromTableImpl extends UseCase
 
         //
 
-        try
-        {   this.step001 = new SelectFromTableImpl.SelectImpl_Step001(this.parameter);
+        SelectFromTableImpl_Step001 step001 = new SelectFromTableImpl_Step001(parameter);
 
-            this.step002 = new SelectFromTableImpl.SelectImpl_Step002(this.parameter);
+        SelectFromTableImpl_Step002 step002 = new SelectFromTableImpl_Step002(parameter);
 
-            this.step003 = new SelectFromTableImpl.SelectImpl_Step003(this.parameter);
-        }
-        catch (Exception e)
+        SelectFromImpl_Step003 step003 = new SelectFromImpl_Step003(parameter);
+    }
+
+    public static class SelectFromTableImpl_Step001
+    {
+        public SelectFromTableImpl_Step001(Parameter parameter) throws Exception
         {
-            return;
+            PreconditionCheck check = new PreconditionCheck(parameter);
         }
     }
 
-    public static class SelectImpl_Step001
+    public static class SelectFromTableImpl_Step002
     {
-        public SelectImpl_Step001(Parameter parameter) throws Exception
+        public SelectFromTableImpl_Step002(Parameter parameter) throws Exception
         {
-            System.touch("//database");
+            TaskRunner runner = new TaskRunner(parameter);
         }
     }
 
-    public static class SelectImpl_Step002
+    public static class SelectFromImpl_Step003
     {
-        public SelectImpl_Step002(Parameter parameter) throws Exception
+        public SelectFromImpl_Step003(Parameter parameter) throws Exception
         {
-            //System.push("//result", System.database.reader.select(parameter));
+            PostconditionCheck check = new PostconditionCheck(parameter);
         }
     }
 
-    public static class SelectImpl_Step003
+    public static class PreconditionCheck
     {
-        public SelectImpl_Step003(Parameter parameter) throws Exception
+        public PreconditionCheck(Parameter parameter) throws Exception
         {
-            System.touch("//database");
+            System.touch("//continue");
+
+                System.set("//database", parameter, DeleteFromImpl.PreconditionCheck.class);
+
+            System.touch("//continue");
+        }
+    }
+
+    public static class TaskRunner
+    {
+        public TaskRunner(Parameter parameter) throws Exception
+        {
+            System.touch("//continue");
+
+                System.set("//database", parameter, DeleteFromImpl.TaskRunner.class);
+
+            System.touch("//continue");
+        }
+    }
+
+    public static class PostconditionCheck
+    {
+        public PostconditionCheck(Parameter parameter) throws Exception
+        {
+            System.touch("//continue");
+
+                System.set("//database", parameter, DeleteFromImpl.PostconditionCheck.class);
+
+            System.touch("//continue");
         }
     }
 

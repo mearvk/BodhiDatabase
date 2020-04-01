@@ -8,14 +8,6 @@ import java.util.StringTokenizer;
 
 public class UpdateTableImpl extends UseCase
 {
-    public UpdateTableImpl.UpdateImpl_Step001 step001;
-
-    public UpdateTableImpl.UpdateImpl_Step002 step002;
-
-    public UpdateTableImpl.UpdateImpl_Step003 step003;
-
-    public Parameter parameter;
-
     public UpdateTableImpl(String sqlString) throws Exception
     {
         System.pre("//continue");
@@ -26,38 +18,32 @@ public class UpdateTableImpl extends UseCase
 
         //
 
-        try
-        {   this.step001 = new UpdateTableImpl.UpdateImpl_Step001(this.parameter);
+        UpdateTableImpl_Step001 step001 = new UpdateTableImpl_Step001(parameter);
 
-            this.step002 = new UpdateTableImpl.UpdateImpl_Step002(this.parameter);
+        UpdateTableImpl_Step002 step002 = new UpdateTableImpl_Step002(parameter);
 
-            this.step003 = new UpdateTableImpl.UpdateImpl_Step003(this.parameter);
-        }
-        catch (Exception e)
-        {
-            return;
-        }
+        UpdateTableImpl_Step003 step003 = new UpdateTableImpl_Step003(parameter);
     }
 
-    public static class UpdateImpl_Step001
+    public static class UpdateTableImpl_Step001
     {
-        public UpdateImpl_Step001(Parameter parameter) throws Exception
+        public UpdateTableImpl_Step001(Parameter parameter) throws Exception
         {
             //step 1
         }
     }
 
-    public static class UpdateImpl_Step002
+    public static class UpdateTableImpl_Step002
     {
-        public UpdateImpl_Step002(Parameter parameter) throws Exception
+        public UpdateTableImpl_Step002(Parameter parameter) throws Exception
         {
             //step 2
         }
     }
 
-    public static class UpdateImpl_Step003
+    public static class UpdateTableImpl_Step003
     {
-        public UpdateImpl_Step003(Parameter parameter) throws Exception
+        public UpdateTableImpl_Step003(Parameter parameter) throws Exception
         {
             //step 3
         }
