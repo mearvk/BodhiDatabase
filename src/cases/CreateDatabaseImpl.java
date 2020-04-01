@@ -17,13 +17,11 @@ public class CreateDatabaseImpl extends UseCase
 
     public CreateDatabaseImpl(String sqlstring) throws Exception
     {
-        Parameter parameter;
-
-        parameter = new Parameter(this, sqlstring);
+        System.pre("//continue");
 
         //
 
-        System.pre("//continue");
+        Parameter parameter = new Parameter(this, sqlstring);
 
         //
 

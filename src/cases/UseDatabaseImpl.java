@@ -18,7 +18,11 @@ public class UseDatabaseImpl extends UseCase
 
     public UseDatabaseImpl(String sqlString) throws Exception
     {
-        this.parameter = new Parameter(this, sqlString);
+        System.pre("//continue");
+
+        //
+
+        Parameter parameter = new Parameter(this, sqlString);
 
         //
 

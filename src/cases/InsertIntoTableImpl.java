@@ -17,11 +17,11 @@ public class InsertIntoTableImpl extends UseCase
 
     public InsertIntoTableImpl(String sqlString) throws Exception
     {
-        System.push("//impl/insertinto", this);
+        System.pre("//continue");
 
         //
 
-        this.parameter = new Parameter(this, sqlString);
+        Parameter parameter = new Parameter(this, sqlString);
 
         //
 

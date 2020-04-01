@@ -18,11 +18,11 @@ public class UpdateTableImpl extends UseCase
 
     public UpdateTableImpl(String sqlString) throws Exception
     {
-        System.push("//impl/update", this);
+        System.pre("//continue");
 
         //
 
-        this.parameter = new Parameter(this, sqlString);
+        Parameter parameter = new Parameter(this, sqlString);
 
         //
 

@@ -17,11 +17,11 @@ public class SelectFromTableImpl extends UseCase
 
     public SelectFromTableImpl(String sqlString) throws Exception
     {
-        System.push("//impl/select", this);
+        System.pre("//continue");
 
         //
 
-        this.parameter = new Parameter(this, sqlString);
+        Parameter parameter = new Parameter(this, sqlString);
 
         //
 

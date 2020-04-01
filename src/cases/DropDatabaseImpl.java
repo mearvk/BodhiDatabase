@@ -7,42 +7,28 @@ import java.util.StringTokenizer;
 
 public class DropDatabaseImpl extends UseCase
 {
-    public DropDatabaseImpl.DropDatabaseImpl_Step001 step001;
-
-    public DropDatabaseImpl.DropDatabaseImpl_Step002 step002;
-
-    public DropDatabaseImpl.DropDatabaseImpl_Step003 step003;
-
-    public Parameter parameter;
-
     public DropDatabaseImpl(String sqlString) throws Exception
     {
-        System.push("//impl/dropdatabase", this);
+        System.pre("//continue");
 
         //
 
-        this.parameter = new Parameter(this, sqlString);
+        Parameter parameter = new Parameter(this, sqlString);
 
         //
 
-        try
-        {   this.step001 = new DropDatabaseImpl.DropDatabaseImpl_Step001(this.parameter);
+         DropDatabaseImpl.DropDatabaseImpl_Step001 step001 = new DropDatabaseImpl.DropDatabaseImpl_Step001(parameter);
 
-            this.step002 = new DropDatabaseImpl.DropDatabaseImpl_Step002(this.parameter);
+         DropDatabaseImpl.DropDatabaseImpl_Step002 step002 = new DropDatabaseImpl.DropDatabaseImpl_Step002(parameter);
 
-            this.step003 = new DropDatabaseImpl.DropDatabaseImpl_Step003(this.parameter);
-        }
-        catch (Exception e)
-        {
-            return;
-        }
+         DropDatabaseImpl.DropDatabaseImpl_Step003 step003 = new DropDatabaseImpl.DropDatabaseImpl_Step003(parameter);
     }
 
     public static class DropDatabaseImpl_Step001
     {
         public DropDatabaseImpl_Step001(Parameter parameter) throws Exception
         {
-            System.touch("//database");
+            PreconditionCheck check = new PreconditionCheck(parameter);
         }
     }
 
@@ -50,7 +36,7 @@ public class DropDatabaseImpl extends UseCase
     {
         public DropDatabaseImpl_Step002(Parameter parameter) throws Exception
         {
-            //System.database.writer.drop_database(parameter);
+            TaskRunner runner = new TaskRunner(parameter);
         }
     }
 
@@ -58,7 +44,43 @@ public class DropDatabaseImpl extends UseCase
     {
         public DropDatabaseImpl_Step003(Parameter parameter) throws Exception
         {
-            System.touch("//database");
+            PostconditionCheck check = new PostconditionCheck(parameter);
+        }
+    }
+
+    public static class PreconditionCheck
+    {
+        public PreconditionCheck(Parameter parameter) throws Exception
+        {
+            System.touch("//continue");
+
+                System.set("//database", parameter, DeleteFromImpl.PreconditionCheck.class);
+
+            System.touch("//continue");
+        }
+    }
+
+    public static class TaskRunner
+    {
+        public TaskRunner(Parameter parameter) throws Exception
+        {
+            System.touch("//continue");
+
+                System.set("//database", parameter, DeleteFromImpl.TaskRunner.class);
+
+            System.touch("//continue");
+        }
+    }
+
+    public static class PostconditionCheck
+    {
+        public PostconditionCheck(Parameter parameter) throws Exception
+        {
+            System.touch("//continue");
+
+                System.set("//database", parameter, DeleteFromImpl.PostconditionCheck.class);
+
+            System.touch("//continue");
         }
     }
 
