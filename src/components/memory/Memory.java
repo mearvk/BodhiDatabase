@@ -13,6 +13,15 @@ public class Memory
         Memory.reference = this;
     }
 
+    public Object peek(String name)
+    {
+        boolean result = this.map.get(name)==null;
+
+        if(result==false) return this.map.get(name);
+
+        else return null;
+    }
+
     public Object pull(String name) throws Exception
     {
         boolean result = this.map.get(name)==null;

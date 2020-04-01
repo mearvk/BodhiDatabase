@@ -12,7 +12,8 @@ import messaging.MessageQueue;
 import parameter.Parameter;
 import components.validation.ValidationComponent;
 
-import static java.lang.Boolean.FALSE;
+import javax.swing.text.Element;
+
 import static java.lang.Boolean.TRUE;
 
 public class System
@@ -64,9 +65,62 @@ public class System
         }
     }
 
-    public static void unset(String bodhi, Parameter parameter, Class<?> klass) throws Exception
+    public static Object spin(final String bodhi, final Class<?> klass) throws Exception
     {
+        if(bodhi.equals("//spin/{database}") && klass.isAssignableFrom(UseDatabaseImpl.PreconditionCheck.class))
+        {
+            Database database;
 
+            database = (Database)System.pull("//database");
+
+            //
+
+            System.pop("//database{name}");
+
+            System.pop("//database{url}");
+
+            //
+
+            String name = database.name = (String)System.pull("//database{name}");
+
+            String url = database.url = (String)System.pull("//database{url}");
+        }
+
+        if(bodhi.equals("//spin/{database}") && klass.isAssignableFrom(UseDatabaseImpl.TaskRunner.class))
+        {
+            Database database;
+
+            database = (Database)System.pull("//database");
+
+            //
+
+            System.pop("//database{name}");
+
+            System.pop("//database{url}");
+
+            //
+
+            String name = database.name = (String)System.pull("//database{name}");
+
+            String url = database.url = (String)System.pull("//database{url}");
+        }
+
+        return System.reference;
+    }
+
+    public static Object peek(final String bodhi)
+    {
+        return Memory.reference.peek(bodhi);
+    }
+
+    public static Boolean compare(final String bodhi, final String compared, final Class<?> klass) throws Exception
+    {
+        return true;
+    }
+
+    public static Object pop(final String bodhi) throws Exception
+    {
+        return Memory.reference.exists(bodhi);
     }
 
     public static Object set(final String bodhi, final Parameter parameter, final Class<?> klass) throws Exception
@@ -119,21 +173,55 @@ public class System
 
         if(bodhi.equals("//database") && klass.isAssignableFrom(UseDatabaseImpl.PreconditionCheck.class))
         {
-            System.push("//database/{ready}", FALSE);
+            Database database;
+
+            database = (Database) System.peek("//database");
+
+            if(database==null)
+            {
+                System.push("//database", database = new Database(parameter, UseDatabaseImpl.PreconditionCheck.class));
+
+                System.push("//database{name}", UseDatabaseImpl.Utility.getDatabaseName(parameter));
+
+                System.push("//database{url}", UseDatabaseImpl.Utility.getDatabaseUrl(parameter));
+
+                //
+
+                System.spin("//database/{spin}", UseDatabaseImpl.PreconditionCheck.class);
+
+                return System.reference;
+            }
+            else
+            {
+                System.spin("//spin/{database}", UseDatabaseImpl.TaskRunner.class);
+            }
         }
 
-        if(bodhi.equals("//database") && klass.isAssignableFrom(UseDatabaseImpl.PreconditionCheck.class))
+        if(bodhi.equals("//database") && klass.isAssignableFrom(UseDatabaseImpl.TaskRunner.class))
         {
             Database database;
 
-            System.push("//database", database = new Database(parameter, UseDatabaseImpl.TaskRunner.class));
+            database = (Database) System.pull("//database");
 
-            System.push("//database/{name}", database.name);
+            if(database==null)
+            {
+                System.push("//database", database = new Database(parameter, UseDatabaseImpl.TaskRunner.class));
 
-            System.push("//database/{file}", database.url);
+                System.push("//database/{name}", database.name);
+
+                System.push("//database/{url}", database.url);
+
+                //
+
+                System.spin("//database/{spin}", UseDatabaseImpl.TaskRunner.class);
+            }
+            else
+            {
+                System.spin("//spin/{database}", UseDatabaseImpl.TaskRunner.class);
+            }
         }
 
-        if(bodhi.equals("//database") && klass.isAssignableFrom(UseDatabaseImpl.PreconditionCheck.class))
+        if(bodhi.equals("//database") && klass.isAssignableFrom(UseDatabaseImpl.PostconditionCheck.class))
         {
             System.push("//database/{ready}", TRUE);
         }

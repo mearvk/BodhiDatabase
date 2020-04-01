@@ -29,6 +29,11 @@ public class Database extends Component
 
     public Database(Parameter parameter, Class<?> klass) throws Exception
     {
+        if(klass.isAssignableFrom(UseDatabaseImpl.PreconditionCheck.class))
+        {
+
+        }
+
         if(klass.isAssignableFrom(CreateTableImpl.TaskRunner.class))
         {
             Database.reference = this;

@@ -8,14 +8,6 @@ import java.util.StringTokenizer;
 
 public class UseDatabaseImpl extends UseCase
 {
-    public UseDatabaseImpl_Step001 step001;
-
-    public UseDatabaseImpl_Step002 step002;
-
-    public UseDatabaseImpl_Step003 step003;
-
-    public Parameter parameter;
-
     public UseDatabaseImpl(String sqlString) throws Exception
     {
         System.pre("//continue");
@@ -26,18 +18,11 @@ public class UseDatabaseImpl extends UseCase
 
         //
 
-        try
-        {
-            this.step001 = new UseDatabaseImpl_Step001(this.parameter);
+        UseDatabaseImpl_Step001 step001 = new UseDatabaseImpl_Step001(parameter);
 
-            this.step002 = new UseDatabaseImpl_Step002(this.parameter);
+        UseDatabaseImpl_Step002 step002 = new UseDatabaseImpl_Step002(parameter);
 
-            this.step003 = new UseDatabaseImpl_Step003(this.parameter);
-        }
-        catch (Exception e)
-        {
-            return;
-        }
+        UseDatabaseImpl_Step003 step003 = new UseDatabaseImpl_Step003(parameter);
     }
 
     public static class UseDatabaseImpl_Step001
