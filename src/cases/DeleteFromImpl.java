@@ -11,36 +11,29 @@ public class DeleteFromImpl extends UseCase
 
     public DeleteFromImpl.DeleteFromImpl_Step003 step003;
 
-    public Parameter parameter;
 
     public DeleteFromImpl(String sqlString) throws Exception
     {
-        System.push("//impl/createtable", this);
+        System.pre("//continue");
 
         //
 
-        this.parameter = new Parameter(this, sqlString);
+        Parameter parameter = new Parameter(this, sqlString);
 
         //
 
-        try
-        {   this.step001 = new DeleteFromImpl.DeleteFromImpl_Step001(this.parameter);
+        DeleteFromImpl.DeleteFromImpl_Step001 step001 = new DeleteFromImpl.DeleteFromImpl_Step001(parameter);
 
-            this.step002 = new DeleteFromImpl.DeleteFromImpl_Step002(this.parameter);
+        DeleteFromImpl.DeleteFromImpl_Step002 step002 = new DeleteFromImpl.DeleteFromImpl_Step002(parameter);
 
-            this.step003 = new DeleteFromImpl.DeleteFromImpl_Step003(this.parameter);
-        }
-        catch (Exception e)
-        {
-            return;
-        }
+        DeleteFromImpl.DeleteFromImpl_Step003 step003 = new DeleteFromImpl.DeleteFromImpl_Step003(parameter);
     }
 
     public static class DeleteFromImpl_Step001
     {
         public DeleteFromImpl_Step001(Parameter parameter) throws Exception
         {
-            System.push("//step001", new PreConditionRunner(parameter));
+            PreconditionCheck check =  new PreconditionCheck(parameter);
         }
     }
 
@@ -48,7 +41,7 @@ public class DeleteFromImpl extends UseCase
     {
         public DeleteFromImpl_Step002(Parameter parameter) throws Exception
         {
-            System.push("//step002", new TaskRunner(parameter));
+            TaskRunner runner = new TaskRunner(parameter);
         }
     }
 
@@ -56,15 +49,19 @@ public class DeleteFromImpl extends UseCase
     {
         public DeleteFromImpl_Step003(Parameter parameter) throws Exception
         {
-            System.push("//step00\3", new PostConditionRunner(parameter));
+            PostconditionCheck check = new PostconditionCheck(parameter);
         }
     }
 
-    public static class PreConditionRunner
+    public static class PreconditionCheck
     {
-        public PreConditionRunner(Parameter parameter) throws Exception
+        public PreconditionCheck(Parameter parameter) throws Exception
         {
-            System.touch("//database");
+            System.touch("//continue");
+
+                System.set("//database", parameter, DeleteFromImpl.PreconditionCheck.class);
+
+            System.touch("//continue");
         }
     }
 
@@ -72,15 +69,23 @@ public class DeleteFromImpl extends UseCase
     {
         public TaskRunner(Parameter parameter) throws Exception
         {
-            //System.database.writer.delete_from(parameter);
+            System.touch("//continue");
+
+                System.set("//database", parameter, DeleteFromImpl.TaskRunner.class);
+
+            System.touch("//continue");
         }
     }
 
-    public static class PostConditionRunner
+    public static class PostconditionCheck
     {
-        public PostConditionRunner(Parameter parameter) throws Exception
+        public PostconditionCheck(Parameter parameter) throws Exception
         {
-            System.touch("//database");
+            System.touch("//continue");
+
+                System.set("//database", parameter, DeleteFromImpl.PostconditionCheck.class);
+
+            System.touch("//continue");
         }
     }
 }
