@@ -9,12 +9,6 @@ import java.util.StringTokenizer;
 
 public class CreateDatabaseImpl extends UseCase
 {
-    public CreateDatabaseImpl_Step001 step001;
-
-    public CreateDatabaseImpl_Step002 step002;
-
-    public CreateDatabaseImpl_Step003 step003;
-
     public CreateDatabaseImpl(String sqlstring) throws Exception
     {
         System.pre("//continue");
@@ -25,11 +19,11 @@ public class CreateDatabaseImpl extends UseCase
 
         //
 
-        this.step001 = new CreateDatabaseImpl_Step001(parameter);
+        CreateDatabaseImpl.CreateDatabaseImpl_Step001 step001 = new CreateDatabaseImpl.CreateDatabaseImpl_Step001(parameter);
 
-        this.step002 = new CreateDatabaseImpl_Step002(parameter);
+        CreateDatabaseImpl.CreateDatabaseImpl_Step002 step002 = new CreateDatabaseImpl.CreateDatabaseImpl_Step002(parameter);
 
-        this.step003 = new CreateDatabaseImpl_Step003(parameter);
+        CreateDatabaseImpl.CreateDatabaseImpl_Step003 step003 = new CreateDatabaseImpl.CreateDatabaseImpl_Step003(parameter);
     }
 
     public static class CreateDatabaseImpl_Step001

@@ -7,14 +7,6 @@ import java.util.StringTokenizer;
 
 public class InsertIntoTableImpl extends UseCase
 {
-    public InsertIntoTableImpl.InsertIntoImpl_Step001 step001;
-
-    public InsertIntoTableImpl.InsertIntoImpl_Step002 step002;
-
-    public InsertIntoTableImpl.InsertIntoImpl_Step003 step003;
-
-    public Parameter parameter;
-
     public InsertIntoTableImpl(String sqlString) throws Exception
     {
         System.pre("//continue");
@@ -25,24 +17,18 @@ public class InsertIntoTableImpl extends UseCase
 
         //
 
-        try
-        {   this.step001 = new InsertIntoTableImpl.InsertIntoImpl_Step001(this.parameter);
+        InsertIntoTableImpl.InsertIntoImpl_Step001 step001 = new InsertIntoTableImpl.InsertIntoImpl_Step001(parameter);
 
-            this.step002 = new InsertIntoTableImpl.InsertIntoImpl_Step002(this.parameter);
+        InsertIntoTableImpl.InsertIntoImpl_Step002 step002 = new InsertIntoTableImpl.InsertIntoImpl_Step002(parameter);
 
-            this.step003 = new InsertIntoTableImpl.InsertIntoImpl_Step003(this.parameter);
-        }
-        catch (Exception e)
-        {
-            return;
-        }
+        InsertIntoTableImpl.InsertIntoImpl_Step003 step003 = new InsertIntoTableImpl.InsertIntoImpl_Step003(parameter);
     }
 
     public static class InsertIntoImpl_Step001
     {
         public InsertIntoImpl_Step001(Parameter parameter) throws Exception
         {
-            System.touch("//database");
+            PreconditionCheck check = new PreconditionCheck(parameter);
         }
     }
 
@@ -50,7 +36,7 @@ public class InsertIntoTableImpl extends UseCase
     {
         public InsertIntoImpl_Step002(Parameter parameter) throws Exception
         {
-            //System.database.writer.insert_into(parameter);
+            TaskRunner runner = new TaskRunner(parameter);
         }
     }
 
@@ -58,7 +44,43 @@ public class InsertIntoTableImpl extends UseCase
     {
         public InsertIntoImpl_Step003(Parameter parameter) throws Exception
         {
-            System.touch("//database");
+            PostconditionCheck check = new PostconditionCheck(parameter);
+        }
+    }
+
+    public static class PreconditionCheck
+    {
+        public PreconditionCheck(Parameter parameter) throws Exception
+        {
+            System.touch("//continue");
+
+            System.set("//database", parameter, DeleteFromImpl.PreconditionCheck.class);
+
+            System.touch("//continue");
+        }
+    }
+
+    public static class TaskRunner
+    {
+        public TaskRunner(Parameter parameter) throws Exception
+        {
+            System.touch("//continue");
+
+            System.set("//database", parameter, DeleteFromImpl.TaskRunner.class);
+
+            System.touch("//continue");
+        }
+    }
+
+    public static class PostconditionCheck
+    {
+        public PostconditionCheck(Parameter parameter) throws Exception
+        {
+            System.touch("//continue");
+
+            System.set("//database", parameter, DeleteFromImpl.PostconditionCheck.class);
+
+            System.touch("//continue");
         }
     }
 

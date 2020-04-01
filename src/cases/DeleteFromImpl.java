@@ -5,13 +5,6 @@ import system.System;
 
 public class DeleteFromImpl extends UseCase
 {
-    public DeleteFromImpl.DeleteFromImpl_Step001 step001;
-
-    public DeleteFromImpl.DeleteFromImpl_Step002 step002;
-
-    public DeleteFromImpl.DeleteFromImpl_Step003 step003;
-
-
     public DeleteFromImpl(String sqlString) throws Exception
     {
         System.pre("//continue");
