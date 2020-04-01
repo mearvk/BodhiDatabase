@@ -72,8 +72,6 @@ public class CreateDatabaseImpl extends UseCase
 
                 System.set("//database", parameter, CreateDatabaseImpl.TaskRunner.class);
 
-
-
             System.touch("//continue");
         }
     }

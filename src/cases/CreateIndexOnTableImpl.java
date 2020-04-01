@@ -7,9 +7,9 @@ import system.System;
 import java.io.File;
 import java.util.StringTokenizer;
 
-public class CreateIndexImpl extends UseCase
+public class CreateIndexOnTableImpl extends UseCase
 {
-    public CreateIndexImpl(String sqlString) throws Exception
+    public CreateIndexOnTableImpl(String sqlString) throws Exception
     {
         System.pre("//continue");
 
@@ -19,18 +19,18 @@ public class CreateIndexImpl extends UseCase
 
         //
 
-        CreateIndexImpl.CreateIndexImpl_Step001 step001 = new CreateIndexImpl.CreateIndexImpl_Step001(parameter);
+        CreateIndexImpl_Step001 step001 = new CreateIndexImpl_Step001(parameter);
 
-        CreateIndexImpl.CreateIndexImpl_Step002 step002 = new CreateIndexImpl.CreateIndexImpl_Step002(parameter);
+        CreateIndexImpl_Step002 step002 = new CreateIndexImpl_Step002(parameter);
 
-        CreateIndexImpl.CreateIndexImpl_Step003 step003 = new CreateIndexImpl.CreateIndexImpl_Step003(parameter);
+        CreateIndexImpl_Step003 step003 = new CreateIndexImpl_Step003(parameter);
     }
 
     public static class CreateIndexImpl_Step001
     {
         public CreateIndexImpl_Step001(Parameter parameter) throws Exception
         {
-            System.touch("//database");
+            PreconditionCheck check = new PreconditionCheck(parameter);
         }
     }
 
@@ -38,7 +38,7 @@ public class CreateIndexImpl extends UseCase
     {
         public CreateIndexImpl_Step002(Parameter parameter) throws Exception
         {
-            //TODO JSON in RAM and output option
+            TaskRunner runner = new TaskRunner(parameter);
         }
     }
 
@@ -46,7 +46,31 @@ public class CreateIndexImpl extends UseCase
     {
         public CreateIndexImpl_Step003(Parameter parameter) throws Exception
         {
-            System.touch("//database");
+            PostconditionCheck check = new PostconditionCheck(parameter);
+        }
+    }
+
+    public static class PreconditionCheck
+    {
+        public PreconditionCheck(Parameter parameter) throws Exception
+        {
+            System.set("//database", parameter, UseDatabaseImpl.PreconditionCheck.class);
+        }
+    }
+
+    public static class TaskRunner
+    {
+        public TaskRunner(Parameter parameter) throws Exception
+        {
+            System.set("//database", parameter, UseDatabaseImpl.PreconditionCheck.class);
+        }
+    }
+
+    public static class PostconditionCheck
+    {
+        public PostconditionCheck(Parameter parameter) throws Exception
+        {
+            System.set("//database", parameter, UseDatabaseImpl.PreconditionCheck.class);
         }
     }
 

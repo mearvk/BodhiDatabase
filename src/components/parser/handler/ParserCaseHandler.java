@@ -19,7 +19,7 @@ public class ParserCaseHandler
             {
                 new ParserCaseHandler.CreateDatabase(sqlstring);
             }
-            else if (sqlstring.startsWith("CREATE INDEX"))
+            else if (sqlstring.startsWith("CREATE INDEX") || sqlstring.startsWith("CREATE UNIQUE INDEX"))
             {
                 new ParserCaseHandler.CreateIndex(sqlstring);
             }
@@ -93,7 +93,7 @@ public class ParserCaseHandler
         {
             try
             {
-                CreateIndexImpl runner = new CreateIndexImpl(sqlstring);
+                CreateIndexOnTableImpl runner = new CreateIndexOnTableImpl(sqlstring);
             }
             catch(Exception e)
             {

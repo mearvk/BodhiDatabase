@@ -111,7 +111,7 @@ public class PersistenceCaseHandler
         public CreateIndex(String sqlString) throws Exception
         {
             try
-            { CreateIndexImpl runner = new CreateIndexImpl(this.sqlString = sqlString); }
+            { CreateIndexOnTableImpl runner = new CreateIndexOnTableImpl(this.sqlString = sqlString); }
             catch(Exception e)
             {
 

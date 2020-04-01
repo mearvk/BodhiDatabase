@@ -21,7 +21,7 @@ public class SelectFromTableImpl extends UseCase
 
         SelectFromTableImpl_Step002 step002 = new SelectFromTableImpl_Step002(parameter);
 
-        SelectFromImpl_Step003 step003 = new SelectFromImpl_Step003(parameter);
+        SelectFromTableImpl_Step003 step003 = new SelectFromTableImpl_Step003(parameter);
     }
 
     public static class SelectFromTableImpl_Step001
@@ -40,9 +40,9 @@ public class SelectFromTableImpl extends UseCase
         }
     }
 
-    public static class SelectFromImpl_Step003
+    public static class SelectFromTableImpl_Step003
     {
-        public SelectFromImpl_Step003(Parameter parameter) throws Exception
+        public SelectFromTableImpl_Step003(Parameter parameter) throws Exception
         {
             PostconditionCheck check = new PostconditionCheck(parameter);
         }
