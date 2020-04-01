@@ -123,6 +123,13 @@ public class System
         return Memory.reference.exists(bodhi);
     }
 
+    public static Object message(final String bodhi, String message)
+    {
+        java.lang.System.out.println("Message: <"+message+">");
+
+        return new Object();
+    }
+
     public static Object set(final String bodhi, final Parameter parameter, final Class<?> klass) throws Exception
     {
         if(bodhi.equals("//database") && klass.isAssignableFrom(CreateTableImpl.PreconditionCheck.class))
@@ -184,24 +191,17 @@ public class System
                 System.push("//database{name}", UseDatabaseImpl.Utility.getDatabaseName(parameter));
 
                 System.push("//database{url}", UseDatabaseImpl.Utility.getDatabaseUrl(parameter));
-
-                //
-
-                System.spin("//database/{spin}", UseDatabaseImpl.PreconditionCheck.class);
-
-                return System.reference;
             }
-            else
-            {
-                System.spin("//spin/{database}", UseDatabaseImpl.TaskRunner.class);
-            }
+
+            System.spin("//spin/{database}", UseDatabaseImpl.PreconditionCheck.class);
+
         }
 
         if(bodhi.equals("//database") && klass.isAssignableFrom(UseDatabaseImpl.TaskRunner.class))
         {
             Database database;
 
-            database = (Database) System.pull("//database");
+            database = (Database) System.peek("//database");
 
             if(database==null)
             {
@@ -210,20 +210,31 @@ public class System
                 System.push("//database/{name}", database.name);
 
                 System.push("//database/{url}", database.url);
-
-                //
-
-                System.spin("//database/{spin}", UseDatabaseImpl.TaskRunner.class);
             }
-            else
-            {
-                System.spin("//spin/{database}", UseDatabaseImpl.TaskRunner.class);
-            }
+
+            System.spin("//spin/{database}", UseDatabaseImpl.TaskRunner.class);
         }
 
         if(bodhi.equals("//database") && klass.isAssignableFrom(UseDatabaseImpl.PostconditionCheck.class))
         {
-            System.push("//database/{ready}", TRUE);
+            Database database;
+
+            database = (Database) System.peek("//database");
+
+            if(database==null)
+            {
+                System.touch("//continue", null);
+
+                return System.reference;
+            }
+            else
+            {
+
+            }
+
+            System.message("//database", "Database <"+database.name+"> selected.");
+
+            System.spin("//spin/{database}", UseDatabaseImpl.PostconditionCheck.class);
         }
 
         //
