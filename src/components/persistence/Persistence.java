@@ -9,7 +9,7 @@ import parameter.Parameter;
 import structures.Queue;
 import structures.SQLString;
 import system.System;
-import utility.validation.Utility;
+import utility.Utility;
 
 public class Persistence extends Component
 {
