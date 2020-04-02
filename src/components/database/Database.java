@@ -36,9 +36,9 @@ public class Database extends Component
         {
             Database.reference = this;
 
-            Database.reference.name = CreateTableImpl.Utility.getDatabaseName(parameter);
+            Database.reference.name = UseDatabaseImpl.Utility.getDatabaseName(parameter);
 
-            Database.reference.url = CreateTableImpl.Utility.getDatabaseUrl(parameter);
+            Database.reference.url = UseDatabaseImpl.Utility.getDatabaseUrl(parameter);
         }
 
         if(klass.isAssignableFrom(CreateTableImpl.TaskRunner.class))

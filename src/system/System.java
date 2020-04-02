@@ -202,13 +202,13 @@ public class System
      *
      * @param bodhi
      * @param parameter
-     * @param klass
+     * @param context
      * @return
      * @throws Exception
      */
-    public static Object set(final String bodhi, final Parameter parameter, final Class<?> klass) throws Exception
+    public static Object set(final String bodhi, final Parameter parameter, final Class<?> context) throws Exception
     {
-        if(bodhi.equals("//database") && klass.isAssignableFrom(CreateTableImpl.PreconditionCheck.class))
+        if(bodhi.equals("//database") && context.isAssignableFrom(CreateTableImpl.PreconditionCheck.class))
         {
             Database database;
 
@@ -226,14 +226,14 @@ public class System
             System.spin("//spin/{table}", UseDatabaseImpl.PreconditionCheck.class);
         }
 
-        else if(bodhi.equals("//database{name}") && klass.isAssignableFrom(CreateTableImpl.PreconditionCheck.class))
+        else if(bodhi.equals("//database{name}") && context.isAssignableFrom(CreateTableImpl.PreconditionCheck.class))
         {
             System.touch("//database");
 
             System.touch("//database{name}");
         }
 
-        else if(bodhi.equals("//database") && klass.isAssignableFrom(CreateTableImpl.TaskRunner.class))
+        else if(bodhi.equals("//database") && context.isAssignableFrom(CreateTableImpl.TaskRunner.class))
         {
             Database database = new Database(parameter, CreateTableImpl.TaskRunner.class);
 
@@ -256,7 +256,7 @@ public class System
             persistence.writer.writeXML(bodhi,parameter,CreateTableImpl.TaskRunner.class);
         }
 
-        else if(bodhi.equals("//database{name}") && klass.isAssignableFrom(CreateTableImpl.PostconditionCheck.class))
+        else if(bodhi.equals("//database{name}") && context.isAssignableFrom(CreateTableImpl.PostconditionCheck.class))
         {
             System.touch("//database");
 
@@ -265,7 +265,7 @@ public class System
 
         //
 
-        else if(bodhi.equals("//database") && klass.isAssignableFrom(UseDatabaseImpl.PreconditionCheck.class))
+        else if(bodhi.equals("//database") && context.isAssignableFrom(UseDatabaseImpl.PreconditionCheck.class))
         {
             Database database;
 
@@ -283,7 +283,7 @@ public class System
             System.spin("//spin{database}", parameter, UseDatabaseImpl.PreconditionCheck.class);
         }
 
-        else if(bodhi.equals("//database") && klass.isAssignableFrom(UseDatabaseImpl.TaskRunner.class))
+        else if(bodhi.equals("//database") && context.isAssignableFrom(UseDatabaseImpl.TaskRunner.class))
         {
             Database database;
 
@@ -291,7 +291,7 @@ public class System
 
             if(database==null)
             {
-                System.push("//database", database = new Database(parameter, UseDatabaseImpl.TaskRunner.class));
+                System.push("//database", database = new Database(parameter, context));
             }
 
             System.push("//database{name}", database.name);
@@ -301,7 +301,7 @@ public class System
             System.spin("//spin{database}", UseDatabaseImpl.TaskRunner.class);
         }
 
-        else if(bodhi.equals("//database") && klass.isAssignableFrom(UseDatabaseImpl.PostconditionCheck.class))
+        else if(bodhi.equals("//database") && context.isAssignableFrom(UseDatabaseImpl.PostconditionCheck.class))
         {
             Database database;
 
@@ -324,14 +324,14 @@ public class System
 
         //
 
-        else if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImpl.PreconditionCheck.class))
+        else if(bodhi.equals("//database") && context.isAssignableFrom(CreateDatabaseImpl.PreconditionCheck.class))
         {
             System.push("//database{name}", CreateDatabaseImpl.Utility.getDatabaseName(parameter));
 
             System.push("//database{file}", CreateDatabaseImpl.Utility.getDatabaseUrl(parameter));
         }
 
-        else if(bodhi.equals("//database{name}") && klass.isAssignableFrom(CreateDatabaseImpl.PreconditionCheck.class))
+        else if(bodhi.equals("//database{name}") && context.isAssignableFrom(CreateDatabaseImpl.PreconditionCheck.class))
         {
             String name = CreateDatabaseImpl.Utility.getDatabaseName(parameter).trim();
 
@@ -346,7 +346,7 @@ public class System
             }
         }
 
-        else if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImpl.TaskRunner.class))
+        else if(bodhi.equals("//database") && context.isAssignableFrom(CreateDatabaseImpl.TaskRunner.class))
         {
             Database database;
 
@@ -365,7 +365,7 @@ public class System
             persistence.writer.writeXML("//database", parameter, CreateDatabaseImpl.TaskRunner.class);
         }
 
-        else if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImpl.PostconditionCheck.class))
+        else if(bodhi.equals("//database") && context.isAssignableFrom(CreateDatabaseImpl.PostconditionCheck.class))
         {
             System.push("//database/{ready}", true);
         }
