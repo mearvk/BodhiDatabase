@@ -1,22 +1,30 @@
 package components.database;
 
+import cases.CreateDatabaseImpl;
 import cases.CreateTableImpl;
 import cases.UseDatabaseImpl;
 import components.Component;
 import parameter.Parameter;
 import system.System;
 
+import javax.xml.crypto.Data;
 import java.util.HashMap;
 
 public class Database extends Component
 {
-    public Parameter parameter;
+    public static Database reference;
+
+    //
 
     public String name;
 
     public String url;
 
-    public static Database reference;
+    public Parameter parameter;
+
+    public Class<?> context;
+
+    //
 
     public HashMap<String, Table> tables = new HashMap<>();
 
@@ -25,29 +33,58 @@ public class Database extends Component
         Database.reference = this;
     }
 
-    public Database(String sqlstring) throws Exception
+    public Database(Parameter parameter, Class<?> context) throws Exception
     {
+        if(context.isAssignableFrom(CreateDatabaseImpl.PreconditionCheck.class))
+        {
+            Database.reference = this;
 
-    }
+            Database.reference.name = CreateDatabaseImpl.Utility.getDatabaseName(parameter);
 
-    public Database(Parameter parameter, Class<?> klass) throws Exception
-    {
-        if(klass.isAssignableFrom(UseDatabaseImpl.PreconditionCheck.class))
+            Database.reference.url = CreateDatabaseImpl.Utility.getDatabaseUrl(parameter);
+
+            Database.reference.parameter = parameter;
+
+            Database.reference.context = context;
+        }
+
+        if(context.isAssignableFrom(CreateDatabaseImpl.TaskRunner.class))
+        {
+            Database.reference = this;
+
+            Database.reference.name = CreateDatabaseImpl.Utility.getDatabaseName(parameter);
+
+            Database.reference.url = CreateDatabaseImpl.Utility.getDatabaseUrl(parameter);
+
+            Database.reference.parameter = parameter;
+
+            Database.reference.context = context;
+        }
+
+        if(context.isAssignableFrom(UseDatabaseImpl.PreconditionCheck.class))
         {
             Database.reference = this;
 
             Database.reference.name = UseDatabaseImpl.Utility.getDatabaseName(parameter);
 
             Database.reference.url = UseDatabaseImpl.Utility.getDatabaseUrl(parameter);
+
+            Database.reference.parameter = parameter;
+
+            Database.reference.context = context;
         }
 
-        if(klass.isAssignableFrom(CreateTableImpl.TaskRunner.class))
+        if(context.isAssignableFrom(CreateTableImpl.TaskRunner.class))
         {
             Database.reference = this;
 
             Database.reference.name = CreateTableImpl.Utility.getDatabaseName(parameter);
 
             Database.reference.url = CreateTableImpl.Utility.getDatabaseUrl(parameter);
+
+            Database.reference.parameter = parameter;
+
+            Database.reference.context = context;
         }
     }
 
