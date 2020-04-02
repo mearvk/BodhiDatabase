@@ -90,9 +90,9 @@ public class Persistence extends Component
             return null;
         }
 
-        public void writeXML(String bodhi, String dbname, Parameter parameter, Class<?> klass)
+        public void writeXML(String bodhi, String dbname, Parameter parameter, Class<?> context)
         {
-            if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImpl.TaskRunner.class))
+            if(bodhi.equals("//database") && context.isAssignableFrom(CreateDatabaseImpl.TaskRunner.class))
             {
                 Database database;
 
@@ -118,14 +118,14 @@ public class Persistence extends Component
 
                     writer = new Utility.XMLWriter();
 
-                    writer.create_database(databaseUrl, databaseName, CreateTableImpl.TaskRunner.class);
+                    writer.create_database(databaseUrl, databaseName, CreateDatabaseImpl.TaskRunner.class);
                 }
             }
         }
 
-        public void writeXML(String bodhi, String dbname, String tablename, Parameter parameter, Class<?> klass)
+        public void writeXML(String bodhi, String dbname, String tablename, Parameter parameter, Class<?> context)
         {
-            if(bodhi.equals("//database") && klass.isAssignableFrom(CreateTableImpl.TaskRunner.class))
+            if(bodhi.equals("//database") && context.isAssignableFrom(CreateTableImpl.TaskRunner.class))
             {
                 Database database;
 

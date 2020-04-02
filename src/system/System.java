@@ -11,6 +11,7 @@ import messaging.MessageQueue;
 import parameter.Parameter;
 import components.validation.ValidationComponent;
 import utility.Utility;
+import utility.Reader;
 
 public class System
 {
@@ -180,15 +181,11 @@ public class System
         return System.reference;
     }
 
-    public static Object utility(final String bodhi, Parameter parameter, final Class<?> klass)
+    public static Object utility(final String bodhi, final Parameter parameter, final Class<?> klass)
     {
         if(bodhi.equals("//database") && klass.isAssignableFrom(UseDatabaseImpl.PostconditionCheck.class))
         {
-            Utility.XMLReader reader;
-
-            reader = new Utility.XMLReader();
-
-            reader.existsDatabase();
+            Reader reader;
         }
 
         return System.reference;
@@ -349,12 +346,18 @@ public class System
         {
             Database database;
 
+            //
+
             database = (Database) System.peek("//database");
 
             if(database==null)
             {
                 System.store("//database", database = new Database(parameter, context));
             }
+
+            //
+
+            System.store("//database{exists}", database.exists);
 
             System.store("//database{name}", database.name);
 
@@ -478,6 +481,11 @@ public class System
     }
 
     public static void store(final String name, Class<?> klass) throws Exception
+    {
+
+    }
+
+    public static void store(final String name, Reader reader, Database database) throws Exception
     {
 
     }

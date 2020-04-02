@@ -25,14 +25,14 @@ public class Utility
 
         }
 
-        public void existsTable()
+        public void exists_table()
         {
 
         }
 
-        public void existsDatabase()
+        public boolean exists_database(final String dbname)
         {
-
+            return true;
         }
 
     }

@@ -16,6 +16,8 @@ public class Database extends Component
 
     //
 
+    public String exists;
+
     public String name;
 
     public String url;
@@ -39,6 +41,8 @@ public class Database extends Component
         {
             Database.reference = this;
 
+            Database.reference.exists = CreateDatabaseImpl.Utility.getDatabaseExists(parameter);
+
             Database.reference.name = CreateDatabaseImpl.Utility.getDatabaseName(parameter);
 
             Database.reference.url = CreateDatabaseImpl.Utility.getDatabaseUrl(parameter);
@@ -52,6 +56,8 @@ public class Database extends Component
         {
             Database.reference = this;
 
+            //Database.reference.exists = CreateDatabaseImpl.Utility.getDatabaseExists(parameter);
+
             Database.reference.name = CreateDatabaseImpl.Utility.getDatabaseName(parameter);
 
             Database.reference.url = CreateDatabaseImpl.Utility.getDatabaseUrl(parameter);
@@ -64,6 +70,8 @@ public class Database extends Component
         if(context.isAssignableFrom(UseDatabaseImpl.PreconditionCheck.class))
         {
             Database.reference = this;
+
+            //Database.reference.exists = CreateDatabaseImpl.Utility.getDatabaseExists(parameter);
 
             Database.reference.name = UseDatabaseImpl.Utility.getDatabaseName(parameter);
 
