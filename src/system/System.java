@@ -34,7 +34,7 @@ public class System
 
     //
 
-    public static void pre(String bodhi) throws Exception
+    public static void pre(final String bodhi) throws Exception
     {
         if(bodhi.equals("//continue"))
         {
@@ -42,7 +42,7 @@ public class System
         }
     }
 
-    public static void unset(String bodhi) throws Exception
+    public static void unset(final String bodhi) throws Exception
     {
         if(bodhi.equals("//continue"))
         {
@@ -50,7 +50,7 @@ public class System
         }
     }
 
-    public static void set(String property, String ref, Class klass) throws Exception
+    public static void set(final String property, final String ref, Class klass) throws Exception
     {
         if(property.equals("//database/selected")  && klass.isAssignableFrom(UseDatabaseImpl.class))
         {
@@ -79,9 +79,9 @@ public class System
 
             //
 
-            String name = database.name = (String)System.pull("//database{name}");
+            database.name = (String)System.pull("//database{name}");
 
-            String url = database.url = (String)System.pull("//database{url}");
+            database.url = (String)System.pull("//database{url}");
         }
 
         else if(bodhi.equals("//spin{database}") && klass.isAssignableFrom(UseDatabaseImpl.TaskRunner.class))
@@ -141,6 +141,12 @@ public class System
         return System.reference;
     }
 
+    /**
+     * Returns null if no Bodhi lookup is found
+     *
+     * @param bodhi lookup string
+     * @return null if no match
+     */
     public static Object peek(final String bodhi)
     {
         return Memory.reference.peek(bodhi);
@@ -274,7 +280,7 @@ public class System
 
             System.push("//database{url}", UseDatabaseImpl.Utility.getDatabaseUrl(parameter));
 
-            System.spin("//spin{database}", UseDatabaseImpl.PreconditionCheck.class);
+            System.spin("//spin{database}", parameter, UseDatabaseImpl.PreconditionCheck.class);
         }
 
         else if(bodhi.equals("//database") && klass.isAssignableFrom(UseDatabaseImpl.TaskRunner.class))
@@ -367,7 +373,7 @@ public class System
         return System.reference;
     }
 
-    public static Boolean touch(String bodhi, String reference) throws Exception
+    public static Boolean touch(final String bodhi, final String reference) throws Exception
     {
         Object object_001 = Memory.reference.pull(bodhi);
 
@@ -376,12 +382,12 @@ public class System
         return object_001.equals(object_002);
     }
 
-    public static Boolean touch(String bodhi) throws Exception
+    public static Boolean touch(final String bodhi) throws Exception
     {
         return Memory.reference.exists(bodhi);
     }
 
-    public static Boolean touch(String bodhi, Parameter parameter, Class<?> klass) throws Exception
+    public static Boolean touch(final String bodhi, final Parameter parameter, final Class<?> klass) throws Exception
     {
         if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImpl.PreconditionCheck.class))
         {
@@ -401,7 +407,7 @@ public class System
         return System.memory.exists(bodhi);
     }
 
-    public static Boolean touch(@org.jetbrains.annotations.NotNull String...names) throws Exception
+    public static Boolean touch(final String...names) throws Exception
     {
         Boolean result = true;
 
@@ -413,42 +419,42 @@ public class System
         return result;
     }
 
-    public static void validate(String name, Class<?> klass) throws Exception
+    public static void validate(final String name, Class<?> klass) throws Exception
     {
         ValidationComponent.reference.push(name, klass);
     }
 
-    public static void print(String value) throws Exception
+    public static void print(final String value) throws Exception
     {
         java.lang.System.out.print(value);
     }
 
-    public static void println(String value) throws Exception
+    public static void println(final String value) throws Exception
     {
         java.lang.System.out.println(value);
     }
 
-    public static Boolean put(String name) throws Exception
+    public static Boolean put(final String name) throws Exception
     {
         return Memory.reference.exists(name);
     }
 
-    public static Object pull(String name) throws Exception
+    public static Object pull(final String name) throws Exception
     {
         return Memory.reference.pull(name);
     }
 
-    public static void push(String name, Class<?> klass) throws Exception
+    public static void push(final String name, Class<?> klass) throws Exception
     {
 
     }
 
-    public static void push(String name, Object object) throws Exception
+    public static void push(final String name, Object object) throws Exception
     {
         Memory.reference.push(name, object);
     }
 
-    public static void push(String name, String target) throws Exception
+    public static void push(final String name, String target) throws Exception
     {
         Memory.reference.push(name, target);
     }
@@ -458,7 +464,7 @@ public class System
         Memory.reference.push(name, null);
     }
 
-    public static void nullify(String bodhi, String cause) throws Exception
+    public static void nullify(final String bodhi, String cause) throws Exception
     {
         Memory.reference.push(bodhi, null);
 
