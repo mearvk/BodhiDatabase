@@ -24,6 +24,17 @@ public class Utility
         {
 
         }
+
+        public void existsTable()
+        {
+
+        }
+
+        public void existsDatabase()
+        {
+
+        }
+
     }
 
     public static class XMLWriter
@@ -33,7 +44,7 @@ public class Utility
 
         }
 
-        public void writeTable(String fileURL, String dbname, Class<?> klass)
+        public void createTable(String fileURL, String dbname, Class<?> klass)
         {
             if(klass.isAssignableFrom(CreateTableImpl.TaskRunner.class))
             {
@@ -41,7 +52,7 @@ public class Utility
             }
         }
 
-        public void writeDatabase(String fileURL, String dbname, Class<?> klass)
+        public void createDatabase(String fileURL, String dbname, Class<?> klass)
         {
             if(klass.isAssignableFrom(CreateDatabaseImpl.TaskRunner.class))
             {

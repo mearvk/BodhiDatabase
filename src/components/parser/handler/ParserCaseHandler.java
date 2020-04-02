@@ -252,7 +252,8 @@ public class ParserCaseHandler
 
                 equeue = new ExceptionQueue();
 
-                equeue.enqueue(e, e.getMessage());            }
+                equeue.enqueue(e, e.getMessage());
+            }
         }
     }
 

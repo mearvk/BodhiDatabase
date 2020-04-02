@@ -3,9 +3,10 @@ package components.database;
 import cases.CreateTableImpl;
 import cases.UseDatabaseImpl;
 import components.Component;
-import components.parser.handler.ParserCaseHandler;
 import parameter.Parameter;
 import system.System;
+
+import java.util.HashMap;
 
 public class Database extends Component
 {
@@ -16,6 +17,8 @@ public class Database extends Component
     public String url;
 
     public static Database reference;
+
+    public HashMap<String, Table> tables = new HashMap<>();
 
     public Database() throws Exception
     {
@@ -31,7 +34,11 @@ public class Database extends Component
     {
         if(klass.isAssignableFrom(UseDatabaseImpl.PreconditionCheck.class))
         {
+            Database.reference = this;
 
+            Database.reference.name = CreateTableImpl.Utility.getDatabaseName(parameter);
+
+            Database.reference.url = CreateTableImpl.Utility.getDatabaseUrl(parameter);
         }
 
         if(klass.isAssignableFrom(CreateTableImpl.TaskRunner.class))
@@ -40,7 +47,7 @@ public class Database extends Component
 
             Database.reference.name = CreateTableImpl.Utility.getDatabaseName(parameter);
 
-            Database.reference.url = CreateTableImpl.Utility.getDatabaseFile(parameter);
+            Database.reference.url = CreateTableImpl.Utility.getDatabaseUrl(parameter);
         }
     }
 
@@ -72,7 +79,7 @@ public class Database extends Component
 
                 String name = this.name = CreateTableImpl.Utility.getTableName(parameter);
 
-                String url = this.url = CreateTableImpl.Utility.getDatabaseFile(parameter);
+                String url = this.url = CreateTableImpl.Utility.getDatabaseUrl(parameter);
             }
         }
     }

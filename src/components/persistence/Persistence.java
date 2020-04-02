@@ -3,6 +3,7 @@ package components.persistence;
 import cases.CreateDatabaseImpl;
 import cases.CreateTableImpl;
 import components.Component;
+import components.database.Database;
 import components.persistence.handler.PersistenceCaseHandler;
 import exceptions.ExceptionQueue;
 import parameter.Parameter;
@@ -86,20 +87,62 @@ public class Persistence extends Component
         {
             if(bodhi.equals("//database") && klass.isAssignableFrom(CreateTableImpl.TaskRunner.class))
             {
-                Utility.XMLWriter writer;
+                Database database;
 
-                writer = new Utility.XMLWriter();
+                database = (Database) system.System.peek("//database");
 
-                writer.writeTable(CreateTableImpl.Utility.getDatabaseFile(parameter), CreateTableImpl.Utility.getDatabaseName(parameter), CreateTableImpl.TaskRunner.class);
+                if(database==null)
+                {
+                    ExceptionQueue equeue;
+
+                    equeue = new ExceptionQueue();
+
+                    equeue.enqueue(new Exception("CreateTableImpl.TaskRunner >> Persistence.writeXML >> Database is NULL"));
+                }
+                else
+                {
+                    String databaseUrl = CreateTableImpl.Utility.getDatabaseUrl(parameter);
+
+                    String databaseName = CreateTableImpl.Utility.getDatabaseName(parameter);
+
+                    //
+
+                    Utility.XMLWriter writer;
+
+                    writer = new Utility.XMLWriter();
+
+                    writer.createTable(databaseUrl, databaseName, CreateTableImpl.TaskRunner.class);
+                }
             }
 
             if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImpl.TaskRunner.class))
             {
-                Utility.XMLWriter writer;
+                Database database;
 
-                writer = new Utility.XMLWriter();
+                database = (Database) system.System.peek("//database");
 
-                writer.writeDatabase(CreateDatabaseImpl.Utility.getDatabaseFile(parameter), CreateDatabaseImpl.Utility.getDatabaseName(parameter), CreateDatabaseImpl.TaskRunner.class);
+                if(database==null)
+                {
+                    ExceptionQueue equeue;
+
+                    equeue = new ExceptionQueue();
+
+                    equeue.enqueue(new Exception("CreateDatabaseImpl.TaskRunner >> Persistence.writeXML >> Database is NULL"));
+                }
+                else
+                {
+                    String databaseUrl = CreateDatabaseImpl.Utility.getDatabaseUrl(parameter);
+
+                    String databaseName = CreateDatabaseImpl.Utility.getDatabaseName(parameter);
+
+                    //
+
+                    Utility.XMLWriter writer;
+
+                    writer = new Utility.XMLWriter();
+
+                    writer.createDatabase(databaseUrl, databaseName, CreateTableImpl.TaskRunner.class);
+                }
             }
         }
     }

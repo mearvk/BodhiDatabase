@@ -92,7 +92,7 @@ public class CreateDatabaseImpl extends UseCase
 
     public static class Utility
     {
-        public static String getDatabaseFile(Parameter parameter)
+        public static String getDatabaseUrl(Parameter parameter)
         {
             return DatabaseConstants.baseURL +"\\"+ getDatabaseName(parameter) + ".sql";
         }
