@@ -44,7 +44,7 @@ public class Utility
 
         }
 
-        public void createTable(String fileURL, String dbname, Class<?> klass)
+        public void create_table(String fileURL, String dbname, Class<?> klass)
         {
             if(klass.isAssignableFrom(CreateTableImpl.TaskRunner.class))
             {
@@ -52,7 +52,7 @@ public class Utility
             }
         }
 
-        public void createDatabase(String fileURL, String dbname, Class<?> klass)
+        public void create_database(String fileURL, String dbname, Class<?> klass)
         {
             if(klass.isAssignableFrom(CreateDatabaseImpl.TaskRunner.class))
             {

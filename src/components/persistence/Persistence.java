@@ -32,14 +32,6 @@ public class Persistence extends Component
 
     }
 
-    public void read(String bodhi, Parameter parameter, Class<?> klass)
-    {
-        if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImpl.TaskRunner.class))
-        {
-            this.reader.readXML(bodhi, CreateDatabaseImpl.Utility.getDatabaseName(parameter), klass);
-        }
-    }
-
     public static class Thread extends java.lang.Thread
     {
         public Queue<SQLString> queue = new Queue<SQLString>();
@@ -93,11 +85,7 @@ public class Persistence extends Component
 
                 if(database==null)
                 {
-                    ExceptionQueue equeue;
-
-                    equeue = new ExceptionQueue();
-
-                    equeue.enqueue(new Exception("CreateTableImpl.TaskRunner >> Persistence.writeXML >> Database is NULL"));
+                    new ExceptionQueue().enqueue(new Exception("CreateTableImpl.TaskRunner >> Persistence.writeXML >> Database is NULL"));
                 }
                 else
                 {
@@ -111,7 +99,7 @@ public class Persistence extends Component
 
                     writer = new Utility.XMLWriter();
 
-                    writer.createTable(databaseUrl, databaseName, CreateTableImpl.TaskRunner.class);
+                    writer.create_table(databaseUrl, databaseName, CreateTableImpl.TaskRunner.class);
                 }
             }
 
@@ -141,7 +129,7 @@ public class Persistence extends Component
 
                     writer = new Utility.XMLWriter();
 
-                    writer.createDatabase(databaseUrl, databaseName, CreateTableImpl.TaskRunner.class);
+                    writer.create_database(databaseUrl, databaseName, CreateTableImpl.TaskRunner.class);
                 }
             }
         }
@@ -149,8 +137,10 @@ public class Persistence extends Component
 
     public class SQLReader
     {
-        public Object readXML(String bodhi, String dbname, Class<?> klass)
+        public Object readXML(String bodhi, String dbname, Parameter parameter, Class<?> klass)
         {
+            //System.message("//database", "Database <"+dbname+"> selected.");
+
             return null;
         }
     }
