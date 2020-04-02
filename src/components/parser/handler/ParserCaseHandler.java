@@ -17,7 +17,7 @@ public class ParserCaseHandler
         {
             if (sqlstring.startsWith("CREATE DATABASE"))
             {
-                new ParserCaseHandler.CreateDatabase(sqlstring);
+                 new ParserCaseHandler.CreateDatabase(sqlstring);
             }
             else if (sqlstring.startsWith("CREATE INDEX") || sqlstring.startsWith("CREATE UNIQUE INDEX"))
             {

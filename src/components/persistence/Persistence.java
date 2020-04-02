@@ -80,24 +80,24 @@ public class Persistence extends Component
             //TODO validate XML
         }
 
-        public Object checkXML(String bodhi, String dbname, Parameter parameter, Class<?> klass)
+        public Object checkXML(String bodhi, Database database, Parameter parameter, Class<?> klass)
         {
+            java.lang.System.out.println("TODO: IMPL CHECKXML IN PERSISTENCE");
+
             return null;
         }
 
         public Object checkXML(String bodhi, String dbname, String tablename, Parameter parameter, Class<?> klass)
         {
+            java.lang.System.out.println("TODO: IMPL CHECKXML IN PERSISTENCE");
+
             return null;
         }
 
-        public void writeXML(String bodhi, String dbname, Parameter parameter, Class<?> context)
+        public void writeXML(String bodhi, Database database, Parameter parameter, Class<?> context)
         {
-            if(bodhi.equals("//database") && context.isAssignableFrom(CreateDatabaseImpl.TaskRunner.class))
+            if(context.isAssignableFrom(CreateDatabaseImpl.TaskRunner.class))
             {
-                Database database;
-
-                database = (Database) system.System.peek("//database");
-
                 if(database==null)
                 {
                     ExceptionQueue equeue;
@@ -125,7 +125,7 @@ public class Persistence extends Component
 
         public void writeXML(String bodhi, String dbname, String tablename, Parameter parameter, Class<?> context)
         {
-            if(bodhi.equals("//database") && context.isAssignableFrom(CreateTableImpl.TaskRunner.class))
+            if(context.isAssignableFrom(CreateTableImpl.TaskRunner.class))
             {
                 Database database;
 
@@ -150,8 +150,6 @@ public class Persistence extends Component
                     writer.create_table(databaseUrl, databaseName, CreateTableImpl.TaskRunner.class);
                 }
             }
-
-
         }
     }
 

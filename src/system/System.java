@@ -8,10 +8,11 @@ import components.memory.Memory;
 import components.persistence.Persistence;
 import components.processor.Processor;
 import messaging.MessageQueue;
+import org.jetbrains.annotations.NotNull;
 import parameter.Parameter;
 import components.validation.ValidationComponent;
-import utility.Utility;
 import utility.Reader;
+import utility.Writer;
 
 public class System
 {
@@ -46,7 +47,7 @@ public class System
     {
         if(bodhi.equals("//continue"))
         {
-            System.nullify(bodhi);
+            System.invalidate(bodhi);
         }
     }
 
@@ -67,18 +68,15 @@ public class System
     {
         if(bodhi.equals("//spin{database}") && context.isAssignableFrom(CreateDatabaseImpl.PreconditionCheck.class))
         {
-            Database database;
+            Database database = (Database)System.peek("//database");
 
-            database = (Database)System.peek("//database");
+            System.equality("//database{exists}", database.exists);
 
-            if(database==null)
-            {
-                System.store("//database", database = new Database(parameter,context));
-            }
+            System.equality("//database{name}", database.name);
 
-            System.compare("//database{name}", database.name, context);
+            System.equality("//database{url}", database.url);
 
-            System.compare("//database{url}", database.url, context);
+            return System.reference;
         }
 
         else if(bodhi.equals("//spin{database}") && context.isAssignableFrom(CreateDatabaseImpl.TaskRunner.class))
@@ -96,7 +94,7 @@ public class System
 
             persistence = new Persistence();
 
-            persistence.writer.writeXML(bodhi, database.name, parameter, context);
+            persistence.writer.writeXML(bodhi, database, parameter, context);
         }
 
         else if(bodhi.equals("//spin{database}") && context.isAssignableFrom(CreateDatabaseImpl.PostconditionCheck.class))
@@ -110,11 +108,11 @@ public class System
                 System.store("//database", database = new Database(parameter,context));
             }
 
-            Persistence persistence;
+            Reader reader;
 
-            persistence = new Persistence();
+            reader = new Reader();
 
-            persistence.writer.checkXML(bodhi,database.name, parameter, context);
+            reader.checkXML(bodhi, database, parameter, context);
         }
 
         //
@@ -146,9 +144,9 @@ public class System
 
             //
 
-            System.compare(database.name,"//database{name}", UseDatabaseImpl.TaskRunner.class);
+            System.equality(database.name,"//database{name}", UseDatabaseImpl.TaskRunner.class);
 
-            System.compare(database.url, "//database{url}", UseDatabaseImpl.TaskRunner.class);
+            System.equality(database.url, "//database{url}", UseDatabaseImpl.TaskRunner.class);
 
             //
 
@@ -163,9 +161,9 @@ public class System
 
             //
 
-            System.compare(database.name,"//database{name}", UseDatabaseImpl.PostconditionCheck.class);
+            System.equality(database.name,"//database{name}", UseDatabaseImpl.PostconditionCheck.class);
 
-            System.compare(database.url, "//database{url}", UseDatabaseImpl.PostconditionCheck.class);
+            System.equality(database.url, "//database{url}", UseDatabaseImpl.PostconditionCheck.class);
 
             //
 
@@ -192,7 +190,7 @@ public class System
     }
 
     /**
-     * Returns null if no Bodhi lookup is found
+     * Non-exception throwing version of System.pull()
      *
      * @param bodhi lookup string
      * @return null if no match
@@ -202,23 +200,27 @@ public class System
         return Memory.reference.peek(bodhi);
     }
 
-    public static Boolean compare(final String bodhi, final String comparable, final Class<?> klass) throws Exception
+    /**
+     * Compare equality of bodhi and comparable
+     *
+     * @param bodhi
+     * @param comparable
+     * @param klass
+     * @return
+     * @throws Exception
+     */
+    public static Boolean equality(final String bodhi, final String comparable, final Class<?> klass) throws Exception
     {
-        if(bodhi.equals("//database{name}") && klass.isAssignableFrom(UseDatabaseImpl.PostconditionCheck.class))
-        {
-            if(bodhi.equals(comparable)) return true;
+        if(bodhi.equals(comparable)) return true;
 
-            throw new Exception();
-        }
+        throw new Exception();
+    }
 
-        if(bodhi.equals("//database{url}") && klass.isAssignableFrom(UseDatabaseImpl.PostconditionCheck.class))
-        {
-            if(bodhi.equals(comparable)) return true;
+    public static Boolean equality(final String bodhi, final Object comparable) throws Exception
+    {
+        if(bodhi.equals(comparable)) return true;
 
-            throw new Exception();
-        }
-
-        return true;
+        throw new Exception();
     }
 
     public static Object full(final String bodhi) throws Exception
@@ -346,8 +348,6 @@ public class System
         {
             Database database;
 
-            //
-
             database = (Database) System.peek("//database");
 
             if(database==null)
@@ -355,55 +355,41 @@ public class System
                 System.store("//database", database = new Database(parameter, context));
             }
 
-            //
-
             System.store("//database{exists}", database.exists);
 
             System.store("//database{name}", database.name);
 
             System.store("//database{url}", database.url);
-
-            //
-
-            System.spin("//spin{database}", parameter, context);
         }
 
         else if(context.isAssignableFrom(CreateDatabaseImpl.TaskRunner.class))
         {
             Database database;
 
-            System.store("//database", database = new Database(parameter, context));
-
-            System.store("//database/{name}", database.name);
-
-            System.store("//database/{url}", database.url);
+            database = (Database) System.peek("//database");
 
             //
 
-            Persistence persistence;
+            Writer writer;
 
-            persistence = new Persistence();
+            writer = new Writer();
 
-            persistence.writer.writeXML("//database", database.name, parameter, CreateDatabaseImpl.TaskRunner.class);
-
-            persistence.writer.checkXML("//database", database.name, parameter, CreateDatabaseImpl.TaskRunner.class);
-
-            //
-
-            //System.spin("//spin{database}", parameter, context);
+            writer.writeXML("//database", database, parameter, CreateDatabaseImpl.TaskRunner.class);
         }
 
         else if(context.isAssignableFrom(CreateDatabaseImpl.PostconditionCheck.class))
         {
-            //Persistence persistence;
+            Database database;
 
-            //persistence = new Persistence();
-
-            //persistence.writer.writeXML("//database", parameter, context);
+            database = (Database) System.peek("//database");
 
             //
 
-            System.spin("//spin{database}", parameter, context);
+            Reader reader;
+
+            reader = new Reader();
+
+            reader.checkXML("//database", database, parameter, CreateDatabaseImpl.PostconditionCheck.class);
         }
 
         return System.reference;
@@ -500,12 +486,12 @@ public class System
         Memory.reference.push(name, target);
     }
 
-    public static void nullify(String name) throws Exception
+    public static void invalidate(String name) throws Exception
     {
         Memory.reference.push(name, null);
     }
 
-    public static void nullify(final String bodhi, String cause) throws Exception
+    public static void invalidate(final String bodhi, String cause) throws Exception
     {
         Memory.reference.push(bodhi, null);
 

@@ -56,21 +56,22 @@ public class Utility
         {
             if(klass.isAssignableFrom(CreateDatabaseImpl.TaskRunner.class))
             {
-                //File file=null;
-
                 try
                 {
                     File file = new File(fileURL);
 
-                    FileWriter writer = new FileWriter(new File(fileURL));
+                    if(!file.exists())
+                    {
+                        FileWriter writer = new FileWriter(file);
 
-                    writer.write("");
+                        writer.write("");
 
-                    writer.flush();
+                        writer.flush();
 
-                    writer.close();
+                        writer.close();
 
-                    writer = null;
+                        writer = null;
+                    }
 
                     //
 
@@ -127,13 +128,6 @@ public class Utility
                     StreamResult result = new StreamResult(file);
 
                     transformer.transform(source, result);
-
-                    //
-
-                    StreamResult consoleResult = new StreamResult(System.out);
-
-                    transformer.transform(source, consoleResult);
-
                 }
                 catch (Exception e)
                 {

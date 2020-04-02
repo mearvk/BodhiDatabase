@@ -98,7 +98,7 @@ public class CreateDatabaseImpl extends UseCase
             }
             catch (Exception e)
             {
-                return "nan";
+                return "false";
             }
         }
 
