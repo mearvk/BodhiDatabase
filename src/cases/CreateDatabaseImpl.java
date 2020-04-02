@@ -58,8 +58,6 @@ public class CreateDatabaseImpl extends UseCase
 
                 System.set("//database", parameter, CreateDatabaseImpl.PreconditionCheck.class);
 
-                System.set("//database{name}", parameter, CreateDatabaseImpl.PreconditionCheck.class);
-
             System.touch("//continue");
         }
     }

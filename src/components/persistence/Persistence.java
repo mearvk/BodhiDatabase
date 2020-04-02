@@ -75,6 +75,11 @@ public class Persistence extends Component
 
     public class SQLWriter
     {
+        public void validateXML(String bodhi, Parameter parameter, Class<?> klass)
+        {
+            //TODO validate XML
+        }
+
         public void writeXML(String bodhi, Parameter parameter, Class<?> klass)
         {
             if(bodhi.equals("//database") && klass.isAssignableFrom(CreateTableImpl.TaskRunner.class))

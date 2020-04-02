@@ -258,14 +258,14 @@ public class System
 
             if(database==null)
             {
-                System.push("//database", database = new Database(parameter, UseDatabaseImpl.PreconditionCheck.class));
+                System.push("//database", database = new Database(parameter, CreateTableImpl.PreconditionCheck.class));
 
-                System.push("//database{name}", UseDatabaseImpl.Utility.getDatabaseName(parameter));
+                System.push("//database{name}", CreateTableImpl.Utility.getDatabaseName(parameter));
 
-                System.push("//database{url}", UseDatabaseImpl.Utility.getDatabaseUrl(parameter));
+                System.push("//database{url}", CreateTableImpl.Utility.getDatabaseUrl(parameter));
             }
 
-            System.adhere("//spin/{table}", UseDatabaseImpl.PreconditionCheck.class);
+            System.adhere("//spin/{table}", CreateTableImpl.PreconditionCheck.class);
         }
 
         else if(bodhi.equals("//database{name}") && context.isAssignableFrom(CreateTableImpl.PreconditionCheck.class))
@@ -325,6 +325,25 @@ public class System
             System.adhere("//spin{database}", parameter, context);
         }
 
+        else if(bodhi.equals("//database") && context.isAssignableFrom(UseDatabaseImpl.PostconditionCheck.class))
+        {
+            Database database;
+
+            database = (Database) System.pull("//database");
+
+            //
+
+            Persistence persistence;
+
+            persistence = new Persistence();
+
+            persistence.reader.readXML(bodhi, database.name, parameter, context);
+
+            //
+
+            System.adhere("//spin{database}", context);
+        }
+
         else if(bodhi.equals("//database") && context.isAssignableFrom(CreateDatabaseImpl.PreconditionCheck.class))
         {
             Database database;
@@ -345,49 +364,6 @@ public class System
             System.adhere("//spin{database}", parameter, context);
         }
 
-        else if(bodhi.equals("//database") && context.isAssignableFrom(UseDatabaseImpl.PostconditionCheck.class))
-        {
-            Database database;
-
-            database = (Database) System.pull("//database");
-
-            //
-
-            Persistence persistence;
-
-            persistence = new Persistence();
-
-            persistence.reader.readXML(bodhi, database.name, parameter, context);
-
-            //
-
-            System.adhere("//spin{database}", context);
-        }
-
-        //d
-
-        else if(bodhi.equals("//database") && context.isAssignableFrom(CreateDatabaseImpl.PreconditionCheck.class))
-        {
-            System.push("//database{name}", CreateDatabaseImpl.Utility.getDatabaseName(parameter));
-
-            System.push("//database{file}", CreateDatabaseImpl.Utility.getDatabaseUrl(parameter));
-        }
-
-        else if(bodhi.equals("//database{name}") && context.isAssignableFrom(CreateDatabaseImpl.PreconditionCheck.class))
-        {
-            String name = CreateDatabaseImpl.Utility.getDatabaseName(parameter).trim();
-
-            String[] names = CreateDatabaseImpl.Utility.getExistingDatabaseNames(parameter);
-
-            for(int i=0; i<names.length; i++)
-            {
-                if(names[i].equals(name))
-                {
-                    System.nullify("//continue","Database <"+name+"> exists already; see file <"+ DatabaseConstants.baseURL+"\\"+name+".sql>");
-                }
-            }
-        }
-
         else if(bodhi.equals("//database") && context.isAssignableFrom(CreateDatabaseImpl.TaskRunner.class))
         {
             Database database;
@@ -405,11 +381,19 @@ public class System
             persistence = new Persistence();
 
             persistence.writer.writeXML("//database", parameter, CreateDatabaseImpl.TaskRunner.class);
+
+            //
+
+            System.adhere("//spin{database}", parameter, context);
         }
 
         else if(bodhi.equals("//database") && context.isAssignableFrom(CreateDatabaseImpl.PostconditionCheck.class))
         {
-            System.push("//database/{ready}", true);
+            Persistence persistence;
+
+            persistence = new Persistence();
+
+            persistence.writer.writeXML("//database", parameter, context);
         }
 
         return System.reference;
