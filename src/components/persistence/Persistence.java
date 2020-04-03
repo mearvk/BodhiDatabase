@@ -9,8 +9,10 @@ import exceptions.ExceptionQueue;
 import parameter.Parameter;
 import structures.Queue;
 import structures.SQLString;
+import structures.table.Table;
 import system.System;
 import utility.Utility;
+import utility.Writer;
 
 public class Persistence extends Component
 {
@@ -94,61 +96,19 @@ public class Persistence extends Component
             return null;
         }
 
-        public void writeXML(String bodhi, Database database, Parameter parameter, Class<?> context)
+        public void writeXML(String bodhi, Database database, Parameter parameter, Class<?> context) throws Exception
         {
             if(context.isAssignableFrom(CreateDatabaseImpl.TaskRunner.class))
             {
-                if(database==null)
-                {
-                    ExceptionQueue equeue;
-
-                    equeue = new ExceptionQueue();
-
-                    equeue.enqueue(new Exception("CreateDatabaseImpl.TaskRunner >> Persistence.writeXML >> Database is NULL"));
-                }
-                else
-                {
-                    String databaseUrl = CreateDatabaseImpl.Utility.getDatabaseUrl(parameter);
-
-                    String databaseName = CreateDatabaseImpl.Utility.getDatabaseName(parameter);
-
-                    //
-
-                    Utility.XMLWriter writer;
-
-                    writer = new Utility.XMLWriter();
-
-                    writer.create_database(databaseUrl, databaseName, CreateDatabaseImpl.TaskRunner.class);
-                }
+                Writer.writeXML(bodhi, database, parameter, context);
             }
         }
 
-        public void writeXML(String bodhi, String dbname, String tablename, Parameter parameter, Class<?> context)
+        public void writeXML(String bodhi, Database database, Table table, Parameter parameter, Class<?> context) throws Exception
         {
             if(context.isAssignableFrom(CreateTableImpl.TaskRunner.class))
             {
-                Database database;
-
-                database = (Database) system.System.peek("//database");
-
-                if(database==null)
-                {
-                    new ExceptionQueue().enqueue(new Exception("CreateTableImpl.TaskRunner >> Persistence.writeXML >> Database is NULL"));
-                }
-                else
-                {
-                    String databaseUrl = CreateTableImpl.Utility.getDatabaseUrl(parameter);
-
-                    String databaseName = CreateTableImpl.Utility.getDatabaseName(parameter);
-
-                    //
-
-                    Utility.XMLWriter writer;
-
-                    writer = new Utility.XMLWriter();
-
-                    writer.create_table(databaseUrl, databaseName, CreateTableImpl.TaskRunner.class);
-                }
+                Writer.writeXML(bodhi, database, table, parameter, context);
             }
         }
     }

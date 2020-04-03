@@ -108,7 +108,7 @@ public class Database extends Component
 
     }
 
-    public static class Table
+    public class Table
     {
         public String name;
 

@@ -11,8 +11,11 @@ import messaging.MessageQueue;
 import org.jetbrains.annotations.NotNull;
 import parameter.Parameter;
 import components.validation.ValidationComponent;
+import structures.table.Table;
 import utility.Reader;
 import utility.Writer;
+
+import java.io.FileWriter;
 
 public class System
 {
@@ -259,7 +262,7 @@ public class System
         {
             Database database = new Database(parameter, CreateTableImpl.TaskRunner.class);
 
-            Database.Table table = new Database.Table(parameter, CreateTableImpl.TaskRunner.class);
+            Table table = new Table(parameter, CreateTableImpl.TaskRunner.class);
 
             System.store("//database", database);
 
@@ -275,7 +278,7 @@ public class System
 
             persistence = new Persistence();
 
-            persistence.writer.writeXML(bodhi, database.name, table.name, parameter,CreateTableImpl.TaskRunner.class);
+            persistence.writer.writeXML(bodhi, database, table, parameter,CreateTableImpl.TaskRunner.class);
         }
 
         else if(context.isAssignableFrom(CreateTableImpl.PostconditionCheck.class))
@@ -484,6 +487,14 @@ public class System
     public static void store(final String name, String target) throws Exception
     {
         Memory.reference.push(name, target);
+    }
+
+    public static void action(final String name, Object object, Class<?> context) throws Exception
+    {
+        if(name.equals("//file{exists}"))
+        {
+
+        }
     }
 
     public static void invalidate(String name) throws Exception

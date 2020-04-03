@@ -14,4 +14,9 @@ public class Table
     {
         this.parameter = parameter;
     }
+
+    public Table(Parameter parameter, Class<?> klass)
+    {
+
+    }
 }
