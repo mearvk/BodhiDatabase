@@ -13,7 +13,7 @@ public class Reader
 
         persistence = new Persistence();
 
-        //persistence.reader.readXML("//database", database, parameter, CreateDatabaseImpl.TaskRunner.class);
+        persistence.reader.readXML(bodhi, database, parameter, context);
 
         return null;
     }

@@ -54,7 +54,7 @@ public class DropDatabaseImpl extends UseCase
         {
             System.touch("//continue");
 
-                System.set("//database", parameter, DeleteFromImpl.PreconditionCheck.class);
+                System.step("//database", parameter, DeleteFromImpl.PreconditionCheck.class);
 
             System.touch("//continue");
         }
@@ -66,7 +66,7 @@ public class DropDatabaseImpl extends UseCase
         {
             System.touch("//continue");
 
-                System.set("//database", parameter, DeleteFromImpl.TaskRunner.class);
+                System.step("//database", parameter, DeleteFromImpl.TaskRunner.class);
 
             System.touch("//continue");
         }
@@ -78,7 +78,7 @@ public class DropDatabaseImpl extends UseCase
         {
             System.touch("//continue");
 
-                System.set("//database", parameter, DeleteFromImpl.PostconditionCheck.class);
+                System.step("//database", parameter, DeleteFromImpl.PostconditionCheck.class);
 
             System.touch("//continue");
         }

@@ -14,7 +14,7 @@ public class Writer
 
         persistence = new Persistence();
 
-        persistence.writer.writeXML("//database", database, parameter, CreateDatabaseImpl.TaskRunner.class);
+        persistence.writer.writeXML(bodhi, database, table, parameter, context);
 
         return persistence = null;
     }
@@ -25,7 +25,7 @@ public class Writer
 
         persistence = new Persistence();
 
-        persistence.writer.writeXML("//database", database, parameter, CreateDatabaseImpl.TaskRunner.class);
+        persistence.writer.writeXML(bodhi, database, parameter, context);
 
         return persistence = null;
     }

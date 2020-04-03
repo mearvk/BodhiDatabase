@@ -56,7 +56,7 @@ public class CreateTableImpl extends UseCase
         {
             System.touch("//continue");
 
-                System.set("//database", parameter, CreateTableImpl.PreconditionCheck.class);
+                System.step("//database", parameter, CreateTableImpl.PreconditionCheck.class);
 
             System.touch("//continue");
         }
@@ -68,7 +68,7 @@ public class CreateTableImpl extends UseCase
         {
             System.touch("//continue");
 
-                System.set("//database/table", parameter, CreateTableImpl.TaskRunner.class);
+                System.step("//database/table", parameter, CreateTableImpl.TaskRunner.class);
 
             System.touch("//continue");
         }
@@ -80,7 +80,7 @@ public class CreateTableImpl extends UseCase
         {
             System.touch("//continue");
 
-                System.set("//database/table", parameter, CreateTableImpl.PostconditionCheck.class);
+                System.step("//database/table", parameter, CreateTableImpl.PostconditionCheck.class);
 
             System.touch("//continue");
         }

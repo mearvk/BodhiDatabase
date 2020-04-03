@@ -11,7 +11,6 @@ import structures.Queue;
 import structures.SQLString;
 import structures.table.Table;
 import system.System;
-import utility.Utility;
 import utility.Writer;
 
 public class Persistence extends Component
@@ -24,7 +23,7 @@ public class Persistence extends Component
 
     public Persistence() throws Exception
     {
-        System.store("//persistence", this);
+        System.push("//persistence", this);
 
         Persistence.reference = this;
     }
@@ -115,7 +114,7 @@ public class Persistence extends Component
 
     public class SQLReader
     {
-        public Object readXML(String bodhi, String dbname, Parameter parameter, Class<?> klass)
+        public Object readXML(String bodhi, Database database, Parameter parameter, Class<?> klass) throws Exception
         {
             //System.message("//database", "Database <"+dbname+"> selected.");
 

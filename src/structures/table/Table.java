@@ -10,12 +10,12 @@ public class Table
 
     public String url;
 
-    public Table(Parameter parameter)
+    public Table(Parameter parameter, Class<?> context)
     {
         this.parameter = parameter;
     }
 
-    public Table(Parameter parameter, Class<?> klass)
+    public Table(Parameter parameter)
     {
 
     }
