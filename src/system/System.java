@@ -359,11 +359,11 @@ public class System
 
             //
 
-            Writer writer;
+            Persistence persistence;
 
-            writer = new Writer();
+            persistence = new Persistence();
 
-            writer.writeXML("//database", database, parameter, CreateDatabaseImpl.TaskRunner.class);
+            persistence.writer.writeXML("//database", database, Writer.reference, parameter, CreateDatabaseImpl.TaskRunner.class);
         }
 
         else if(context.isAssignableFrom(CreateDatabaseImpl.PostconditionCheck.class))

@@ -80,7 +80,7 @@ public class CreateDatabaseImpl extends UseCase
         {
             System.touch("//continue");
 
-                System.step("//database", parameter, CreateDatabaseImpl.PostconditionCheck.class);
+                 System.step("//database", parameter, CreateDatabaseImpl.PostconditionCheck.class);
 
             System.touch("//continue");
         }
