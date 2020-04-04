@@ -90,9 +90,9 @@ public class Terminal extends Component
             {
                 public Step001(Builder builder) throws Exception
                 {
-                    System.push("//jframe", builder.jframe = new JFrame());
+                    System.store("//jframe", builder.jframe = new JFrame());
 
-                    System.push("//jpanel", builder.jpanel = new JPanel());
+                    System.store("//jpanel", builder.jpanel = new JPanel());
 
                     //
 

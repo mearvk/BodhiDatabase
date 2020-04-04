@@ -1,6 +1,8 @@
 package parameter;
 
 import cases.UseCase;
+import components.database.Database;
+import structures.table.Table;
 
 public class Parameter
 {
@@ -15,6 +17,10 @@ public class Parameter
     public UseCase parent;
 
     public String file;
+
+    public Database database;
+
+    public Table table;
 
     public Parameter(UseCase parent, String sqlString)
     {

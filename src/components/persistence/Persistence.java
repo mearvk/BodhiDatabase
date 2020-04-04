@@ -11,7 +11,7 @@ import structures.Queue;
 import structures.SQLString;
 import structures.table.Table;
 import system.System;
-import utility.Writer;
+import io.Writer;
 
 public class Persistence extends Component
 {
@@ -23,7 +23,7 @@ public class Persistence extends Component
 
     public Persistence() throws Exception
     {
-        System.push("//persistence", this);
+        System.store("//persistence", this);
 
         Persistence.reference = this;
     }
@@ -81,33 +81,53 @@ public class Persistence extends Component
             //TODO validate XML
         }
 
-        public Object checkXML(String bodhi, Database database, Parameter parameter, Class<?> klass)
+        public Object checkXML(String bodhi, Database database, Writer writer, Parameter parameter, Class<?> context)
+        {
+            return null;
+        }
+
+        public Object checkXML(String bodhi, String dbname, String tablename, Writer writer, Parameter parameter, Class<?> context)
         {
             java.lang.System.out.println("TODO: IMPL CHECKXML IN PERSISTENCE");
 
             return null;
         }
 
-        public Object checkXML(String bodhi, String dbname, String tablename, Parameter parameter, Class<?> klass)
-        {
-            java.lang.System.out.println("TODO: IMPL CHECKXML IN PERSISTENCE");
-
-            return null;
-        }
-
-        public void writeXML(String bodhi, Database database, Parameter parameter, Class<?> context) throws Exception
+        public void writeXML(String bodhi, Database database, Writer writer, Parameter parameter, Class<?> context) throws Exception
         {
             if(context.isAssignableFrom(CreateDatabaseImpl.TaskRunner.class))
             {
-                Writer.writeXML(bodhi, database, parameter, context);
+                try
+                {
+                    writer.step001(bodhi, database, parameter, context);
+
+                    writer.step002(bodhi, database, parameter, context);
+
+                    writer.step003(bodhi, database, parameter, context);
+                }
+                catch(Exception e)
+                {
+
+                }
             }
         }
 
-        public void writeXML(String bodhi, Database database, Table table, Parameter parameter, Class<?> context) throws Exception
+        public void writeXML(String bodhi, Database database, Table table, Writer writer, Parameter parameter, Class<?> context) throws Exception
         {
             if(context.isAssignableFrom(CreateTableImpl.TaskRunner.class))
             {
-                Writer.writeXML(bodhi, database, table, parameter, context);
+                writer.step001(bodhi, database, parameter, context);
+
+                writer.step002(bodhi, database, parameter, context);
+
+                writer.step003(bodhi, database, parameter, context);
+            }
+
+            if(context.isAssignableFrom(CreateDatabaseImpl.TaskRunner.class))
+            {
+
+
+                writer.writeXML(bodhi, database, table, parameter, context);
             }
         }
     }
