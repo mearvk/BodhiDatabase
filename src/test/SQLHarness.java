@@ -17,6 +17,8 @@ public class SQLHarness
 
     public Test_005 test_005;
 
+    public Test_006 test_006;
+
     //
 
     public static class Test_001
@@ -144,4 +146,28 @@ public class SQLHarness
         }
     }
 
+    public static class Test_006
+    {
+        public Test_006()
+        {
+            try
+            {
+                Queue<SQLString> queue = Parser.reference.thread.queue;
+
+                queue.add(new SQLString("CREATE DATABASE reports"));
+
+                queue.add(new SQLString("USE reports"));
+
+                queue.add(new SQLString("CREATE TABLE daily (ReportID int, Report varchar(65536), Firstname varchar(255), Lastname varchar(255))"));
+            }
+            catch(Exception e)
+            {
+                ExceptionQueue queue;
+
+                queue = new ExceptionQueue();
+
+                queue.enqueue(e, e.getMessage());
+            }
+        }
+    }
 }

@@ -260,7 +260,7 @@ public class System
 
             persistence = new Persistence();
 
-            persistence.writer.writeXML(bodhi, database, table, null, parameter, context);
+            persistence.writer.writeXML(bodhi, database, table, parameter, context);
         }
 
         else if(context.isAssignableFrom(CreateTableImpl.PostconditionCheck.class))
@@ -363,7 +363,7 @@ public class System
 
             persistence = new Persistence();
 
-            persistence.writer.writeXML("//database", database, Writer.reference, parameter, CreateDatabaseImpl.TaskRunner.class);
+            persistence.writer.writeXML("//database", database, parameter, CreateDatabaseImpl.TaskRunner.class);
         }
 
         else if(context.isAssignableFrom(CreateDatabaseImpl.PostconditionCheck.class))

@@ -51,6 +51,8 @@ public class Main
         harness.test_004 = new SQLHarness.Test_004();              //step 4. run test harness #4
 
         harness.test_005 = new SQLHarness.Test_005();              //step 5. run test harness #5
+
+        harness.test_006 = new SQLHarness.Test_006();              //step 6. run test harness #5
     }
 
 }

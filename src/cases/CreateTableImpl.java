@@ -56,7 +56,7 @@ public class CreateTableImpl extends UseCase
         {
             System.touch("//continue");
 
-                System.step("//database", parameter, CreateTableImpl.PreconditionCheck.class);
+                System.step("//database/table", parameter, CreateTableImpl.PreconditionCheck.class);
 
             System.touch("//continue");
         }

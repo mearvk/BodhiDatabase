@@ -8,15 +8,13 @@ public class Parameter
 {
     public String sqlstring;
 
-    public String table_name = "";
+    public String tblname = "";
 
-    public String name = "";
-
-    public String database_url = "";
+    public String dbname = "";
 
     public UseCase parent;
 
-    public String file;
+    public String url;
 
     public Database database;
 

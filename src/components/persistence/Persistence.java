@@ -9,7 +9,6 @@ import exceptions.ExceptionQueue;
 import parameter.Parameter;
 import structures.Queue;
 import structures.SQLString;
-import structures.table.Table;
 import system.System;
 import io.Writer;
 
@@ -93,41 +92,42 @@ public class Persistence extends Component
             return null;
         }
 
-        public void writeXML(String bodhi, Database database, Writer writer, Parameter parameter, Class<?> context) throws Exception
+        public void writeXML(String bodhi, Database database, Parameter parameter, Class<?> context) throws Exception
         {
             if(context.isAssignableFrom(CreateDatabaseImpl.TaskRunner.class))
             {
-                try
-                {
-                    writer.step001(bodhi, database, parameter, context);
+                Writer writer = new Writer();
 
-                    writer.step002(bodhi, database, parameter, context);
+                writer.precheck(bodhi, database, parameter, context);
 
-                    writer.step003(bodhi, database, parameter, context);
-                }
-                catch(Exception e)
-                {
+                writer.runner(bodhi, database, parameter, context);
 
-                }
+                writer.postcheck(bodhi, database, parameter, context);
             }
-        }
+         }
 
-        public void writeXML(String bodhi, Database database, Table table, Writer writer, Parameter parameter, Class<?> context) throws Exception
+        public void writeXML(String bodhi, Database database, structures.table.Table table, Parameter parameter, Class<?> context) throws Exception
         {
             if(context.isAssignableFrom(CreateTableImpl.TaskRunner.class))
             {
-                writer.step001(bodhi, database, parameter, context);
+                Writer writer = new Writer();
 
-                writer.step002(bodhi, database, parameter, context);
+                writer.precheck(bodhi, database, table, parameter, context);
 
-                writer.step003(bodhi, database, parameter, context);
+                writer.runner(bodhi, database, table, parameter, context);
+
+                writer.postcheck(bodhi, database, table, parameter, context);
             }
 
             if(context.isAssignableFrom(CreateDatabaseImpl.TaskRunner.class))
             {
+                Writer writer = new Writer();
 
+                writer.precheck(bodhi, database, table, parameter, context);
 
-                writer.writeXML(bodhi, database, table, parameter, context);
+                writer.runner(bodhi, database, table, parameter, context);
+
+                writer.postcheck(bodhi, database, table, parameter, context);
             }
         }
     }

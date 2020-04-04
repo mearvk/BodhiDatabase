@@ -1,6 +1,8 @@
 package io;
 
 import components.persistence.Persistence;
+import exceptions.ExceptionQueue;
+import org.w3c.dom.Attr;
 import parameter.Parameter;
 
 import org.w3c.dom.Document;
@@ -17,6 +19,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import java.io.File;
 
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 
 public class Writer
@@ -36,7 +39,7 @@ public class Writer
 
         persistence = new Persistence();
 
-        persistence.writer.writeXML(bodhi, database, table, this, parameter, context);
+        persistence.writer.writeXML(bodhi, database, table, parameter, context);
 
         return persistence = null;
     }
@@ -64,36 +67,36 @@ public class Writer
 
     //
 
-    public void step001(final String bodhi, final components.database.Database database, final Parameter parameter, final Class<?> context) throws Exception
+    public void precheck(final String bodhi, final components.database.Database database, final Parameter parameter, final Class<?> context) throws Exception
     {
         System.setter("//schema/database","validate", database, Writer.Database.Step001.class);
     }
 
-    public void step002(final String bodhi, final components.database.Database database, final Parameter parameter, final Class<?> context) throws Exception
+    public void runner(final String bodhi, final components.database.Database database, final Parameter parameter, final Class<?> context) throws Exception
     {
         System.setter("//schema/database/tables","validate", database, Writer.Database.Step002.class);
     }
 
-    public void step003(final String bodhi, final components.database.Database database, final Parameter parameter, final Class<?> context) throws Exception
+    public void postcheck(final String bodhi, final components.database.Database database, final Parameter parameter, final Class<?> context) throws Exception
     {
         System.setter("//schema{output}","validate", database, Writer.Database.Step003.class);
     }
 
     //
 
-    public void step001(final String bodhi, final components.database.Database database, final Table table, final Parameter parameter, final Class<?> context) throws Exception
+    public void precheck(final String bodhi, final components.database.Database database, final structures.table.Table table, final Parameter parameter, final Class<?> context) throws Exception
     {
-        System.setter("//schema/database/table","validate", database, Writer.Table.Step001.class);
+        System.setter("//schema/database/table","validate", database, table, Writer.Table.Step001.class);
     }
 
-    public void step002(final String bodhi, final components.database.Database database, final Table table, final Parameter parameter, final Class<?> context) throws Exception
+    public void runner(final String bodhi, final components.database.Database database, final structures.table.Table table, final Parameter parameter, final Class<?> context) throws Exception
     {
-        System.setter("//schema/database/tables/table","validate", database, Writer.Table.Step002.class);
+        System.setter("//schema/database/tables/table","validate", database, table, Writer.Table.Step002.class);
     }
 
-    public void step003(final String bodhi, final components.database.Database database, final Table table, final Parameter parameter, final Class<?> context) throws Exception
+    public void postcheck(final String bodhi, final components.database.Database database, final structures.table.Table table, final Parameter parameter, final Class<?> context) throws Exception
     {
-        System.setter("//schema{output}","validate", database, Writer.Table.Step003.class);
+        System.setter("//schema{output}","validate", database, table, Writer.Table.Step003.class);
     }
 
     public static class System
@@ -122,7 +125,7 @@ public class Writer
             return System.reference.map.get(bodhi);
         }
 
-        public static void setter(final String bodhi, final String value, components.database.Database database, Table table, final Class<?> context) throws Exception
+        public static void setter(final String bodhi, final String value, final components.database.Database database, final structures.table.Table table, final Class<?> context) throws Exception
         {
             if (context.isAssignableFrom(Writer.Table.Step001.class))
             {
@@ -134,7 +137,7 @@ public class Writer
 
                 Element root=null;
 
-                NodeList tables;
+                Element tables;
 
                 //
 
@@ -144,9 +147,9 @@ public class Writer
 
                 System.store("//document", document = builder.parse(new File(database.url)));
 
-                System.store("//schema/database", root = (Element)document.getFirstChild());
+                System.store("//schema/database", root = (Element) document.getFirstChild());
 
-                System.store("//schema/database/tables", tables = root.getElementsByTagName("tables"));
+                System.store("//schema/database/tables{element}", tables = (Element) root.getElementsByTagName("tables").item(0));
 
                 //
 
@@ -155,28 +158,62 @@ public class Writer
 
             if(context.isAssignableFrom(Writer.Table.Step002.class))
             {
-                //TODO ensure that //schema/database/tables/table is in correct form in DOM
+                Document document;
+
+                Element root;
+
+                Element _table;
+
+                Element tables;
+
+                Attr name;
+
+                //
+
+                System.store("//document", document = (Document) System.pull("//document"));
+
+                System.store("//schema/database", root = (Element) System.pull("//schema/database"));
+
+                System.store("//schema/database/tables{element}", tables = (Element) System.pull("//schema/database/tables{element}"));
+
+                //
+
+                root.setAttributeNode(name = document.createAttribute("name"));
+
+                name.setValue(database.name);
+
+                //
+
+                tables.appendChild(_table = document.createElement("table"));
+
+                _table.setAttributeNode(name = document.createAttribute("name"));
+
+                name.setValue(table.name);
+
+                return;
             }
 
             if(context.isAssignableFrom(Writer.Table.Step003.class))
             {
-                try //TODO write correct DOM to disk
+                try
                 {
                     TransformerFactory factory;
 
                     Transformer transformer;
 
+                    Document document;
+
+                    //
+
                     System.store("//transformer/factory", factory = TransformerFactory.newInstance());
 
                     System.store("//transformer", transformer = factory.newTransformer());
 
-                    //
-
-                    //System.setter("//transformer{indent}", "yes");
+                    System.store("//document", document = (Document) System.pull("//document"));
 
                     //
 
-                    DOMSource source = new DOMSource((Document)System.pull("//document"));
+                    DOMSource source = new DOMSource(document);
 
                     transformer.transform(source, new StreamResult(new File(database.url)));
                 }
@@ -203,19 +240,32 @@ public class Writer
 
                 //
 
-                System.store("//document/builder/factory", factory = DocumentBuilderFactory.newInstance());
+                try
+                {
+                    System.store("//document/builder/factory", factory = DocumentBuilderFactory.newInstance());
 
-                System.store("//document/builder", builder = factory.newDocumentBuilder());
+                    System.store("//document/builder", builder = factory.newDocumentBuilder());
 
-                System.store("//document", document = builder.parse(new File(database.url)));
+                    System.store("//document", document = builder.parse(new File(database.url)));
 
-                System.store("//schema/database", root = (Element)document.getFirstChild());
+                    System.store("//schema/database", root = (Element) document.getFirstChild());
 
-                System.store("//schema/database/tables", tables = root.getElementsByTagName("tables"));
+                    System.store("//schema/database/tables", tables = (NodeList)root.getElementsByTagName("tables"));
+                }
+                catch (Exception e)
+                {
+                    if(e instanceof FileNotFoundException)
+                    {
+                        System.store("//document", document = builder.newDocument());
 
-                //
+                        System.store("//schema/database", root = (Element) document.appendChild(document.createElement("database")));
 
-                if(!root.getNodeName().equals("database")) throw new Exception();
+                        System.store("//schema/database/tables{pre}", root.appendChild(document.createElement("tables")));
+
+                        System.store("//schema/database/tables", tables = root.getElementsByTagName("tables"));
+                    }
+                    else ExceptionQueue.reference.enqueue(e, e.getMessage());
+                }
 
                 //
 
@@ -230,9 +280,17 @@ public class Writer
 
                 //
 
-                System.store("//document", document = (Document)System.pull("//document"));
+                System.store("//document", document = (Document) System.pull("//document"));
 
-                System.store("//schema/database", root = (Element)System.pull("//schema/database"));
+                System.store("//schema/database", root = (Element) System.pull("//schema/database"));
+
+                //
+
+                Attr name;
+
+                root.setAttributeNode(name = document.createAttribute("name"));
+
+                name.setValue(database.name);
 
                 //
 
@@ -273,9 +331,14 @@ public class Writer
             }
         }
 
-        public static void equality(final String bodhi, final String value, final components.database.Database database, final Class<?> context) throws Exception
+        public static Boolean equality(final String bodhi, final String value, final components.database.Database database, final Class<?> context) throws Exception
         {
+            return bodhi.equals(value);
+        }
 
+        public static Boolean not_null(final String bodhi) throws Exception
+        {
+            return System.pull(bodhi)==null;
         }
     }
 

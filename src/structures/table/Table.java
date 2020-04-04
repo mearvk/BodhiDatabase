@@ -17,6 +17,8 @@ public class Table
 
     public Table(Parameter parameter)
     {
+        this.name = parameter.tblname;
 
+        this.url = parameter.url;
     }
 }

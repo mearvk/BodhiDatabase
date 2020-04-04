@@ -77,7 +77,7 @@ public class UseDatabaseImpl extends UseCase
     {
         public static String getDatabaseUrl(Parameter parameter)
         {
-            return DatabaseConstants.baseURL +"\\"+ parameter.name + ".sql";
+            return DatabaseConstants.baseURL +"\\"+ parameter.dbname + ".sql";
         }
 
         public static String getDatabaseName(Parameter parameter)
