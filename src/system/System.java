@@ -194,18 +194,21 @@ public class System
         return Memory.reference.peek(bodhi);
     }
 
-    public static Boolean equality(final String bodhi, final String comparable, final Class<?> klass) throws Exception
+    public static Boolean equality(final String bodhi, final String comparable, final Class<?> klass)
     {
-        if(bodhi.equals(comparable)) return true;
-
-        throw new Exception();
+        try
+        {
+            return System.pull(bodhi).equals(comparable);
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
     }
 
-    public static Boolean equality(final String bodhi, final Object comparable) throws Exception
+    public static Boolean equality(final String bodhi, final String comparable)
     {
-        if(bodhi.equals(comparable)) return true;
-
-        throw new Exception();
+        return System.peek(bodhi).equals(comparable);
     }
 
     public static Object full(final String bodhi) throws Exception
@@ -226,33 +229,38 @@ public class System
         {
             Database database;
 
-            database = (Database) System.peek("//database");
+            Table table;
 
-            if(database==null)
-            {
-                System.store("//database", database = new Database(parameter, CreateTableImpl.PreconditionCheck.class));
+            String name;
 
-                System.store("//database{name}", CreateTableImpl.Utility.getDatabaseName(parameter));
+            String url;
 
-                System.store("//database{url}", CreateTableImpl.Utility.getDatabaseUrl(parameter));
-            }
+            //
 
-            System.spin("//spin{table}", CreateTableImpl.PreconditionCheck.class);
+            System.store("//database", database = new Database(parameter, context));
+
+            System.store("//database/tables{table}", table = new Table(parameter, context));
+
+            System.store("//database{name}", name = CreateTableImpl.Utility.getDatabaseName(parameter));
+
+            System.store("//database{url}", url = CreateTableImpl.Utility.getDatabaseUrl(parameter));
         }
 
         else if(context.isAssignableFrom(CreateTableImpl.TaskRunner.class))
         {
-            Database database = new Database(parameter, context);
+            Database database;
 
-            Table table = new Table(parameter);
+            Table table;
 
-            System.store("//database", database);
+            //
 
-            System.store("//database/table", table);
+            System.store("//database", database = (Database) System.pull("//database"));
 
-            System.store("//database/table{name}", table.name);
+            System.store("//database/tables{table}", table = (Table) System.pull("//database/tables{table}"));
 
-            System.store("//database/table{url}", table.url);
+            System.store("//database/tables{name}", table.name);
+
+            System.store("//database/tables{url}", table.url);
 
             //
 

@@ -37,63 +37,17 @@ public class Database extends Component
 
     public Database(Parameter parameter, Class<?> context) throws Exception
     {
-        if(context.isAssignableFrom(CreateDatabaseImpl.PreconditionCheck.class))
-        {
-            Database.reference = this;
+        Database.reference = this;
 
-            Database.reference.exists = CreateDatabaseImpl.Utility.getDatabaseExists(parameter);
+        Database.reference.exists = CreateDatabaseImpl.Utility.getDatabaseExists(parameter);
 
-            Database.reference.name = CreateDatabaseImpl.Utility.getDatabaseName(parameter);
+        Database.reference.name = CreateDatabaseImpl.Utility.getDatabaseName(parameter);
 
-            Database.reference.url = CreateDatabaseImpl.Utility.getDatabaseUrl(parameter);
+        Database.reference.url = CreateDatabaseImpl.Utility.getDatabaseUrl(parameter);
 
-            Database.reference.parameter = parameter;
+        Database.reference.parameter = parameter;
 
-            Database.reference.context = context;
-        }
-
-        if(context.isAssignableFrom(CreateDatabaseImpl.TaskRunner.class))
-        {
-            Database.reference = this;
-
-            //Database.reference.exists = CreateDatabaseImpl.Utility.getDatabaseExists(parameter);
-
-            Database.reference.name = CreateDatabaseImpl.Utility.getDatabaseName(parameter);
-
-            Database.reference.url = CreateDatabaseImpl.Utility.getDatabaseUrl(parameter);
-
-            Database.reference.parameter = parameter;
-
-            Database.reference.context = context;
-        }
-
-        if(context.isAssignableFrom(UseDatabaseImpl.PreconditionCheck.class))
-        {
-            Database.reference = this;
-
-            //Database.reference.exists = CreateDatabaseImpl.Utility.getDatabaseExists(parameter);
-
-            Database.reference.name = UseDatabaseImpl.Utility.getDatabaseName(parameter);
-
-            Database.reference.url = UseDatabaseImpl.Utility.getDatabaseUrl(parameter);
-
-            Database.reference.parameter = parameter;
-
-            Database.reference.context = context;
-        }
-
-        if(context.isAssignableFrom(CreateTableImpl.TaskRunner.class))
-        {
-            Database.reference = this;
-
-            Database.reference.name = CreateTableImpl.Utility.getDatabaseName(parameter);
-
-            Database.reference.url = CreateTableImpl.Utility.getDatabaseUrl(parameter);
-
-            Database.reference.parameter = parameter;
-
-            Database.reference.context = context;
-        }
+        Database.reference.context = context;
     }
 
     public static class Properties

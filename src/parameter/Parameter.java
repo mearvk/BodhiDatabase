@@ -20,10 +20,10 @@ public class Parameter
 
     public Table table;
 
-    public Parameter(UseCase parent, String sqlString)
+    public Parameter(UseCase parent, String sqlstring)
     {
         this.parent = parent;
 
-        this.sqlstring = sqlString;
+        this.sqlstring = sqlstring;
     }
 }
