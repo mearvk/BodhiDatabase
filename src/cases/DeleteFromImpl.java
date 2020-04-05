@@ -5,13 +5,13 @@ import system.System;
 
 public class DeleteFromImpl extends UseCase
 {
-    public DeleteFromImpl(String sqlString) throws Exception
+    public DeleteFromImpl(String sql_string) throws Exception
     {
         System.pre("//continue");
 
         //
 
-        Parameter parameter = new Parameter(this, sqlString);
+        Parameter parameter = new Parameter(this, sql_string, DeleteFromImpl.class);
 
         //
 

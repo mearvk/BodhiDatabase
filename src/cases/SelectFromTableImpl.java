@@ -7,13 +7,13 @@ import java.util.StringTokenizer;
 
 public class SelectFromTableImpl extends UseCase
 {
-    public SelectFromTableImpl(String sqlString) throws Exception
+    public SelectFromTableImpl(String sql_string) throws Exception
     {
         System.pre("//continue");
 
         //
 
-        Parameter parameter = new Parameter(this, sqlString);
+        Parameter parameter = new Parameter(this, sql_string, SelectFromTableImpl.class);
 
         //
 
@@ -93,7 +93,7 @@ public class SelectFromTableImpl extends UseCase
 
         public static String getDatabaseName(Parameter parameter)
         {
-            String sqlString = parameter.sqlstring;
+            String sqlString = parameter.sql_string;
 
             StringTokenizer tokenizer = new StringTokenizer(sqlString, " ");
 

@@ -8,13 +8,13 @@ import java.util.StringTokenizer;
 
 public class UpdateTableImpl extends UseCase
 {
-    public UpdateTableImpl(String sqlString) throws Exception
+    public UpdateTableImpl(String sql_string) throws Exception
     {
         System.pre("//continue");
 
         //
 
-        Parameter parameter = new Parameter(this, sqlString);
+        Parameter parameter = new Parameter(this, sql_string, UpdateTableImpl.class);
 
         //
 
@@ -71,7 +71,7 @@ public class UpdateTableImpl extends UseCase
 
         public static String getTableName(Parameter parameter)
         {
-            String sqlString = parameter.sqlstring;
+            String sqlString = parameter.sql_string;
 
             StringTokenizer tokenizer = new StringTokenizer(sqlString, " ");
 

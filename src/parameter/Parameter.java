@@ -1,16 +1,17 @@
 package parameter;
 
+import cases.CreateTableImpl;
 import cases.UseCase;
 import components.database.Database;
 import structures.table.Table;
 
 public class Parameter
 {
-    public String sqlstring;
+    public String sql_string;
 
-    public String tblname = "";
+    public String table_name = "";
 
-    public String dbname = "";
+    public String database_name = "";
 
     public UseCase parent;
 
@@ -20,10 +21,23 @@ public class Parameter
 
     public Table table;
 
-    public Parameter(UseCase parent, String sqlstring)
+    public Parameter(UseCase parent, String sql_string, Class<?> context)
     {
+        if(context.isAssignableFrom(CreateTableImpl.class))
+        {
+            this.parent = parent;
+
+            this.sql_string = sql_string;
+
+            this.table_name = CreateTableImpl.Utility.getTableName(this);
+
+            this.database_name = CreateTableImpl.Utility.getDatabaseName(this);
+
+            this.url = CreateTableImpl.Utility.getDatabaseUrl(this);
+        }
+
         this.parent = parent;
 
-        this.sqlstring = sqlstring;
+        this.sql_string = sql_string;
     }
 }

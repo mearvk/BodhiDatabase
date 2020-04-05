@@ -15,7 +15,7 @@ public class CreateTableImpl extends UseCase
 
         //
 
-        Parameter parameter = new Parameter(this, sqlstring);
+        Parameter parameter = new Parameter(this, sqlstring, CreateTableImpl.class);
 
         //
 
@@ -95,7 +95,7 @@ public class CreateTableImpl extends UseCase
 
         public static String getDatabaseName(Parameter parameter)
         {
-            var sqlstring = parameter.sqlstring;
+            var sqlstring = parameter.sql_string;
 
             var tokenizer = new StringTokenizer(sqlstring, " ");
 
@@ -126,7 +126,7 @@ public class CreateTableImpl extends UseCase
 
         public static String getTableName(Parameter parameter)
         {
-            var sqlstring = parameter.sqlstring;
+            var sqlstring = parameter.sql_string;
 
             var tokenizer = new StringTokenizer(sqlstring, " ");
 

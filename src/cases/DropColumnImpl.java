@@ -7,13 +7,13 @@ import java.util.StringTokenizer;
 
 public class DropColumnImpl extends UseCase
 {
-    public DropColumnImpl(String sqlString) throws Exception
+    public DropColumnImpl(String sql_string) throws Exception
     {
         System.pre("//continue");
 
         //
 
-        Parameter parameter = new Parameter(this, sqlString);
+        Parameter parameter = new Parameter(this, sql_string, DropColumnImpl.class);
 
         //
 
@@ -94,7 +94,7 @@ public class DropColumnImpl extends UseCase
 
         public static String getDatabaseName(Parameter parameter)
         {
-            String sqlString = parameter.sqlstring;
+            String sqlString = parameter.sql_string;
 
             StringTokenizer tokenizer = new StringTokenizer(sqlString, " ");
 

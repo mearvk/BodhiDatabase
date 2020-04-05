@@ -9,13 +9,13 @@ import java.util.StringTokenizer;
 
 public class CreateIndexOnTableImpl extends UseCase
 {
-    public CreateIndexOnTableImpl(String sqlString) throws Exception
+    public CreateIndexOnTableImpl(String sql_string) throws Exception
     {
         System.pre("//continue");
 
         //
 
-        Parameter parameter = new Parameter(this, sqlString);
+        Parameter parameter = new Parameter(this, sql_string,CreateIndexOnTableImpl.class);
 
         //
 
@@ -83,7 +83,7 @@ public class CreateIndexOnTableImpl extends UseCase
 
         public static String getDatabaseName(Parameter parameter)
         {
-            var sqlstring = parameter.sqlstring;
+            var sqlstring = parameter.sql_string;
 
             var tokenizer = new StringTokenizer(sqlstring, " ");
 

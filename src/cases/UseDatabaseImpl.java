@@ -9,13 +9,13 @@ import java.util.StringTokenizer;
 
 public class UseDatabaseImpl extends UseCase
 {
-    public UseDatabaseImpl(String sqlString) throws Exception
+    public UseDatabaseImpl(String sql_string) throws Exception
     {
         System.pre("//continue");
 
         //
 
-        Parameter parameter = new Parameter(this, sqlString);
+        Parameter parameter = new Parameter(this, sql_string, UseDatabaseImpl.class);
 
         //
 
@@ -78,14 +78,14 @@ public class UseDatabaseImpl extends UseCase
     {
         public static String getDatabaseUrl(Parameter parameter)
         {
-            return DatabaseConstants.baseURL +"\\"+ parameter.dbname + ".sql";
+            return DatabaseConstants.baseURL +"\\"+ parameter.database_name + ".sql";
         }
 
         public static String getDatabaseExists(Parameter parameter)
         {
             try
             {
-                return new File(DatabaseConstants.baseURL+"\\"+parameter.dbname+".sql").exists() ? "true" : "false";
+                return new File(DatabaseConstants.baseURL+"\\"+parameter.database_name +".sql").exists() ? "true" : "false";
             }
             catch(Exception e)
             {
@@ -95,7 +95,7 @@ public class UseDatabaseImpl extends UseCase
 
         public static String getDatabaseName(Parameter parameter)
         {
-            String sqlstring = parameter.sqlstring;
+            String sqlstring = parameter.sql_string;
 
             StringTokenizer tokenizer = new StringTokenizer(sqlstring, " ");
 

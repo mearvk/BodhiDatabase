@@ -9,13 +9,13 @@ import java.util.StringTokenizer;
 
 public class CreateDatabaseImpl extends UseCase
 {
-    public CreateDatabaseImpl(String sqlstring) throws Exception
+    public CreateDatabaseImpl(String sql_string) throws Exception
     {
         System.pre("//continue");
 
         //
 
-        Parameter parameter = new Parameter(this, sqlstring);
+        Parameter parameter = new Parameter(this, sql_string, CreateDatabaseImpl.class);
 
         //
 
@@ -109,7 +109,7 @@ public class CreateDatabaseImpl extends UseCase
 
         public static String getDatabaseName(Parameter parameter)
         {
-            var sqlstring = parameter.sqlstring;
+            var sqlstring = parameter.sql_string;
 
             var tokenizer = new StringTokenizer(sqlstring, " ");
 
