@@ -35,6 +35,10 @@ public class Parameter
 
             this.url = CreateTableImpl.Utility.getDatabaseUrl(this);
         }
+        else
+        {
+            //TODO write all the cases for Utility
+        }
 
         this.parent = parent;
 
