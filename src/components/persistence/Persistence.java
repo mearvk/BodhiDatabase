@@ -98,28 +98,17 @@ public class Persistence extends Component
             {
                 Writer writer = new Writer();
 
-                writer.precheck(bodhi, database, parameter, context);
+                //writer.precheck(bodhi, database, parameter, context);
 
-                writer.runner(bodhi, database, parameter, context);
+                //writer.runner(bodhi, database, parameter, context);
 
-                writer.postcheck(bodhi, database, parameter, context);
+                //writer.postcheck(bodhi, database, parameter, context);
             }
          }
 
         public void writeXML(String bodhi, Database database, structures.table.Table table, Parameter parameter, Class<?> context) throws Exception
         {
             if(context.isAssignableFrom(CreateTableImpl.TaskRunner.class))
-            {
-                Writer writer = new Writer();
-
-                writer.precheck(bodhi, database, table, parameter, context);
-
-                writer.runner(bodhi, database, table, parameter, context);
-
-                writer.postcheck(bodhi, database, table, parameter, context);
-            }
-
-            if(context.isAssignableFrom(CreateDatabaseImpl.TaskRunner.class))
             {
                 Writer writer = new Writer();
 

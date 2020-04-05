@@ -12,7 +12,6 @@ import parameter.Parameter;
 import components.validation.ValidationComponent;
 import structures.table.Table;
 import io.Reader;
-import io.Writer;
 
 public class System
 {
@@ -250,7 +249,7 @@ public class System
         {
             Database database;
 
-            Table table; //hugh jass
+            Table table;
 
             //
 
@@ -258,9 +257,13 @@ public class System
 
             System.store("//database/tables{table}", table = (Table) System.pull("//database/tables{table}"));
 
-            System.store("//database/tables{name}", table.name);
+            System.store("//database/tables/table{name}", table.name);
 
-            System.store("//database/tables{url}", table.url);
+            System.store("//database/tables/table{url}", table.url);
+
+            //
+
+            //TODO check here
 
             //
 
