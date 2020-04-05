@@ -108,7 +108,7 @@ public class SQLHarness
 
                 queue.add(new SQLString("USE alcohol"));
 
-                queue.add(new SQLString("CREATE TABLE alcohol (ObjectID int, Brand varchar(255), Make varchar(255))"));
+                queue.add(new SQLString("CREATE TABLE beverages (ObjectID int, Brand varchar(255), Make varchar(255))"));
             }
             catch (Exception e)
             {
@@ -158,7 +158,7 @@ public class SQLHarness
 
                 queue.add(new SQLString("USE reports"));
 
-                queue.add(new SQLString("CREATE TABLE daily (ReportID int, Report varchar(65536), Firstname varchar(255), Lastname varchar(255))"));
+                queue.add(new SQLString("CREATE TABLE economic (ReportID int, Report varchar(65536), Firstname varchar(255), Lastname varchar(255))"));
             }
             catch(Exception e)
             {

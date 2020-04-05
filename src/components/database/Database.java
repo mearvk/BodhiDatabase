@@ -37,17 +37,34 @@ public class Database extends Component
 
     public Database(Parameter parameter, Class<?> context) throws Exception
     {
-        Database.reference = this;
+        if(context.isAssignableFrom(CreateTableImpl.PreconditionCheck.class))
+        {
+            Database.reference = this;
 
-        Database.reference.exists = CreateDatabaseImpl.Utility.getDatabaseExists(parameter);
+            this.exists = CreateTableImpl.Utility.getDatabaseExists(parameter);
 
-        Database.reference.name = CreateDatabaseImpl.Utility.getDatabaseName(parameter);
+            this.name = CreateTableImpl.Utility.getDatabaseName(parameter);
 
-        Database.reference.url = CreateDatabaseImpl.Utility.getDatabaseUrl(parameter);
+            this.url = CreateTableImpl.Utility.getDatabaseUrl(parameter);
 
-        Database.reference.parameter = parameter;
+            this.parameter = parameter;
 
-        Database.reference.context = context;
+            this.context = context;
+        }
+        else if(context.isAssignableFrom(CreateDatabaseImpl.PreconditionCheck.class))
+        {
+            Database.reference = this;
+
+            this.exists = CreateDatabaseImpl.Utility.getDatabaseExists(parameter);
+
+            this.name = CreateDatabaseImpl.Utility.getDatabaseName(parameter);
+
+            this.url = CreateDatabaseImpl.Utility.getDatabaseUrl(parameter);
+
+            this.parameter = parameter;
+
+            this.context = context;
+        }
     }
 
     public static class Properties

@@ -202,17 +202,17 @@ public class Writer
 
                 //
 
-                root.setAttributeNode(name = document.createAttribute("name"));
+                //root.setAttributeNode(name = document.createAttribute("name"));
 
-                name.setValue(database.name);
+                //name.setValue(database.name);
 
                 //
 
-                tables.appendChild(table = document.createElement("table"));
+                //tables.appendChild(table = document.createElement("table"));
 
-                table.setAttributeNode(name = document.createAttribute("name"));
+                //table.setAttributeNode(name = document.createAttribute("name"));
 
-                name.setValue(newtable.name);
+                //name.setValue(newtable.name);
 
                 //
 

@@ -1,5 +1,6 @@
 package cases;
 
+import components.database.Database;
 import constants.DatabaseConstants;
 import parameter.Parameter;
 import system.System;
@@ -9,13 +10,13 @@ import java.util.StringTokenizer;
 
 public class CreateTableImpl extends UseCase
 {
-    public CreateTableImpl(String sqlstring) throws Exception
+    public CreateTableImpl(String sql_string) throws Exception
     {
         System.pre("//continue");
 
         //
 
-        Parameter parameter = new Parameter(this, sqlstring, CreateTableImpl.class);
+        Parameter parameter = new Parameter(this, sql_string, CreateTableImpl.class);
 
         //
 
@@ -88,6 +89,20 @@ public class CreateTableImpl extends UseCase
 
     public static class Utility
     {
+        public static String getDatabaseExists(Parameter parameter)
+        {
+            try
+            {
+                File file = new File(DatabaseConstants.baseURL+"\\"+ CreateDatabaseImpl.Utility.getDatabaseName(parameter)+".sql");
+
+                return file.exists() ? "true" : "false";
+            }
+            catch (Exception e)
+            {
+                return "false";
+            }
+        }
+
         public static String getDatabaseUrl(Parameter parameter)
         {
             return DatabaseConstants.baseURL +"\\"+ getDatabaseName(parameter) + ".sql";
@@ -95,17 +110,13 @@ public class CreateTableImpl extends UseCase
 
         public static String getDatabaseName(Parameter parameter)
         {
-            var sqlstring = parameter.sql_string;
+            Database database;
 
-            var tokenizer = new StringTokenizer(sqlstring, " ");
+            database = (Database) System.peek("//database");
 
-            var token001 = tokenizer.nextToken().toLowerCase();
+            if(database==null) return "No database selected";
 
-            var token002 = tokenizer.nextToken().toLowerCase();
-
-            var token003 = tokenizer.nextToken().toLowerCase();
-
-            return token003;
+            return database.name;
         }
 
         public static String[] getExistingDatabaseNames(Parameter parameter)

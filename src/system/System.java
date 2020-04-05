@@ -251,7 +251,7 @@ public class System
 
             Table table;
 
-            //
+            //TODO IS DB AND TABLE INSIDE OUT?
 
             System.store("//database", database = (Database) System.pull("//database"));
 
@@ -348,12 +348,7 @@ public class System
         {
             Database database;
 
-            database = (Database) System.peek("//database");
-
-            if(database==null)
-            {
-                System.store("//database", database = new Database(parameter, context));
-            }
+            System.store("//database", database = new Database(parameter, context));
 
             System.store("//database{exists}", database.exists);
 

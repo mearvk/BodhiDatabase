@@ -98,11 +98,11 @@ public class Persistence extends Component
             {
                 Writer writer = new Writer();
 
-                //writer.precheck(bodhi, database, parameter, context);
+                writer.precheck(bodhi, database, parameter, context);
 
-                //writer.runner(bodhi, database, parameter, context);
+                writer.runner(bodhi, database, parameter, context);
 
-                //writer.postcheck(bodhi, database, parameter, context);
+                writer.postcheck(bodhi, database, parameter, context);
             }
          }
 
