@@ -250,7 +250,7 @@ public class System
         {
             Database database;
 
-            Table table;
+            Table table; //hugh jass
 
             //
 
