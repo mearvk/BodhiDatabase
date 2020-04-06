@@ -43,7 +43,7 @@ public class System
     {
         if(bodhi.equals("//continue"))
         {
-            System.save(bodhi, true);
+            System.storage(bodhi, true);
         }
     }
 
@@ -77,7 +77,7 @@ public class System
     {
         if(property.equals("//database/selected")  && klass.isAssignableFrom(UseDatabaseImpl.class))
         {
-            System.save(property, ref);
+            System.storage(property, ref);
         }
     }
 
@@ -109,7 +109,7 @@ public class System
 
             if(database==null)
             {
-                System.save("//database", database = new Database(parameter,context));
+                System.storage("//database", database = new Database(parameter,context));
             }
 
             Persistence persistence;
@@ -127,7 +127,7 @@ public class System
 
             if(database==null)
             {
-                System.save("//database", database = new Database(parameter,context));
+                System.storage("//database", database = new Database(parameter,context));
             }
 
             Reader reader;
@@ -259,13 +259,13 @@ public class System
 
             //
 
-            System.save("//database", database = new Database(parameter, context));
+            System.storage("//database", database = new Database(parameter, context));
 
-            System.save("//database/tables{table}", table = new Table(parameter, context));
+            System.storage("//database/tables{table}", table = new Table(parameter, context));
 
-            System.save("//database{name}", name = CreateTableImpl.Utility.getDatabaseName(parameter));
+            System.storage("//database{name}", name = CreateTableImpl.Utility.getDatabaseName(parameter));
 
-            System.save("//database{url}", url = CreateTableImpl.Utility.getDatabaseUrl(parameter));
+            System.storage("//database{url}", url = CreateTableImpl.Utility.getDatabaseUrl(parameter));
         }
         else if(context.isAssignableFrom(CreateTableImpl.TaskRunner.class))
         {
@@ -275,9 +275,9 @@ public class System
 
             //
 
-            System.save("//database", database = (Database) System.pull("//database"));
+            System.storage("//database", database = (Database) System.pull("//database"));
 
-            System.save("//database/tables{table}", table = (Table) System.pull("//database/tables{table}"));
+            System.storage("//database/tables{table}", table = (Table) System.pull("//database/tables{table}"));
 
             //
 
@@ -299,12 +299,12 @@ public class System
 
             if(database==null)
             {
-                System.save("//database", database = new Database(parameter, context));
+                System.storage("//database", database = new Database(parameter, context));
             }
 
-            System.save("//database{name}", UseDatabaseImpl.Utility.getDatabaseName(parameter));
+            System.storage("//database{name}", UseDatabaseImpl.Utility.getDatabaseName(parameter));
 
-            System.save("//database{url}", UseDatabaseImpl.Utility.getDatabaseUrl(parameter));
+            System.storage("//database{url}", UseDatabaseImpl.Utility.getDatabaseUrl(parameter));
 
             //
 
@@ -319,12 +319,12 @@ public class System
 
             if(database==null)
             {
-                System.save("//database", database = new Database(parameter, context));
+                System.storage("//database", database = new Database(parameter, context));
             }
 
-            System.save("//database{name}", UseDatabaseImpl.Utility.getDatabaseName(parameter));
+            System.storage("//database{name}", UseDatabaseImpl.Utility.getDatabaseName(parameter));
 
-            System.save("//database{url}", UseDatabaseImpl.Utility.getDatabaseUrl(parameter));
+            System.storage("//database{url}", UseDatabaseImpl.Utility.getDatabaseUrl(parameter));
 
             //
 
@@ -356,13 +356,13 @@ public class System
         {
             Database database;
 
-            System.save("//database", database = new Database(parameter, context));
+            System.storage("//database", database = new Database(parameter, context));
 
-            System.save("//database{exists}", database.exists);
+            System.storage("//database{exists}", database.exists);
 
-            System.save("//database{name}", database.name);
+            System.storage("//database{name}", database.name);
 
-            System.save("//database{url}", database.url);
+            System.storage("//database{url}", database.url);
         }
 
         else if(context.isAssignableFrom(CreateDatabaseImpl.TaskRunner.class))
@@ -469,12 +469,12 @@ public class System
         return Memory.reference.pull(name);
     }
 
-    public static void save(final String string, Object object) throws Exception
+    public static void storage(final String string, Object object) throws Exception
     {
         Memory.reference.push(string, object);
     }
 
-    public static void save(final String name, String target) throws Exception
+    public static void storage(final String name, String target) throws Exception
     {
         Memory.reference.push(name, target);
     }

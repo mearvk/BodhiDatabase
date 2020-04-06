@@ -69,34 +69,34 @@ public class Writer
 
     public void precheck(final String bodhi, final structures.database.Database database, final Parameter parameter, final Class<?> context) throws Exception
     {
-        System.runner(bodhi,"precheck", database, Writer.Database.Step001.class);
+        System.runner(bodhi,"precheck", database, Database.Precheck.class);
     }
 
     public void runner(final String bodhi, final structures.database.Database database, final Parameter parameter, final Class<?> context) throws Exception
     {
-        System.runner(bodhi,"runner", database, Writer.Database.Step002.class);
+        System.runner(bodhi,"runner", database, Database.Runner.class);
     }
 
     public void postcheck(final String bodhi, final structures.database.Database database, final Parameter parameter, final Class<?> context) throws Exception
     {
-        System.runner(bodhi,"postcheck", database, Writer.Database.Step003.class);
+        System.runner(bodhi,"postcheck", database, Database.Postcheck.class);
     }
 
     //
 
     public void precheck(final String bodhi, final structures.database.Database database, final structures.table.Table table, final Parameter parameter, final Class<?> context) throws Exception
     {
-        System.runner(bodhi,"precheck", database, table, Writer.Table.Step001.class);
+        System.runner(bodhi,"precheck", database, table, Table.Precheck.class);
     }
 
     public void runner(final String bodhi, final structures.database.Database database, final structures.table.Table table, final Parameter parameter, final Class<?> context) throws Exception
     {
-        System.runner(bodhi,"runner", database, table, Writer.Table.Step002.class);
+        System.runner(bodhi,"runner", database, table, Table.Runner.class);
     }
 
     public void postcheck(final String bodhi, final structures.database.Database database, final structures.table.Table table, final Parameter parameter, final Class<?> context) throws Exception
     {
-        System.runner(bodhi,"postcheck", database, table, Writer.Table.Step003.class);
+        System.runner(bodhi,"postcheck", database, table, Table.Postcheck.class);
     }
 
     public static class System
@@ -127,7 +127,7 @@ public class Writer
 
         public static void runner(final String bodhi, final String value, final structures.database.Database pdatabase, final structures.table.Table ptable, final Class<?> context) throws Exception
         {
-            if (context.isAssignableFrom(Writer.Table.Step001.class))
+            if (context.isAssignableFrom(Table.Precheck.class))
             {
                 DocumentBuilderFactory factory=null;
 
@@ -153,19 +153,9 @@ public class Writer
 
                     System.storage("//schema/database", root = (Element) document.getFirstChild());
 
-                    System.storage("//schema/database/tables@element", tables = (Element) root.appendChild(document.createElement("tables")));
+                    System.storage("//schema/database/tables@element", tables = (Element) root.getElementsByTagName("tables").item(0));
 
                     System.storage("//schema/database/tables@nodelist", nodelist = (NodeList)root.getElementsByTagName("tables"));
-                }
-                catch (FileNotFoundException fnfe)
-                {
-                    System.storage("//document", document = builder.newDocument());
-
-                    System.storage("//schema/database", root = (Element) document.appendChild(document.createElement("database")));
-
-                    System.storage("//schema/database/tables@element", tables = (Element) root.appendChild(document.createElement("tables")));
-
-                    System.storage("//schema/database/tables@nodelist", nodelist = (NodeList) root.getElementsByTagName("tables"));
                 }
                 catch (Exception e)
                 {
@@ -174,7 +164,7 @@ public class Writer
 
                 return;
             }
-            else if(context.isAssignableFrom(Writer.Table.Step002.class))
+            else if(context.isAssignableFrom(Table.Runner.class))
             {
                 Document document;
 
@@ -198,44 +188,26 @@ public class Writer
 
                 XPath xPath =  XPathFactory.newInstance().newXPath();
 
-                NodeList nodelist = (NodeList) xPath.compile("/database/tables/table").evaluate(document, XPathConstants.NODESET);
+                NodeList nodelist = (NodeList) xPath.compile("/database/tables/table[@id='"+ptable.name+"']").evaluate(document, XPathConstants.NODESET);
+
+                //
 
                 if(nodelist.getLength()==0)
                 {
-                    tables.appendChild(table = document.createElement("table"));
+                    tables.appendChild( table = (Element)document.createElement("table"));
 
-                    table.setAttributeNode(name = document.createAttribute("name"));
-
-                    name.setValue(ptable.name);
+                    table.setIdAttribute(ptable.name, true);
                 }
                 else if(nodelist.getLength()==1)
                 {
-                    table = (Element)nodelist.item(0);
+                    table = (Element) nodelist.item(0);
 
-                    name = table.getAttributeNode("name");
-
-                    name.setValue(ptable.name);
+                    table.setIdAttribute(ptable.name, true);
                 }
-                else if(nodelist.getLength()>1)
-                {
-                    for(int i=1; i<nodelist.getLength(); i++)
-                    {
-                        document.removeChild(nodelist.item(i));
-                    }
-
-                    table = (Element)nodelist.item(0);
-
-                    name = table.getAttributeNode("name");
-
-                    name.setValue(ptable.name);
-                }
-
-                java.lang.System.out.println("Document had "+nodelist.getLength()+" tables matches.");
 
                 return;
             }
-
-            if(context.isAssignableFrom(Writer.Table.Step003.class))
+            else if(context.isAssignableFrom(Table.Postcheck.class))
             {
                 try
                 {
@@ -255,7 +227,12 @@ public class Writer
 
                     //
 
+
                     DOMSource source = new DOMSource(document);
+
+                    transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+
+                    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 
                     transformer.transform(source, new StreamResult(new File(pdatabase.url)));
                 }
@@ -268,7 +245,7 @@ public class Writer
 
         public static void runner(final String bodhi, final String value, final structures.database.Database database, final Class<?> context) throws Exception
         {
-            if (context.isAssignableFrom(Writer.Database.Step001.class))
+            if (context.isAssignableFrom(Database.Precheck.class))
             {
                 DocumentBuilderFactory factory=null;
 
@@ -314,7 +291,7 @@ public class Writer
                 return;
             }
 
-            if (context.isAssignableFrom(Writer.Database.Step002.class))
+            if (context.isAssignableFrom(Database.Runner.class))
             {
                 Document document;
 
@@ -338,7 +315,7 @@ public class Writer
 
                 return;
             }
-            if (context.isAssignableFrom(Writer.Database.Step003.class))
+            if (context.isAssignableFrom(Database.Postcheck.class))
             {
                 try
                 {
@@ -386,19 +363,19 @@ public class Writer
 
     public static class Database
     {
-        public static class Step001 {}
+        public static class Precheck {}
 
-        public static class Step002 {}
+        public static class Runner {}
 
-        public static class Step003 {}
+        public static class Postcheck {}
     }
 
     public static class Table
     {
-        public static class Step001 {}
+        public static class Precheck {}
 
-        public static class Step002 {}
+        public static class Runner {}
 
-        public static class Step003 {}
+        public static class Postcheck {}
     }
 }

@@ -22,7 +22,7 @@ public class Persistence extends Component
 
     public Persistence() throws Exception
     {
-        System.save("//persistence", this);
+        System.storage("//persistence", this);
 
         Persistence.reference = this;
     }
@@ -114,7 +114,7 @@ public class Persistence extends Component
 
                 writer.precheck(bodhi, database, table, parameter, context);
 
-                writer.runner(bodhi, database, table, parameter, context);
+                 writer.runner(bodhi, database, table, parameter, context);
 
                 writer.postcheck(bodhi, database, table, parameter, context);
             }
