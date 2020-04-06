@@ -4,8 +4,6 @@ import components.persistence.Persistence;
 import exceptions.ExceptionQueue;
 import org.w3c.dom.*;
 import parameter.Parameter;
-import structures.database.Database;
-
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -112,12 +110,12 @@ public class Writer
             System.reference = this;
         }
 
-        public static void store(final String bodhi00, final String bodhi01)
+        public static void storage(final String bodhi00, final String bodhi01)
         {
-            System.store(bodhi00, System.pull(bodhi01));
+            System.storage(bodhi00, System.pull(bodhi01));
         }
 
-        public static void store(final String bodhi, final Object object)
+        public static void storage(final String bodhi, final Object object)
         {
             System.reference.map.put(bodhi, object);
         }
@@ -127,7 +125,7 @@ public class Writer
             return System.reference.map.get(bodhi);
         }
 
-        public static void runner(final String bodhi, final String value, final structures.database.Database database, final structures.table.Table newtable, final Class<?> context) throws Exception
+        public static void runner(final String bodhi, final String value, final structures.database.Database pdatabase, final structures.table.Table ptable, final Class<?> context) throws Exception
         {
             if (context.isAssignableFrom(Writer.Table.Step001.class))
             {
@@ -139,31 +137,35 @@ public class Writer
 
                 Element root=null;
 
-                NodeList tables;
+                Element tables;
+
+                NodeList nodelist;
 
                 //
 
                 try
                 {
-                    System.store("//document/builder/factory", factory = DocumentBuilderFactory.newInstance());
+                    System.storage("//document/builder/factory", factory = DocumentBuilderFactory.newInstance());
 
-                    System.store("//document/builder", builder = factory.newDocumentBuilder());
+                    System.storage("//document/builder", builder = factory.newDocumentBuilder());
 
-                    System.store("//document", document = builder.parse(new File(database.url)));
+                    System.storage("//document", document = builder.parse(new File(pdatabase.url)));
 
-                    System.store("//schema/database", root = (Element) document.getFirstChild());
+                    System.storage("//schema/database", root = (Element) document.getFirstChild());
 
-                    System.store("//schema/database/tables", tables = (NodeList)root.getElementsByTagName("tables"));
+                    System.storage("//schema/database/tables@element", tables = (Element) root.appendChild(document.createElement("tables")));
+
+                    System.storage("//schema/database/tables@nodelist", nodelist = (NodeList)root.getElementsByTagName("tables"));
                 }
                 catch (FileNotFoundException fnfe)
                 {
-                    System.store("//document", document = builder.newDocument());
+                    System.storage("//document", document = builder.newDocument());
 
-                    System.store("//schema/database", root = (Element) document.appendChild(document.createElement("database")));
+                    System.storage("//schema/database", root = (Element) document.appendChild(document.createElement("database")));
 
-                    System.store("//schema/database/tables{element}", root.appendChild(document.createElement("tables")));
+                    System.storage("//schema/database/tables@element", tables = (Element) root.appendChild(document.createElement("tables")));
 
-                    System.store("//schema/database/tables{nodelist}", tables = (NodeList) root.getElementsByTagName("tables"));
+                    System.storage("//schema/database/tables@nodelist", nodelist = (NodeList) root.getElementsByTagName("tables"));
                 }
                 catch (Exception e)
                 {
@@ -172,8 +174,7 @@ public class Writer
 
                 return;
             }
-
-            if(context.isAssignableFrom(Writer.Table.Step002.class))
+            else if(context.isAssignableFrom(Writer.Table.Step002.class))
             {
                 Document document;
 
@@ -187,37 +188,49 @@ public class Writer
 
                 //
 
-                System.store("//document", document = (Document) System.pull("//document"));
+                System.storage("//document", document = (Document) System.pull("//document"));
 
-                System.store("//schema/database", root = (Element) System.pull("//schema/database"));
+                System.storage("//schema/database", root = (Element) System.pull("//schema/database"));
 
-                System.store("//schema/database/tables{element}", tables = (Element) System.pull("//schema/database/tables{element}"));
+                System.storage("//schema/database/tables@element", tables = (Element) System.pull("//schema/database/tables@element"));
 
                 //
 
                 XPath xPath =  XPathFactory.newInstance().newXPath();
 
-                NodeList nodelist = (NodeList) xPath.compile("/database/tables/table[@name='company']").evaluate(document, XPathConstants.NODESET);
+                NodeList nodelist = (NodeList) xPath.compile("/database/tables/table").evaluate(document, XPathConstants.NODESET);
 
-                //
+                if(nodelist.getLength()==0)
+                {
+                    tables.appendChild(table = document.createElement("table"));
+
+                    table.setAttributeNode(name = document.createAttribute("name"));
+
+                    name.setValue(ptable.name);
+                }
+                else if(nodelist.getLength()==1)
+                {
+                    table = (Element)nodelist.item(0);
+
+                    name = table.getAttributeNode("name");
+
+                    name.setValue(ptable.name);
+                }
+                else if(nodelist.getLength()>1)
+                {
+                    for(int i=1; i<nodelist.getLength(); i++)
+                    {
+                        document.removeChild(nodelist.item(i));
+                    }
+
+                    table = (Element)nodelist.item(0);
+
+                    name = table.getAttributeNode("name");
+
+                    name.setValue(ptable.name);
+                }
 
                 java.lang.System.out.println("Document had "+nodelist.getLength()+" tables matches.");
-
-                //
-
-                //root.setAttributeNode(name = document.createAttribute("name"));
-
-                //name.setValue(database.name);
-
-                //
-
-                //tables.appendChild(table = document.createElement("table"));
-
-                //table.setAttributeNode(name = document.createAttribute("name"));
-
-                //name.setValue(newtable.name);
-
-                //
 
                 return;
             }
@@ -234,17 +247,17 @@ public class Writer
 
                     //
 
-                    System.store("//transformer/factory", factory = TransformerFactory.newInstance());
+                    System.storage("//transformer/factory", factory = TransformerFactory.newInstance());
 
-                    System.store("//transformer", transformer = factory.newTransformer());
+                    System.storage("//transformer", transformer = factory.newTransformer());
 
-                    System.store("//document", document = (Document) System.pull("//document"));
+                    System.storage("//document", document = (Document) System.pull("//document"));
 
                     //
 
                     DOMSource source = new DOMSource(document);
 
-                    transformer.transform(source, new StreamResult(new File(database.url)));
+                    transformer.transform(source, new StreamResult(new File(pdatabase.url)));
                 }
                 catch (Exception e)
                 {
@@ -271,27 +284,27 @@ public class Writer
 
                 try
                 {
-                    System.store("//document/builder/factory", factory = DocumentBuilderFactory.newInstance());
+                    System.storage("//document/builder/factory", factory = DocumentBuilderFactory.newInstance());
 
-                    System.store("//document/builder", builder = factory.newDocumentBuilder());
+                    System.storage("//document/builder", builder = factory.newDocumentBuilder());
 
-                    System.store("//document", document = builder.parse(new File(database.url)));
+                    System.storage("//document", document = builder.parse(new File(database.url)));
 
-                    System.store("//schema/database", root = (Element) document.getFirstChild());
+                    System.storage("//schema/database", root = (Element) document.getFirstChild());
 
-                    System.store("//schema/database/tables", tables = (NodeList)root.getElementsByTagName("tables"));
+                    System.storage("//schema/database/tables", tables = (NodeList)root.getElementsByTagName("tables"));
                 }
                 catch (Exception e)
                 {
                     if(e instanceof FileNotFoundException)
                     {
-                        System.store("//document", document = builder.newDocument());
+                        System.storage("//document", document = builder.newDocument());
 
-                        System.store("//schema/database", root = (Element) document.appendChild(document.createElement("database")));
+                        System.storage("//schema/database", root = (Element) document.appendChild(document.createElement("database")));
 
-                        System.store("//schema/database/tables{pre}", root.appendChild(document.createElement("tables")));
+                        System.storage("//schema/database/tables{pre}", root.appendChild(document.createElement("tables")));
 
-                        System.store("//schema/database/tables", tables = (NodeList) root.getElementsByTagName("tables"));
+                        System.storage("//schema/database/tables", tables = (NodeList) root.getElementsByTagName("tables"));
                     }
                     else ExceptionQueue.reference.enqueue(e, e.getMessage());
                 }
@@ -309,9 +322,9 @@ public class Writer
 
                 //
 
-                System.store("//document", document = (Document) System.pull("//document"));
+                System.storage("//document", document = (Document) System.pull("//document"));
 
-                System.store("//schema/database", root = (Element) System.pull("//schema/database"));
+                System.storage("//schema/database", root = (Element) System.pull("//schema/database"));
 
                 //
 
@@ -337,11 +350,11 @@ public class Writer
 
                     //
 
-                    System.store("//transformer/factory", factory = TransformerFactory.newInstance());
+                    System.storage("//transformer/factory", factory = TransformerFactory.newInstance());
 
-                    System.store("//transformer", transformer = factory.newTransformer());
+                    System.storage("//transformer", transformer = factory.newTransformer());
 
-                    System.store("//document", document = (Document)System.pull("//document"));
+                    System.storage("//document", document = (Document)System.pull("//document"));
 
                     //
 
