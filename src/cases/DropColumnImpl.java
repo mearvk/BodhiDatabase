@@ -53,11 +53,11 @@ public class DropColumnImpl extends UseCase
     {
         public PreconditionCheck(Parameter parameter) throws Exception
         {
-            System.touch_base("//continue");
+            System.hook("//continue");
 
                 System.stepper("//database", parameter, DeleteFromImpl.PreconditionCheck.class);
 
-            System.touch_base("//continue");
+            System.hook("//continue");
         }
     }
 
@@ -65,11 +65,11 @@ public class DropColumnImpl extends UseCase
     {
         public TaskRunner(Parameter parameter) throws Exception
         {
-            System.touch_base("//continue");
+            System.hook("//continue");
 
                 System.stepper("//database", parameter, DeleteFromImpl.TaskRunner.class);
 
-            System.touch_base("//continue");
+            System.hook("//continue");
         }
     }
 
@@ -77,11 +77,11 @@ public class DropColumnImpl extends UseCase
     {
         public PostconditionCheck(Parameter parameter) throws Exception
         {
-            System.touch_base("//continue");
+            System.hook("//continue");
 
                 System.stepper("//database", parameter, DeleteFromImpl.PostconditionCheck.class);
 
-            System.touch_base("//continue");
+            System.hook("//continue");
         }
     }
 

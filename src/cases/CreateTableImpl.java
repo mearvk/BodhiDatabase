@@ -1,6 +1,6 @@
 package cases;
 
-import components.database.Database;
+import structures.database.Database;
 import constants.DatabaseConstants;
 import parameter.Parameter;
 import system.System;
@@ -20,11 +20,11 @@ public class CreateTableImpl extends UseCase
 
         //
 
-        CreateTableImpl.CreateTableImpl_Step001 step001 = new CreateTableImpl.CreateTableImpl_Step001(parameter);
+        new CreateTableImpl.CreateTableImpl_Step001(parameter);
 
-        CreateTableImpl.CreateTableImpl_Step002 step002 = new CreateTableImpl.CreateTableImpl_Step002(parameter);
+        new CreateTableImpl.CreateTableImpl_Step002(parameter);
 
-        CreateTableImpl.CreateTableImpl_Step003 step003 = new CreateTableImpl.CreateTableImpl_Step003(parameter);
+        new CreateTableImpl.CreateTableImpl_Step003(parameter);
     }
 
     public static class CreateTableImpl_Step001
@@ -55,11 +55,11 @@ public class CreateTableImpl extends UseCase
     {
         public PreconditionCheck(Parameter parameter) throws Exception
         {
-            System.touch_base("//continue");
+            System.hook("//continue");
 
                 System.stepper("//database/table", parameter, CreateTableImpl.PreconditionCheck.class);
 
-            System.touch_base("//continue");
+            System.hook("//continue");
         }
     }
 
@@ -67,11 +67,11 @@ public class CreateTableImpl extends UseCase
     {
         public TaskRunner(Parameter parameter) throws Exception
         {
-            System.touch_base("//continue");
+            System.hook("//continue");
 
                 System.stepper("//database/table", parameter, CreateTableImpl.TaskRunner.class);
 
-            System.touch_base("//continue");
+            System.hook("//continue");
         }
     }
 
@@ -79,11 +79,11 @@ public class CreateTableImpl extends UseCase
     {
         public PostconditionCheck(Parameter parameter) throws Exception
         {
-            System.touch_base("//continue");
+            System.hook("//continue");
 
                 System.stepper("//database/table", parameter, CreateTableImpl.PostconditionCheck.class);
 
-            System.touch_base("//continue");
+            System.hook("//continue");
         }
     }
 

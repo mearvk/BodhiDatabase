@@ -24,7 +24,7 @@ public class SQLBuilder
 
     public static class Builder_Step001
     {
-        public Builder_Step001() throws Exception
+        public Builder_Step001(String var) throws Exception
         {
             Database database = new Database();
         }
@@ -32,7 +32,7 @@ public class SQLBuilder
 
     public static class Builder_Step002
     {
-        public Builder_Step002() throws Exception
+        public Builder_Step002(String var) throws Exception
         {
             Parser parser = new Parser();
 
@@ -42,7 +42,7 @@ public class SQLBuilder
 
     public static class Builder_Step003
     {
-        public Builder_Step003() throws Exception
+        public Builder_Step003(String var) throws Exception
         {
             Persistence persistence = new Persistence();
 
@@ -52,7 +52,7 @@ public class SQLBuilder
 
     public static class Builder_Step004
     {
-        public Builder_Step004() throws Exception
+        public Builder_Step004(String var) throws Exception
         {
             Processor processor = new Processor();
 
@@ -62,7 +62,7 @@ public class SQLBuilder
 
     public static class Builder_Step005
     {
-        public Builder_Step005() throws Exception
+        public Builder_Step005(String var) throws Exception
         {
             Terminal terminal = new Terminal();
 
@@ -72,7 +72,7 @@ public class SQLBuilder
 
     public static class Builder_Step006
     {
-        public Builder_Step006() throws Exception
+        public Builder_Step006(String var) throws Exception
         {
             Network network = new Network();
 

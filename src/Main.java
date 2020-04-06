@@ -19,26 +19,23 @@ public class Main
 
             SQLBuilder builder = new SQLBuilder();
 
-            builder.builder_step001 = new SQLBuilder.Builder_Step001();    //step 1. <parser>
+            builder.builder_step001 = new SQLBuilder.Builder_Step001("<<parser>>");         //<step 1. parser>
 
-            builder.builder_step002 = new SQLBuilder.Builder_Step002();    //step 2. <persistence>
+            builder.builder_step002 = new SQLBuilder.Builder_Step002("<<persistence>>");    //<step 2. persistence>
 
-            builder.builder_step003 = new SQLBuilder.Builder_Step003();    //step 3. <network>
+            builder.builder_step003 = new SQLBuilder.Builder_Step003("<<network>>");        //<step 3. network>
 
-            builder.builder_step004 = new SQLBuilder.Builder_Step004();    //step 4. <processor>
+            builder.builder_step004 = new SQLBuilder.Builder_Step004("<<processor>>");      //<step 4. processor>
 
-            builder.builder_step005 = new SQLBuilder.Builder_Step005();    //step 5. <terminal>
+            builder.builder_step005 = new SQLBuilder.Builder_Step005("<<terminal>>");       //<step 5. terminal>
 
-            builder.builder_step006 = new SQLBuilder.Builder_Step006();    //step 6. <database>
+            builder.builder_step006 = new SQLBuilder.Builder_Step006("<<database>>");       //<step 6. database>
 
         }
         catch (Exception e)
         {
             e.addSuppressed(e);
         }
-
-        //
-
 
         SQLHarness harness = new SQLHarness();
 

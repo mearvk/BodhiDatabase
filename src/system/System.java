@@ -4,15 +4,18 @@ import cases.CreateDatabaseImpl;
 import cases.CreateTableImpl;
 import cases.UseDatabaseImpl;
 
+import structures.table.Table;
 import structures.database.Database;
 
 import components.memory.Memory;
 import components.persistence.Persistence;
 import components.processor.Processor;
-import messaging.MessageQueue;
-import parameter.Parameter;
 import components.validation.ValidationComponent;
-import structures.table.Table;
+
+import messaging.MessageQueue;
+
+import parameter.Parameter;
+
 import io.Reader;
 
 public class System
@@ -44,6 +47,24 @@ public class System
         }
     }
 
+    public static void writer(final String bodhi, final structures.database.Database database, Parameter parameter, Class<?> context) throws Exception
+    {
+        Persistence persistence;
+
+        persistence = new Persistence();
+
+        persistence.writer.writeXML(bodhi, database, parameter, context);
+    }
+
+    public static void writer(final String bodhi, final structures.database.Database database, structures.table.Table table, Parameter parameter, Class<?> context) throws Exception
+    {
+        Persistence persistence;
+
+        persistence = new Persistence();
+
+        persistence.writer.writeXML(bodhi, database, table, parameter, context);
+    }
+
     public static void unset(final String bodhi) throws Exception
     {
         if(bodhi.equals("//continue"))
@@ -60,12 +81,12 @@ public class System
         }
     }
 
-    public static Object spin(final String bodhi, final String memory, final Class<?> context) throws Exception
+    public static Object finalize(final String bodhi, final String memory, final Class<?> context) throws Exception
     {
         return System.reference;
     }
 
-    public static Object spin(final String bodhi, final Parameter parameter, final Class<?> context) throws Exception
+    public static Object finalize(final String bodhi, final Parameter parameter, final Class<?> context) throws Exception
     {
         if(bodhi.equals("//spin{database}") && context.isAssignableFrom(CreateDatabaseImpl.PreconditionCheck.class))
         {
@@ -175,7 +196,7 @@ public class System
         return System.reference;
     }
 
-    public static Object spin(final String bodhi, final Class<?> klass) throws Exception
+    public static Object finalize(final String bodhi, final Class<?> klass) throws Exception
     {
         return System.reference;
     }
@@ -252,34 +273,20 @@ public class System
 
             Table table;
 
-            //TODO IS DB AND TABLE INSIDE OUT?
+            //
 
             System.save("//database", database = (Database) System.pull("//database"));
 
             System.save("//database/tables{table}", table = (Table) System.pull("//database/tables{table}"));
 
-            System.save("//database/tables/table{name}", table.name);
-
-            System.save("//database/tables/table{url}", table.url);
-
             //
 
-            //TODO check here
-
-            //
-
-            Persistence persistence;
-
-            persistence = new Persistence();
-
-            persistence.writer.writeXML(bodhi, database, table, parameter, context);
+            System.writer(bodhi, database, table, parameter, context);
         }
 
         else if(context.isAssignableFrom(CreateTableImpl.PostconditionCheck.class))
         {
-            System.touch_base("//database");
-
-            System.touch_base("//database{name}", CreateTableImpl.Utility.getDatabaseName(parameter));
+            //TODO quick check if Database has this table in it;;
         }
 
         //
@@ -301,7 +308,7 @@ public class System
 
             //
 
-            System.spin("//spin{database}", parameter, context);
+            System.finalize("//spin{database}", parameter, context);
         }
 
         else if(context.isAssignableFrom(UseDatabaseImpl.TaskRunner.class))
@@ -321,7 +328,7 @@ public class System
 
             //
 
-            System.spin("//spin{database}", parameter, context);
+            System.finalize("//spin{database}", parameter, context);
         }
 
         else if(context.isAssignableFrom(UseDatabaseImpl.PostconditionCheck.class))
@@ -340,7 +347,7 @@ public class System
 
             //
 
-            System.spin("//spin{database}", context);
+            System.finalize("//spin{database}", context);
         }
 
         //
@@ -391,7 +398,7 @@ public class System
         return System.reference;
     }
 
-    public static Boolean touch_base(final String bodhi, final String reference) throws Exception
+    public static Boolean hook(final String bodhi, final String reference) throws Exception
     {
         Object object_001 = Memory.reference.pull(bodhi);
 
@@ -400,12 +407,12 @@ public class System
         return object_001.equals(object_002);
     }
 
-    public static Boolean touch_base(final String bodhi) throws Exception
+    public static Boolean hook(final String bodhi) throws Exception
     {
         return Memory.reference.exists(bodhi);
     }
 
-    public static Boolean touch_base(final String bodhi, final Parameter parameter, final Class<?> klass) throws Exception
+    public static Boolean hook(final String bodhi, final Parameter parameter, final Class<?> klass) throws Exception
     {
         if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImpl.PreconditionCheck.class))
         {
@@ -425,7 +432,7 @@ public class System
         return System.memory.exists(bodhi);
     }
 
-    public static Boolean touch_base(final String...names) throws Exception
+    public static Boolean hook(final String...names) throws Exception
     {
         Boolean result = true;
 

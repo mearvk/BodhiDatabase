@@ -71,34 +71,34 @@ public class Writer
 
     public void precheck(final String bodhi, final structures.database.Database database, final Parameter parameter, final Class<?> context) throws Exception
     {
-        System.runner("//schema/database","precheck", database, Writer.Database.Step001.class);
+        System.runner(bodhi,"precheck", database, Writer.Database.Step001.class);
     }
 
     public void runner(final String bodhi, final structures.database.Database database, final Parameter parameter, final Class<?> context) throws Exception
     {
-        System.runner("//schema/database","runner", database, Writer.Database.Step002.class);
+        System.runner(bodhi,"runner", database, Writer.Database.Step002.class);
     }
 
     public void postcheck(final String bodhi, final structures.database.Database database, final Parameter parameter, final Class<?> context) throws Exception
     {
-        System.runner("//schema/database","postcheck", database, Writer.Database.Step003.class);
+        System.runner(bodhi,"postcheck", database, Writer.Database.Step003.class);
     }
 
     //
 
     public void precheck(final String bodhi, final structures.database.Database database, final structures.table.Table table, final Parameter parameter, final Class<?> context) throws Exception
     {
-        System.runner("//schema/database/tables{table}","precheck", database, table, Writer.Table.Step001.class);
+        System.runner(bodhi,"precheck", database, table, Writer.Table.Step001.class);
     }
 
     public void runner(final String bodhi, final structures.database.Database database, final structures.table.Table table, final Parameter parameter, final Class<?> context) throws Exception
     {
-        System.runner("//schema/database/tables{table}","runner", database, table, Writer.Table.Step002.class);
+        System.runner(bodhi,"runner", database, table, Writer.Table.Step002.class);
     }
 
     public void postcheck(final String bodhi, final structures.database.Database database, final structures.table.Table table, final Parameter parameter, final Class<?> context) throws Exception
     {
-        System.runner("//schema/database/tables{table}","postcheck", database, table, Writer.Table.Step003.class);
+        System.runner(bodhi,"postcheck", database, table, Writer.Table.Step003.class);
     }
 
     public static class System

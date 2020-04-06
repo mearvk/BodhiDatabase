@@ -2,7 +2,7 @@ package parameter;
 
 import cases.CreateTableImpl;
 import cases.UseCase;
-import components.database.Database;
+import structures.database.Database;
 import structures.table.Table;
 
 public class Parameter

@@ -87,9 +87,9 @@ public class Database extends Component
         {
             if(klass.isAssignableFrom(CreateTableImpl.TaskRunner.class))
             {
-                System.touch_base("//database");
+                System.hook("//database");
 
-                System.touch_base("//database{name}");
+                System.hook("//database{name}");
 
                 String name = this.name = CreateTableImpl.Utility.getTableName(parameter);
 
