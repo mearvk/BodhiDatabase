@@ -4,6 +4,8 @@ import components.persistence.Persistence;
 import exceptions.ExceptionQueue;
 import org.w3c.dom.*;
 import parameter.Parameter;
+import structures.database.Database;
+
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -32,7 +34,7 @@ public class Writer
         Writer.reference = this;
     }
 
-    public Object writeXML(final String bodhi, final components.database.Database database, final structures.table.Table table, final Parameter parameter, Class<?> context) throws Exception
+    public Object writeXML(final String bodhi, final structures.database.Database database, final structures.table.Table table, final Parameter parameter, Class<?> context) throws Exception
     {
         Persistence persistence;
 
@@ -43,17 +45,18 @@ public class Writer
         return persistence = null;
     }
 
-    public Object writeXML(final String bodhi, final components.database.Database database, final Parameter parameter, Class<?> context) throws Exception
+    public Object writeXML(final String bodhi, final structures.database.Database database, final Parameter parameter, Class<?> context) throws Exception
     {
         Persistence persistence;
 
         persistence = new Persistence();
 
+        persistence.writer.writeXML(bodhi, database, parameter, context);
 
         return persistence = null;
     }
 
-    public Object checkXML(final String bodhi, final components.database.Database database, final Parameter parameter, final Class<?> context) throws Exception
+    public Object checkXML(final String bodhi, final structures.database.Database database, final Parameter parameter, final Class<?> context) throws Exception
     {
         Persistence persistence;
 
@@ -66,36 +69,36 @@ public class Writer
 
     //
 
-    public void precheck(final String bodhi, final components.database.Database database, final Parameter parameter, final Class<?> context) throws Exception
+    public void precheck(final String bodhi, final structures.database.Database database, final Parameter parameter, final Class<?> context) throws Exception
     {
-        System.setter("//schema/database","validate", database, Writer.Database.Step001.class);
+        System.runner("//schema/database","precheck", database, Writer.Database.Step001.class);
     }
 
-    public void runner(final String bodhi, final components.database.Database database, final Parameter parameter, final Class<?> context) throws Exception
+    public void runner(final String bodhi, final structures.database.Database database, final Parameter parameter, final Class<?> context) throws Exception
     {
-        System.setter("//schema/database/tables","validate", database, Writer.Database.Step002.class);
+        System.runner("//schema/database","runner", database, Writer.Database.Step002.class);
     }
 
-    public void postcheck(final String bodhi, final components.database.Database database, final Parameter parameter, final Class<?> context) throws Exception
+    public void postcheck(final String bodhi, final structures.database.Database database, final Parameter parameter, final Class<?> context) throws Exception
     {
-        System.setter("//schema{output}","validate", database, Writer.Database.Step003.class);
+        System.runner("//schema/database","postcheck", database, Writer.Database.Step003.class);
     }
 
     //
 
-    public void precheck(final String bodhi, final components.database.Database database, final structures.table.Table table, final Parameter parameter, final Class<?> context) throws Exception
+    public void precheck(final String bodhi, final structures.database.Database database, final structures.table.Table table, final Parameter parameter, final Class<?> context) throws Exception
     {
-        System.setter("//schema/database/table","validate", database, table, Writer.Table.Step001.class);
+        System.runner("//schema/database/tables{table}","precheck", database, table, Writer.Table.Step001.class);
     }
 
-    public void runner(final String bodhi, final components.database.Database database, final structures.table.Table table, final Parameter parameter, final Class<?> context) throws Exception
+    public void runner(final String bodhi, final structures.database.Database database, final structures.table.Table table, final Parameter parameter, final Class<?> context) throws Exception
     {
-        System.setter("//schema/database/tables/table","validate", database, table, Writer.Table.Step002.class);
+        System.runner("//schema/database/tables{table}","runner", database, table, Writer.Table.Step002.class);
     }
 
-    public void postcheck(final String bodhi, final components.database.Database database, final structures.table.Table table, final Parameter parameter, final Class<?> context) throws Exception
+    public void postcheck(final String bodhi, final structures.database.Database database, final structures.table.Table table, final Parameter parameter, final Class<?> context) throws Exception
     {
-        System.setter("//schema{output}","validate", database, table, Writer.Table.Step003.class);
+        System.runner("//schema/database/tables{table}","postcheck", database, table, Writer.Table.Step003.class);
     }
 
     public static class System
@@ -124,7 +127,7 @@ public class Writer
             return System.reference.map.get(bodhi);
         }
 
-        public static void setter(final String bodhi, final String value, final components.database.Database database, final structures.table.Table newtable, final Class<?> context) throws Exception
+        public static void runner(final String bodhi, final String value, final structures.database.Database database, final structures.table.Table newtable, final Class<?> context) throws Exception
         {
             if (context.isAssignableFrom(Writer.Table.Step001.class))
             {
@@ -250,7 +253,7 @@ public class Writer
             }
         }
 
-        public static void setter(final String bodhi, final String value, final components.database.Database database, final Class<?> context) throws Exception
+        public static void runner(final String bodhi, final String value, final structures.database.Database database, final Class<?> context) throws Exception
         {
             if (context.isAssignableFrom(Writer.Database.Step001.class))
             {
@@ -370,37 +373,19 @@ public class Writer
 
     public static class Database
     {
-        public static class Step001
-        {
+        public static class Step001 {}
 
-        }
+        public static class Step002 {}
 
-        public static class Step002
-        {
-
-        }
-
-        public static class Step003
-        {
-
-        }
+        public static class Step003 {}
     }
 
     public static class Table
     {
-        public static class Step001
-        {
+        public static class Step001 {}
 
-        }
+        public static class Step002 {}
 
-        public static class Step002
-        {
-
-        }
-
-        public static class Step003
-        {
-
-        }
+        public static class Step003 {}
     }
 }

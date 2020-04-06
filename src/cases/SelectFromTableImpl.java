@@ -52,11 +52,11 @@ public class SelectFromTableImpl extends UseCase
     {
         public PreconditionCheck(Parameter parameter) throws Exception
         {
-            System.touch("//continue");
+            System.touch_base("//continue");
 
-                System.step("//database", parameter, DeleteFromImpl.PreconditionCheck.class);
+                System.stepper("//database", parameter, DeleteFromImpl.PreconditionCheck.class);
 
-            System.touch("//continue");
+            System.touch_base("//continue");
         }
     }
 
@@ -64,11 +64,11 @@ public class SelectFromTableImpl extends UseCase
     {
         public TaskRunner(Parameter parameter) throws Exception
         {
-            System.touch("//continue");
+            System.touch_base("//continue");
 
-                System.step("//database", parameter, DeleteFromImpl.TaskRunner.class);
+                System.stepper("//database", parameter, DeleteFromImpl.TaskRunner.class);
 
-            System.touch("//continue");
+            System.touch_base("//continue");
         }
     }
 
@@ -76,11 +76,11 @@ public class SelectFromTableImpl extends UseCase
     {
         public PostconditionCheck(Parameter parameter) throws Exception
         {
-            System.touch("//continue");
+            System.touch_base("//continue");
 
-                System.step("//database", parameter, DeleteFromImpl.PostconditionCheck.class);
+                System.stepper("//database", parameter, DeleteFromImpl.PostconditionCheck.class);
 
-            System.touch("//continue");
+            System.touch_base("//continue");
         }
     }
 

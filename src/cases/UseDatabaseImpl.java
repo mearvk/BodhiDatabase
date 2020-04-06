@@ -54,7 +54,7 @@ public class UseDatabaseImpl extends UseCase
     {
         public PreconditionCheck(Parameter parameter) throws Exception
         {
-            System.step("//database", parameter, UseDatabaseImpl.PreconditionCheck.class);
+            System.stepper("//database", parameter, UseDatabaseImpl.PreconditionCheck.class);
         }
     }
 
@@ -62,7 +62,7 @@ public class UseDatabaseImpl extends UseCase
     {
         public TaskRunner(Parameter parameter) throws Exception
         {
-            System.step("//database", parameter, UseDatabaseImpl.TaskRunner.class);
+            System.stepper("//database", parameter, UseDatabaseImpl.TaskRunner.class);
         }
     }
 
@@ -70,7 +70,7 @@ public class UseDatabaseImpl extends UseCase
     {
         public PostconditionCheck(Parameter parameter) throws Exception
         {
-            System.step("//database", parameter, UseDatabaseImpl.PostconditionCheck.class);
+            System.stepper("//database", parameter, UseDatabaseImpl.PostconditionCheck.class);
         }
     }
 

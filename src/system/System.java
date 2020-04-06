@@ -3,7 +3,9 @@ package system;
 import cases.CreateDatabaseImpl;
 import cases.CreateTableImpl;
 import cases.UseDatabaseImpl;
-import components.database.Database;
+
+import structures.database.Database;
+
 import components.memory.Memory;
 import components.persistence.Persistence;
 import components.processor.Processor;
@@ -38,7 +40,7 @@ public class System
     {
         if(bodhi.equals("//continue"))
         {
-            System.store(bodhi, true);
+            System.save(bodhi, true);
         }
     }
 
@@ -50,11 +52,11 @@ public class System
         }
     }
 
-    public static void step(final String property, final String ref, Class klass) throws Exception
+    public static void stepper(final String property, final String ref, Class klass) throws Exception
     {
         if(property.equals("//database/selected")  && klass.isAssignableFrom(UseDatabaseImpl.class))
         {
-            System.store(property, ref);
+            System.save(property, ref);
         }
     }
 
@@ -86,7 +88,7 @@ public class System
 
             if(database==null)
             {
-                System.store("//database", database = new Database(parameter,context));
+                System.save("//database", database = new Database(parameter,context));
             }
 
             Persistence persistence;
@@ -104,7 +106,7 @@ public class System
 
             if(database==null)
             {
-                System.store("//database", database = new Database(parameter,context));
+                System.save("//database", database = new Database(parameter,context));
             }
 
             Reader reader;
@@ -215,14 +217,14 @@ public class System
         return Memory.reference.exists(bodhi);
     }
 
-    public static Object message(final String bodhi, final String message, final Parameter parameter, final Class<?> context)
+    public static Object messager(final String bodhi, final String message, final Parameter parameter, final Class<?> context)
     {
         java.lang.System.out.println("Message: <"+message+">");
 
         return new Object();
     }
 
-    public static Object step(final String bodhi, final Parameter parameter, final Class<?> context) throws Exception
+    public static Object stepper(final String bodhi, final Parameter parameter, final Class<?> context) throws Exception
     {
         if(context.isAssignableFrom(CreateTableImpl.PreconditionCheck.class))
         {
@@ -236,15 +238,14 @@ public class System
 
             //
 
-            System.store("//database", database = new Database(parameter, context));
+            System.save("//database", database = new Database(parameter, context));
 
-            System.store("//database/tables{table}", table = new Table(parameter, context));
+            System.save("//database/tables{table}", table = new Table(parameter, context));
 
-            System.store("//database{name}", name = CreateTableImpl.Utility.getDatabaseName(parameter));
+            System.save("//database{name}", name = CreateTableImpl.Utility.getDatabaseName(parameter));
 
-            System.store("//database{url}", url = CreateTableImpl.Utility.getDatabaseUrl(parameter));
+            System.save("//database{url}", url = CreateTableImpl.Utility.getDatabaseUrl(parameter));
         }
-
         else if(context.isAssignableFrom(CreateTableImpl.TaskRunner.class))
         {
             Database database;
@@ -253,13 +254,13 @@ public class System
 
             //TODO IS DB AND TABLE INSIDE OUT?
 
-            System.store("//database", database = (Database) System.pull("//database"));
+            System.save("//database", database = (Database) System.pull("//database"));
 
-            System.store("//database/tables{table}", table = (Table) System.pull("//database/tables{table}"));
+            System.save("//database/tables{table}", table = (Table) System.pull("//database/tables{table}"));
 
-            System.store("//database/tables/table{name}", table.name);
+            System.save("//database/tables/table{name}", table.name);
 
-            System.store("//database/tables/table{url}", table.url);
+            System.save("//database/tables/table{url}", table.url);
 
             //
 
@@ -276,9 +277,9 @@ public class System
 
         else if(context.isAssignableFrom(CreateTableImpl.PostconditionCheck.class))
         {
-            System.touch("//database");
+            System.touch_base("//database");
 
-            System.touch("//database{name}", CreateTableImpl.Utility.getDatabaseName(parameter));
+            System.touch_base("//database{name}", CreateTableImpl.Utility.getDatabaseName(parameter));
         }
 
         //
@@ -291,12 +292,12 @@ public class System
 
             if(database==null)
             {
-                System.store("//database", database = new Database(parameter, context));
+                System.save("//database", database = new Database(parameter, context));
             }
 
-            System.store("//database{name}", UseDatabaseImpl.Utility.getDatabaseName(parameter));
+            System.save("//database{name}", UseDatabaseImpl.Utility.getDatabaseName(parameter));
 
-            System.store("//database{url}", UseDatabaseImpl.Utility.getDatabaseUrl(parameter));
+            System.save("//database{url}", UseDatabaseImpl.Utility.getDatabaseUrl(parameter));
 
             //
 
@@ -311,12 +312,12 @@ public class System
 
             if(database==null)
             {
-                System.store("//database", database = new Database(parameter, context));
+                System.save("//database", database = new Database(parameter, context));
             }
 
-            System.store("//database{name}", UseDatabaseImpl.Utility.getDatabaseName(parameter));
+            System.save("//database{name}", UseDatabaseImpl.Utility.getDatabaseName(parameter));
 
-            System.store("//database{url}", UseDatabaseImpl.Utility.getDatabaseUrl(parameter));
+            System.save("//database{url}", UseDatabaseImpl.Utility.getDatabaseUrl(parameter));
 
             //
 
@@ -348,13 +349,13 @@ public class System
         {
             Database database;
 
-            System.store("//database", database = new Database(parameter, context));
+            System.save("//database", database = new Database(parameter, context));
 
-            System.store("//database{exists}", database.exists);
+            System.save("//database{exists}", database.exists);
 
-            System.store("//database{name}", database.name);
+            System.save("//database{name}", database.name);
 
-            System.store("//database{url}", database.url);
+            System.save("//database{url}", database.url);
         }
 
         else if(context.isAssignableFrom(CreateDatabaseImpl.TaskRunner.class))
@@ -390,7 +391,7 @@ public class System
         return System.reference;
     }
 
-    public static Boolean touch(final String bodhi, final String reference) throws Exception
+    public static Boolean touch_base(final String bodhi, final String reference) throws Exception
     {
         Object object_001 = Memory.reference.pull(bodhi);
 
@@ -399,12 +400,12 @@ public class System
         return object_001.equals(object_002);
     }
 
-    public static Boolean touch(final String bodhi) throws Exception
+    public static Boolean touch_base(final String bodhi) throws Exception
     {
         return Memory.reference.exists(bodhi);
     }
 
-    public static Boolean touch(final String bodhi, final Parameter parameter, final Class<?> klass) throws Exception
+    public static Boolean touch_base(final String bodhi, final Parameter parameter, final Class<?> klass) throws Exception
     {
         if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImpl.PreconditionCheck.class))
         {
@@ -424,7 +425,7 @@ public class System
         return System.memory.exists(bodhi);
     }
 
-    public static Boolean touch(final String...names) throws Exception
+    public static Boolean touch_base(final String...names) throws Exception
     {
         Boolean result = true;
 
@@ -461,22 +462,12 @@ public class System
         return Memory.reference.pull(name);
     }
 
-    public static void store(final String name, Class<?> klass) throws Exception
+    public static void save(final String string, Object object) throws Exception
     {
-
+        Memory.reference.push(string, object);
     }
 
-    public static void store(final String name, Reader reader, Database database) throws Exception
-    {
-
-    }
-
-    public static void store(final String name, Object object) throws Exception
-    {
-        Memory.reference.push(name, object);
-    }
-
-    public static void store(final String name, String target) throws Exception
+    public static void save(final String name, String target) throws Exception
     {
         Memory.reference.push(name, target);
     }

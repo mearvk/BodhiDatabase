@@ -7,7 +7,7 @@ import parameter.Parameter;
 
 public class Reader
 {
-    public Object readXML(final String bodhi, final Database database, final Parameter parameter, Class<?> context) throws Exception
+    public Object readXML(final String bodhi, final structures.database.Database database, final Parameter parameter, Class<?> context) throws Exception
     {
         Persistence persistence;
 
@@ -18,7 +18,7 @@ public class Reader
         return null;
     }
 
-    public Object checkXML(final String bodhi, final Database database, final Parameter parameter, Class<?> context) throws Exception
+    public Object checkXML(final String bodhi, final structures.database.Database database, final Parameter parameter, Class<?> context) throws Exception
     {
         Persistence persistence;
 

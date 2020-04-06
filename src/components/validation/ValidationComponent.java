@@ -22,7 +22,7 @@ public class ValidationComponent
     {
         if(bodhi.equals("//database") && klass.isAssignableFrom(CreateDatabaseImpl.class))
         {
-            System.touch("//database");
+            System.touch_base("//database");
         }
 
         return this;

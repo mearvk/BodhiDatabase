@@ -54,11 +54,11 @@ public class CreateDatabaseImpl extends UseCase
     {
         public PreconditionCheck(Parameter parameter) throws Exception
         {
-            System.touch("//continue");
+            System.touch_base("//continue");
 
-                System.step("//database", parameter, CreateDatabaseImpl.PreconditionCheck.class);
+                System.stepper("//database", parameter, CreateDatabaseImpl.PreconditionCheck.class);
 
-            System.touch("//continue");
+            System.touch_base("//continue");
         }
     }
 
@@ -66,11 +66,11 @@ public class CreateDatabaseImpl extends UseCase
     {
         public TaskRunner(Parameter parameter) throws Exception
         {
-            System.touch("//continue");
+            System.touch_base("//continue");
 
-                System.step("//database", parameter, CreateDatabaseImpl.TaskRunner.class);
+                System.stepper("//database", parameter, CreateDatabaseImpl.TaskRunner.class);
 
-            System.touch("//continue");
+            System.touch_base("//continue");
         }
     }
 
@@ -78,11 +78,11 @@ public class CreateDatabaseImpl extends UseCase
     {
         public PostconditionCheck(Parameter parameter) throws Exception
         {
-            System.touch("//continue");
+            System.touch_base("//continue");
 
-                 System.step("//database", parameter, CreateDatabaseImpl.PostconditionCheck.class);
+                 System.stepper("//database", parameter, CreateDatabaseImpl.PostconditionCheck.class);
 
-            System.touch("//continue");
+            System.touch_base("//continue");
         }
     }
 

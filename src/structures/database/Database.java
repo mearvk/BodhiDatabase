@@ -1,14 +1,15 @@
-package components.database;
+package structures.database;
 
 import cases.CreateDatabaseImpl;
 import cases.CreateTableImpl;
-import components.Component;
+
 import parameter.Parameter;
-import system.System;
+import structures.Structure;
+import structures.table.Table;
 
 import java.util.HashMap;
 
-public class Database extends Component
+public class Database extends Structure
 {
     public static Database reference;
 
@@ -63,7 +64,7 @@ public class Database extends Component
 
             this.context = context;
         }
-     }
+    }
 
     public static class Properties
     {
@@ -76,25 +77,5 @@ public class Database extends Component
     {
 
     }
-
-    public class Table
-    {
-        public String name;
-
-        public String url;
-
-        public Table(Parameter parameter, Class<?> klass) throws Exception
-        {
-            if(klass.isAssignableFrom(CreateTableImpl.TaskRunner.class))
-            {
-                System.touch_base("//database");
-
-                System.touch_base("//database{name}");
-
-                String name = this.name = CreateTableImpl.Utility.getTableName(parameter);
-
-                String url = this.url = CreateTableImpl.Utility.getDatabaseUrl(parameter);
-            }
-        }
-    }
 }
+

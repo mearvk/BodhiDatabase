@@ -55,11 +55,11 @@ public class CreateTableImpl extends UseCase
     {
         public PreconditionCheck(Parameter parameter) throws Exception
         {
-            System.touch("//continue");
+            System.touch_base("//continue");
 
-                System.step("//database/table", parameter, CreateTableImpl.PreconditionCheck.class);
+                System.stepper("//database/table", parameter, CreateTableImpl.PreconditionCheck.class);
 
-            System.touch("//continue");
+            System.touch_base("//continue");
         }
     }
 
@@ -67,11 +67,11 @@ public class CreateTableImpl extends UseCase
     {
         public TaskRunner(Parameter parameter) throws Exception
         {
-            System.touch("//continue");
+            System.touch_base("//continue");
 
-                System.step("//database/table", parameter, CreateTableImpl.TaskRunner.class);
+                System.stepper("//database/table", parameter, CreateTableImpl.TaskRunner.class);
 
-            System.touch("//continue");
+            System.touch_base("//continue");
         }
     }
 
@@ -79,11 +79,11 @@ public class CreateTableImpl extends UseCase
     {
         public PostconditionCheck(Parameter parameter) throws Exception
         {
-            System.touch("//continue");
+            System.touch_base("//continue");
 
-                System.step("//database/table", parameter, CreateTableImpl.PostconditionCheck.class);
+                System.stepper("//database/table", parameter, CreateTableImpl.PostconditionCheck.class);
 
-            System.touch("//continue");
+            System.touch_base("//continue");
         }
     }
 
@@ -93,12 +93,14 @@ public class CreateTableImpl extends UseCase
         {
             try
             {
-                File file = new File(DatabaseConstants.baseURL+"\\"+ CreateDatabaseImpl.Utility.getDatabaseName(parameter)+".sql");
+                File file = new File(DatabaseConstants.baseURL+"\\"+ CreateTableImpl.Utility.getDatabaseName(parameter)+".sql");
 
                 return file.exists() ? "true" : "false";
             }
             catch (Exception e)
             {
+                e.printStackTrace();
+
                 return "false";
             }
         }

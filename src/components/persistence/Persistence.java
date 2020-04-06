@@ -3,12 +3,12 @@ package components.persistence;
 import cases.CreateDatabaseImpl;
 import cases.CreateTableImpl;
 import components.Component;
-import components.database.Database;
+import structures.Queue;
+import structures.SQLString;
+import structures.database.Database;
 import components.persistence.handler.PersistenceCaseHandler;
 import exceptions.ExceptionQueue;
 import parameter.Parameter;
-import structures.Queue;
-import structures.SQLString;
 import system.System;
 import io.Writer;
 
@@ -22,7 +22,7 @@ public class Persistence extends Component
 
     public Persistence() throws Exception
     {
-        System.store("//persistence", this);
+        System.save("//persistence", this);
 
         Persistence.reference = this;
     }
@@ -106,7 +106,7 @@ public class Persistence extends Component
             }
          }
 
-        public void writeXML(String bodhi, Database database, structures.table.Table table, Parameter parameter, Class<?> context) throws Exception
+        public void writeXML(String bodhi, structures.database.Database database, structures.table.Table table, Parameter parameter, Class<?> context) throws Exception
         {
             if(context.isAssignableFrom(CreateTableImpl.TaskRunner.class))
             {
