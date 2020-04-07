@@ -17,11 +17,11 @@ public class DropDatabaseImpl extends UseCase
 
         //
 
-         DropDatabaseImpl.DropDatabaseImpl_Step001 step001 = new DropDatabaseImpl.DropDatabaseImpl_Step001(parameter);
+         new DropDatabaseImpl.DropDatabaseImpl_Step001(parameter);
 
-         DropDatabaseImpl.DropDatabaseImpl_Step002 step002 = new DropDatabaseImpl.DropDatabaseImpl_Step002(parameter);
+         new DropDatabaseImpl.DropDatabaseImpl_Step002(parameter);
 
-         DropDatabaseImpl.DropDatabaseImpl_Step003 step003 = new DropDatabaseImpl.DropDatabaseImpl_Step003(parameter);
+         new DropDatabaseImpl.DropDatabaseImpl_Step003(parameter);
     }
 
     public static class DropDatabaseImpl_Step001

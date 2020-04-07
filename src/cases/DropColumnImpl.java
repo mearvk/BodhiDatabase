@@ -17,11 +17,11 @@ public class DropColumnImpl extends UseCase
 
         //
 
-        DropColumnImpl.DropColumnImpl_Step001 step001 = new DropColumnImpl.DropColumnImpl_Step001(parameter);
+        new DropColumnImpl.DropColumnImpl_Step001(parameter);
 
-        DropColumnImpl.DropColumnImpl_Step002 step002 = new DropColumnImpl.DropColumnImpl_Step002(parameter);
+        new DropColumnImpl.DropColumnImpl_Step002(parameter);
 
-        DropColumnImpl.DropColumnImpl_Step003 step003 = new DropColumnImpl.DropColumnImpl_Step003(parameter);
+        new DropColumnImpl.DropColumnImpl_Step003(parameter);
 
     }
 

@@ -130,25 +130,6 @@ public class Writer
         {
             if (context.isAssignableFrom(TableWriter.Precheck.class))
             {
-                JSONObject json;
-
-                JSONParser parser = new JSONParser();
-
-                //
-
-                try
-                {
-                    json = (JSONObject) parser.parse(new FileReader(pdatabase.url));
-                }
-                catch (Exception e)
-                {
-
-                }
-
-                json = new JSONObject();
-
-                json.put("table", ptable.name);
-
                 return;
             }
             else if(context.isAssignableFrom(TableWriter.Runner.class))
@@ -194,8 +175,6 @@ public class Writer
                 //
 
                 FileWriter writer = new FileWriter(new File(pdatabase.url));
-
-                writer.write("Trillions and trillions of dollars...");
 
                 writer.write(database.toJSONString());
 

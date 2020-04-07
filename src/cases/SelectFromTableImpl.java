@@ -17,11 +17,11 @@ public class SelectFromTableImpl extends UseCase
 
         //
 
-        SelectFromTableImpl_Step001 step001 = new SelectFromTableImpl_Step001(parameter);
+        new SelectFromTableImpl_Step001(parameter);
 
-        SelectFromTableImpl_Step002 step002 = new SelectFromTableImpl_Step002(parameter);
+        new SelectFromTableImpl_Step002(parameter);
 
-        SelectFromTableImpl_Step003 step003 = new SelectFromTableImpl_Step003(parameter);
+        new SelectFromTableImpl_Step003(parameter);
     }
 
     public static class SelectFromTableImpl_Step001

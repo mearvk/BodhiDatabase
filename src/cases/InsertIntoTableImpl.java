@@ -17,11 +17,11 @@ public class InsertIntoTableImpl extends UseCase
 
         //
 
-        InsertIntoTableImpl.InsertIntoImpl_Step001 step001 = new InsertIntoTableImpl.InsertIntoImpl_Step001(parameter);
+        new InsertIntoTableImpl.InsertIntoImpl_Step001(parameter);
 
-        InsertIntoTableImpl.InsertIntoImpl_Step002 step002 = new InsertIntoTableImpl.InsertIntoImpl_Step002(parameter);
+        new InsertIntoTableImpl.InsertIntoImpl_Step002(parameter);
 
-        InsertIntoTableImpl.InsertIntoImpl_Step003 step003 = new InsertIntoTableImpl.InsertIntoImpl_Step003(parameter);
+        new InsertIntoTableImpl.InsertIntoImpl_Step003(parameter);
     }
 
     public static class InsertIntoImpl_Step001

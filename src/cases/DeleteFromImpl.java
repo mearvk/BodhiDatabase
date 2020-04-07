@@ -15,11 +15,11 @@ public class DeleteFromImpl extends UseCase
 
         //
 
-        DeleteFromImpl.DeleteFromImpl_Step001 step001 = new DeleteFromImpl.DeleteFromImpl_Step001(parameter);
+        new DeleteFromImpl.DeleteFromImpl_Step001(parameter);
 
-        DeleteFromImpl.DeleteFromImpl_Step002 step002 = new DeleteFromImpl.DeleteFromImpl_Step002(parameter);
+        new DeleteFromImpl.DeleteFromImpl_Step002(parameter);
 
-        DeleteFromImpl.DeleteFromImpl_Step003 step003 = new DeleteFromImpl.DeleteFromImpl_Step003(parameter);
+        new DeleteFromImpl.DeleteFromImpl_Step003(parameter);
     }
 
     public static class DeleteFromImpl_Step001

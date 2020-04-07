@@ -19,11 +19,11 @@ public class CreateIndexOnTableImpl extends UseCase
 
         //
 
-        CreateIndexImpl_Step001 step001 = new CreateIndexImpl_Step001(parameter);
+        new CreateIndexImpl_Step001(parameter);
 
-        CreateIndexImpl_Step002 step002 = new CreateIndexImpl_Step002(parameter);
+        new CreateIndexImpl_Step002(parameter);
 
-        CreateIndexImpl_Step003 step003 = new CreateIndexImpl_Step003(parameter);
+        new CreateIndexImpl_Step003(parameter);
     }
 
     public static class CreateIndexImpl_Step001

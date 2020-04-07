@@ -18,11 +18,11 @@ public class UpdateTableImpl extends UseCase
 
         //
 
-        UpdateTableImpl_Step001 step001 = new UpdateTableImpl_Step001(parameter);
+        new UpdateTableImpl_Step001(parameter);
 
-        UpdateTableImpl_Step002 step002 = new UpdateTableImpl_Step002(parameter);
+        new UpdateTableImpl_Step002(parameter);
 
-        UpdateTableImpl_Step003 step003 = new UpdateTableImpl_Step003(parameter);
+        new UpdateTableImpl_Step003(parameter);
     }
 
     public static class UpdateTableImpl_Step001

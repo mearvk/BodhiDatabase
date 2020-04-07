@@ -19,11 +19,11 @@ public class CreateDatabaseImpl extends UseCase
 
         //
 
-        CreateDatabaseImpl.CreateDatabaseImpl_Step001 step001 = new CreateDatabaseImpl.CreateDatabaseImpl_Step001(parameter);
+        new CreateDatabaseImpl.CreateDatabaseImpl_Step001(parameter);
 
-        CreateDatabaseImpl.CreateDatabaseImpl_Step002 step002 = new CreateDatabaseImpl.CreateDatabaseImpl_Step002(parameter);
+        new CreateDatabaseImpl.CreateDatabaseImpl_Step002(parameter);
 
-        CreateDatabaseImpl.CreateDatabaseImpl_Step003 step003 = new CreateDatabaseImpl.CreateDatabaseImpl_Step003(parameter);
+        new CreateDatabaseImpl.CreateDatabaseImpl_Step003(parameter);
     }
 
     public static class CreateDatabaseImpl_Step001
