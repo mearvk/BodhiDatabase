@@ -134,42 +134,39 @@ public class Writer
             }
             else if(context.isAssignableFrom(TableWriter.Runner.class))
             {
-                JSONObject database;
+                JSONObject root = new JSONObject();
 
-                JSONObject tables;
+                JSONObject database = new JSONObject();
 
-                JSONObject columns;
+                JSONObject tables = new JSONObject();
 
-                JSONObject values;
+                JSONObject table = new JSONObject();
 
-                //
+                JSONObject columns = new JSONObject();
 
-                database = new JSONObject();
-
-                database.put("database", pdatabase.name);
-
-                database.put("tables", tables = new JSONObject());
+                JSONObject values = new JSONObject();
 
                 //
 
-                tables.put("table", ptable.name);
+                root.put("database", database);
 
-                tables.put("columns", columns = new JSONObject());
+                    database.put("name", pdatabase.name);
 
-                tables.put("values", values = new JSONObject());
+                    database.put("tables", tables);
+
+                        tables.put("table", table);
+
+                            table.put("columns", columns);
+
+                            table.put("name", ptable.name);
 
                 //
+
+                String name, type;
 
                 for(int i=0; i<ptable.column_names.length; i++)
                 {
                     columns.put(ptable.column_names[i], ptable.column_types[i]);
-                }
-
-                //
-
-                for(int i=0; i<ptable.column_names.length; i++)
-                {
-                    columns.put(ptable.value_names[i], ptable.value_values[i]);
                 }
 
                 //
@@ -214,8 +211,6 @@ public class Writer
                 //
 
                 FileWriter writer = new FileWriter(new File(pdatabase.url));
-
-                writer.write("Trillions and trillions of dollars...");
 
                 writer.write(database.toJSONString());
 

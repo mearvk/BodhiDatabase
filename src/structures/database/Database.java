@@ -36,7 +36,23 @@ public class Database extends Structure
 
     public Database(Parameter parameter, Class<?> context) throws Exception
     {
+
+
         if(context.isAssignableFrom(CreateTableImpl.PreconditionCheck.class))
+        {
+            Database.reference = this;
+
+            this.exists = CreateTableImpl.Utility.getDatabaseExists(parameter);
+
+            this.name = CreateTableImpl.Utility.getDatabaseName(parameter);
+
+            this.url = CreateTableImpl.Utility.getDatabaseUrl(parameter);
+
+            this.parameter = parameter;
+
+            this.context = context;
+        }
+        if(context.isAssignableFrom(CreateTableImpl.TaskRunner.class))
         {
             Database.reference = this;
 

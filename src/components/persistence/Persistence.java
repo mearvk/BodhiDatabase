@@ -114,7 +114,7 @@ public class Persistence extends Component
 
                 writer.precheck(bodhi, database, table, parameter, context);
 
-                 writer.runner(bodhi, database, table, parameter, context);
+                writer.runner(bodhi, database, table, parameter, context);
 
                 writer.postcheck(bodhi, database, table, parameter, context);
             }

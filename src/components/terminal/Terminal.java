@@ -165,7 +165,7 @@ public class Terminal extends Component
         {
             try
             {
-                JPanel jpanel = (JPanel)System.pull("//jpanel");
+                JPanel jpanel = (JPanel)System.storage("//jpanel");
 
                 int w = jpanel.getWidth()-20;
 
@@ -193,7 +193,7 @@ public class Terminal extends Component
         {
             try
             {
-                Frame frame = (Frame)System.pull("//jframe");
+                Frame frame = (Frame)System.storage("//jframe");
 
                 int w = frame.getWidth()-20;
 

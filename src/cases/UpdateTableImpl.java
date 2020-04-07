@@ -64,7 +64,7 @@ public class UpdateTableImpl extends UseCase
 
         public static String getDatabaseName(Parameter parameter) throws Exception
         {
-            Database database = (Database)System.pull("//database");
+            Database database = (Database)System.storage("//database");
 
             return database.name;
         }

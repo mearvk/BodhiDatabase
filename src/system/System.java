@@ -143,7 +143,7 @@ public class System
         {
             Database database;
 
-            database = (Database)System.pull("//database");
+            database = (Database)System.storage("//database");
 
             //
 
@@ -153,16 +153,16 @@ public class System
 
             //
 
-            database.name = (String)System.pull("//database{name}");
+            database.name = (String)System.storage("//database{name}");
 
-            database.url = (String)System.pull("//database{url}");
+            database.url = (String)System.storage("//database{url}");
         }
 
         else if(bodhi.equals("//spin{database}") && context.isAssignableFrom(UseDatabaseImpl.TaskRunner.class))
         {
             Database database;
 
-            database = (Database)System.pull("//database");
+            database = (Database)System.storage("//database");
 
             //
 
@@ -179,7 +179,7 @@ public class System
         {
             Database database;
 
-            database = (Database)System.pull("//database");
+            database = (Database)System.storage("//database");
 
             //
 
@@ -220,7 +220,7 @@ public class System
     {
         try
         {
-            return System.pull(bodhi).equals(comparable);
+            return System.storage(bodhi).equals(comparable);
         }
         catch (Exception e)
         {
@@ -253,19 +253,21 @@ public class System
 
             Table table;
 
-            String name;
+            System.storage("//database", database = new Database(parameter, context));
 
-            String url;
+            System.storage("//database/table", table = new Table(parameter, context));
+
+            System.storage("//database{name}", UseDatabaseImpl.Utility.getDatabaseName(parameter));
+
+            System.storage("//database{url}", UseDatabaseImpl.Utility.getDatabaseUrl(parameter));
 
             //
 
-            System.storage("//database", database = new Database(parameter, context));
+            //System.finalize("//spin{database}", parameter, context);
 
-            System.storage("//database/tables{table}", table = new Table(parameter, context));
+            //
 
-            System.storage("//database{name}", name = CreateTableImpl.Utility.getDatabaseName(parameter));
-
-            System.storage("//database{url}", url = CreateTableImpl.Utility.getDatabaseUrl(parameter));
+            return new Object();
         }
         else if(context.isAssignableFrom(CreateTableImpl.TaskRunner.class))
         {
@@ -273,20 +275,25 @@ public class System
 
             Table table;
 
-            //
+            System.storage("//database", database = new Database(parameter, context));
 
-            System.storage("//database", database = (Database) System.pull("//database"));
-
-            System.storage("//database/tables{table}", table = (Table) System.pull("//database/tables{table}"));
+            System.storage("//database/table", table = new Table(parameter, context));
 
             //
 
-            System.writer(bodhi, database, table, parameter, context);
+            Persistence persistence;
+
+            persistence = new Persistence();
+
+            persistence.writer.writeXML(bodhi, database, table, parameter, context);
+
+            //
+
+            return new Object();
         }
-
         else if(context.isAssignableFrom(CreateTableImpl.PostconditionCheck.class))
         {
-            //TODO quick check if Database has this table in it;;
+            return new Object();
         }
 
         //
@@ -335,7 +342,7 @@ public class System
         {
             Database database;
 
-            database = (Database) System.pull("//database");
+            database = (Database) System.storage("//database");
 
             //
 
@@ -464,7 +471,7 @@ public class System
         return Memory.reference.exists(name);
     }
 
-    public static Object pull(final String name) throws Exception
+    public static Object storage(final String name) throws Exception
     {
         return Memory.reference.pull(name);
     }
@@ -503,4 +510,5 @@ public class System
         mqueue.enqueue(cause);
     }
 }
+
 
