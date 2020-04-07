@@ -1,9 +1,14 @@
 package io;
 
 import components.persistence.Persistence;
+import constants.DatabaseConstants;
 import exceptions.ExceptionQueue;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.w3c.dom.*;
 import parameter.Parameter;
+import structures.database.Database;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -12,13 +17,9 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathFactory;
 
-import java.io.File;
+import java.io.*;
 
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 
 public class Writer
@@ -69,34 +70,34 @@ public class Writer
 
     public void precheck(final String bodhi, final structures.database.Database database, final Parameter parameter, final Class<?> context) throws Exception
     {
-        System.runner(bodhi,"precheck", database, Database.Precheck.class);
+        System.runner(bodhi,"precheck", database, DatabaseWriter.Precheck.class);
     }
 
     public void runner(final String bodhi, final structures.database.Database database, final Parameter parameter, final Class<?> context) throws Exception
     {
-        System.runner(bodhi,"runner", database, Database.Runner.class);
+        System.runner(bodhi,"runner", database, DatabaseWriter.Runner.class);
     }
 
     public void postcheck(final String bodhi, final structures.database.Database database, final Parameter parameter, final Class<?> context) throws Exception
     {
-        System.runner(bodhi,"postcheck", database, Database.Postcheck.class);
+        System.runner(bodhi,"postcheck", database, DatabaseWriter.Postcheck.class);
     }
 
     //
 
     public void precheck(final String bodhi, final structures.database.Database database, final structures.table.Table table, final Parameter parameter, final Class<?> context) throws Exception
     {
-        System.runner(bodhi,"precheck", database, table, Table.Precheck.class);
+        System.runner(bodhi,"precheck", database, table, TableWriter.Precheck.class);
     }
 
     public void runner(final String bodhi, final structures.database.Database database, final structures.table.Table table, final Parameter parameter, final Class<?> context) throws Exception
     {
-        System.runner(bodhi,"runner", database, table, Table.Runner.class);
+        System.runner(bodhi,"runner", database, table, TableWriter.Runner.class);
     }
 
     public void postcheck(final String bodhi, final structures.database.Database database, final structures.table.Table table, final Parameter parameter, final Class<?> context) throws Exception
     {
-        System.runner(bodhi,"postcheck", database, table, Table.Postcheck.class);
+        System.runner(bodhi,"postcheck", database, table, TableWriter.Postcheck.class);
     }
 
     public static class System
@@ -127,226 +128,128 @@ public class Writer
 
         public static void runner(final String bodhi, final String value, final structures.database.Database pdatabase, final structures.table.Table ptable, final Class<?> context) throws Exception
         {
-            if (context.isAssignableFrom(Table.Precheck.class))
+            if (context.isAssignableFrom(TableWriter.Precheck.class))
             {
-                DocumentBuilderFactory factory=null;
+                JSONObject json;
 
-                DocumentBuilder builder=null;
-
-                Document document=null;
-
-                Element root=null;
-
-                Element tables;
-
-                NodeList nodelist;
+                JSONParser parser = new JSONParser();
 
                 //
 
                 try
                 {
-                    System.storage("//document/builder/factory", factory = DocumentBuilderFactory.newInstance());
-
-                    System.storage("//document/builder", builder = factory.newDocumentBuilder());
-
-                    System.storage("//document", document = builder.parse(new File(pdatabase.url)));
-
-                    System.storage("//schema/database", root = (Element) document.getFirstChild());
-
-                    System.storage("//schema/database/tables@element", tables = (Element) root.getElementsByTagName("tables").item(0));
-
-                    System.storage("//schema/database/tables@nodelist", nodelist = (NodeList)root.getElementsByTagName("tables"));
+                    json = (JSONObject) parser.parse(new FileReader(pdatabase.url));
                 }
                 catch (Exception e)
                 {
-                    ExceptionQueue.reference.enqueue(e, e.getMessage());
+
                 }
+
+                json = new JSONObject();
+
+                json.put("table", ptable.name);
 
                 return;
             }
-            else if(context.isAssignableFrom(Table.Runner.class))
+            else if(context.isAssignableFrom(TableWriter.Runner.class))
             {
-                Document document;
+                JSONObject database;
 
-                Element root;
+                JSONObject tables;
 
-                Element table;
+                JSONObject columns;
 
-                Element tables;
-
-                Attr name;
+                JSONObject values;
 
                 //
 
-                System.storage("//document", document = (Document) System.pull("//document"));
+                database = new JSONObject();
 
-                System.storage("//schema/database", root = (Element) System.pull("//schema/database"));
+                database.put("database", pdatabase.name);
 
-                System.storage("//schema/database/tables@element", tables = (Element) System.pull("//schema/database/tables@element"));
-
-                //
-
-                XPath xPath =  XPathFactory.newInstance().newXPath();
-
-                NodeList nodelist = (NodeList) xPath.compile("/database/tables/table[@id='"+ptable.name+"']").evaluate(document, XPathConstants.NODESET);
+                database.put("tables", tables = new JSONObject());
 
                 //
 
-                if(nodelist.getLength()==0)
+                tables.put("table", ptable.name);
+
+                tables.put("columns", columns = new JSONObject());
+
+                tables.put("values", values = new JSONObject());
+
+                //
+
+                for(int i=0; i<ptable.column_names.length; i++)
                 {
-                    tables.appendChild( table = (Element)document.createElement("table"));
-
-                    table.setIdAttribute(ptable.name, true);
-                }
-                else if(nodelist.getLength()==1)
-                {
-                    table = (Element) nodelist.item(0);
-
-                    table.setIdAttribute(ptable.name, true);
+                    columns.put(ptable.column_names[i], ptable.column_types[i]);
                 }
 
-                return;
+                //
+
+                for(int i=0; i<ptable.column_names.length; i++)
+                {
+                    columns.put(ptable.value_names[i], ptable.value_values[i]);
+                }
+
+                //
+
+                FileWriter writer = new FileWriter(new File(pdatabase.url));
+
+                writer.write("Trillions and trillions of dollars...");
+
+                writer.write(database.toJSONString());
+
+                writer.flush();
+
+                writer.close();
+
+                writer = null;
             }
-            else if(context.isAssignableFrom(Table.Postcheck.class))
+            else if(context.isAssignableFrom(TableWriter.Postcheck.class))
             {
-                try
-                {
-                    TransformerFactory factory;
-
-                    Transformer transformer;
-
-                    Document document;
-
-                    //
-
-                    System.storage("//transformer/factory", factory = TransformerFactory.newInstance());
-
-                    System.storage("//transformer", transformer = factory.newTransformer());
-
-                    System.storage("//document", document = (Document) System.pull("//document"));
-
-                    //
-
-
-                    DOMSource source = new DOMSource(document);
-
-                    transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-
-                    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-
-                    transformer.transform(source, new StreamResult(new File(pdatabase.url)));
-                }
-                catch (Exception e)
-                {
-                    return;
-                }
+                return;
             }
         }
 
-        public static void runner(final String bodhi, final String value, final structures.database.Database database, final Class<?> context) throws Exception
+        public static void runner(final String bodhi, final String value, final Database pdatabase, final Class<?> context) throws Exception
         {
-            if (context.isAssignableFrom(Database.Precheck.class))
+            if (context.isAssignableFrom(DatabaseWriter.Precheck.class))
             {
-                DocumentBuilderFactory factory=null;
-
-                DocumentBuilder builder=null;
-
-                Document document=null;
-
-                Element root=null;
-
-                NodeList tables;
-
-                //
-
-                try
-                {
-                    System.storage("//document/builder/factory", factory = DocumentBuilderFactory.newInstance());
-
-                    System.storage("//document/builder", builder = factory.newDocumentBuilder());
-
-                    System.storage("//document", document = builder.parse(new File(database.url)));
-
-                    System.storage("//schema/database", root = (Element) document.getFirstChild());
-
-                    System.storage("//schema/database/tables", tables = (NodeList)root.getElementsByTagName("tables"));
-                }
-                catch (Exception e)
-                {
-                    if(e instanceof FileNotFoundException)
-                    {
-                        System.storage("//document", document = builder.newDocument());
-
-                        System.storage("//schema/database", root = (Element) document.appendChild(document.createElement("database")));
-
-                        System.storage("//schema/database/tables{pre}", root.appendChild(document.createElement("tables")));
-
-                        System.storage("//schema/database/tables", tables = (NodeList) root.getElementsByTagName("tables"));
-                    }
-                    else ExceptionQueue.reference.enqueue(e, e.getMessage());
-                }
-
-                //
-
                 return;
             }
 
-            if (context.isAssignableFrom(Database.Runner.class))
+            else if (context.isAssignableFrom(DatabaseWriter.Runner.class))
             {
-                Document document;
+                JSONObject database;
 
-                Element root;
-
-                //
-
-                System.storage("//document", document = (Document) System.pull("//document"));
-
-                System.storage("//schema/database", root = (Element) System.pull("//schema/database"));
+                JSONArray tables;
 
                 //
 
-                Attr name;
+                database = new JSONObject();
 
-                root.setAttributeNode(name = document.createAttribute("name"));
+                database.put("database", pdatabase.name);
 
-                name.setValue(database.name);
+                database.put("tables", tables = new JSONArray());
 
                 //
 
-                return;
+                FileWriter writer = new FileWriter(new File(pdatabase.url));
+
+                writer.write("Trillions and trillions of dollars...");
+
+                writer.write(database.toJSONString());
+
+                writer.flush();
+
+                writer.close();
+
+                writer = null;
             }
-            if (context.isAssignableFrom(Database.Postcheck.class))
+
+            else if (context.isAssignableFrom(DatabaseWriter.Postcheck.class))
             {
-                try
-                {
-                    TransformerFactory factory;
-
-                    Transformer transformer;
-
-                    Document document;
-
-                    //
-
-                    System.storage("//transformer/factory", factory = TransformerFactory.newInstance());
-
-                    System.storage("//transformer", transformer = factory.newTransformer());
-
-                    System.storage("//document", document = (Document)System.pull("//document"));
-
-                    //
-
-                    DOMSource source = new DOMSource(document);
-
-                    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-
-                    transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-
-                    transformer.transform(source, new StreamResult(new File(database.url)));
-                }
-                catch (Exception e)
-                {
-                    return;
-                }
+                return;
             }
         }
 
@@ -361,7 +264,7 @@ public class Writer
         }
     }
 
-    public static class Database
+    public static class DatabaseWriter
     {
         public static class Precheck {}
 
@@ -370,7 +273,7 @@ public class Writer
         public static class Postcheck {}
     }
 
-    public static class Table
+    public static class TableWriter
     {
         public static class Precheck {}
 

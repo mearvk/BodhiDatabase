@@ -12,6 +12,14 @@ public class Table
 
     public Class<?> context;
 
+    public String[] column_names;
+
+    public String[] column_types;
+
+    public String[] value_names;
+
+    public String[] value_values;
+
     public Table(Parameter parameter, Class<?> context)
     {
         this.parameter = parameter;
