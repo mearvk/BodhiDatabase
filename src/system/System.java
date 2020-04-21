@@ -17,6 +17,9 @@ import messaging.MessageQueue;
 import parameter.Parameter;
 
 import io.Reader;
+import system.properties.SystemProperty;
+
+import java.util.HashMap;
 
 public class System
 {
@@ -28,6 +31,8 @@ public class System
 
     private Database database;
 
+    public HashMap<String, SystemProperty> properties = new HashMap();
+
     //
 
     public System() throws Exception
@@ -38,6 +43,28 @@ public class System
     }
 
     //
+
+    public static void store(final String bodhi, final Object object, Class<?> context) throws Exception
+    {
+        Memory.reference.push(bodhi, object);
+    }
+
+    public static void store(final String bodhi, final String attribute, final Object object, Class<?> context) throws Exception
+    {
+        Memory.reference.push(bodhi+""+attribute, object);
+    }
+
+    public static void property(final String propertyURI, SystemProperty property) throws Exception
+    {
+        System.reference.properties.put(propertyURI, property);
+    }
+
+    public static void pull(final String bodhi) throws Exception
+    {
+        if(Memory.reference.pull(bodhi)==null) throw new Exception();
+
+        return;
+    }
 
     public static void pre(final String bodhi) throws Exception
     {
@@ -88,20 +115,20 @@ public class System
 
     public static Object finalize(final String bodhi, final Parameter parameter, final Class<?> context) throws Exception
     {
-        if(bodhi.equals("//spin{database}") && context.isAssignableFrom(CreateDatabaseImpl.PreconditionCheck.class))
+        if(context.isAssignableFrom(CreateDatabaseImpl.PreconditionCheck.class))
         {
             Database database = (Database)System.peek("//database");
 
-            System.equality("//database{exists}", database.exists);
+            System.compare("//database{exists}", database.exists);
 
-            System.equality("//database{name}", database.name);
+            System.compare("//database{name}", database.name);
 
-            System.equality("//database{url}", database.url);
+            System.compare("//database{url}", database.uri);
 
             return System.reference;
         }
 
-        else if(bodhi.equals("//spin{database}") && context.isAssignableFrom(CreateDatabaseImpl.TaskRunner.class))
+        else if(context.isAssignableFrom(CreateDatabaseImpl.TaskRunner.class))
         {
             Database database;
 
@@ -155,7 +182,7 @@ public class System
 
             database.name = (String)System.storage("//database{name}");
 
-            database.url = (String)System.storage("//database{url}");
+            database.uri = (String)System.storage("//database{url}");
         }
 
         else if(bodhi.equals("//spin{database}") && context.isAssignableFrom(UseDatabaseImpl.TaskRunner.class))
@@ -166,9 +193,9 @@ public class System
 
             //
 
-            System.equality(database.name,"//database{name}", UseDatabaseImpl.TaskRunner.class);
+            System.compare(database.name,"//database{name}", UseDatabaseImpl.TaskRunner.class);
 
-            System.equality(database.url, "//database{url}", UseDatabaseImpl.TaskRunner.class);
+            System.compare(database.uri, "//database{url}", UseDatabaseImpl.TaskRunner.class);
 
             //
 
@@ -183,9 +210,9 @@ public class System
 
             //
 
-            System.equality(database.name,"//database{name}", UseDatabaseImpl.PostconditionCheck.class);
+            System.compare(database.name,"//database{name}", UseDatabaseImpl.PostconditionCheck.class);
 
-            System.equality(database.url, "//database{url}", UseDatabaseImpl.PostconditionCheck.class);
+            System.compare(database.uri, "//database{url}", UseDatabaseImpl.PostconditionCheck.class);
 
             //
 
@@ -216,11 +243,11 @@ public class System
         return Memory.reference.peek(bodhi);
     }
 
-    public static Boolean equality(final String bodhi, final String comparable, final Class<?> klass)
+    public static Boolean compare(final String bodhi, final String comparator, final Class<?> klass)
     {
         try
         {
-            return System.storage(bodhi).equals(comparable);
+            return System.storage(bodhi).equals(comparator);
         }
         catch (Exception e)
         {
@@ -228,9 +255,64 @@ public class System
         }
     }
 
-    public static Boolean equality(final String bodhi, final String comparable)
+    public static Boolean aequalitas(final String bodhi, final Object object, final Class<?> context) throws Exception
+    {
+        if(context.isAssignableFrom(UseDatabaseImpl.TaskRunner.class))
+        {
+            Database comparator01, comparator02;
+
+            comparator01 = (Database) System.peek(bodhi);
+
+            if(object instanceof Database)
+            {
+                Boolean result01, result02;
+
+                comparator02 = (Database) object;
+
+                result01 = comparator01.name.equalsIgnoreCase(comparator02.name);
+
+                result02 = comparator01.uri.equalsIgnoreCase(comparator02.uri);
+
+                return result01 & result02;
+            }
+        }
+
+        return true;
+    }
+
+    public static Boolean inaequalitas(final String bodhi, final Object object, final Class<?> context) throws Exception
+    {
+        if(context.isAssignableFrom(UseDatabaseImpl.PreconditionCheck.class))
+        {
+            Database comparator01, comparator02;
+
+            comparator01 = (Database) System.peek(bodhi);
+
+            if(object instanceof Database)
+            {
+                Boolean result01, result02;
+
+                comparator02 = (Database) object;
+
+                result01 = comparator01.name.equalsIgnoreCase(comparator02.name);
+
+                result02 = comparator01.uri.equalsIgnoreCase(comparator02.uri);
+
+                return !(result01 & result02);
+            }
+        }
+
+        return true;
+    }
+
+    public static Boolean compare(final String bodhi, final String comparable)
     {
         return System.peek(bodhi).equals(comparable);
+    }
+
+    public static Boolean assertion(final String bodhi, String key) throws Exception
+    {
+        return Memory.reference.exists(bodhi);
     }
 
     public static Object full(final String bodhi) throws Exception
@@ -295,66 +377,54 @@ public class System
         {
             return new Object();
         }
-
-        //
-
         else if(context.isAssignableFrom(UseDatabaseImpl.PreconditionCheck.class))
         {
+            /* 04/20/2020 @maxrupplin */
+
             Database database;
 
-            database = (Database) System.peek("//database");
-
-            if(database==null)
+            if(System.inaequalitas("//database", new Database(parameter, context), UseDatabaseImpl.PreconditionCheck.class))
             {
-                System.storage("//database", database = new Database(parameter, context));
+                System.store("//database", database = new Database(parameter, context), UseDatabaseImpl.PreconditionCheck.class);
+
+                System.store("//database", "@self", database, UseDatabaseImpl.PreconditionCheck.class);
+
+                System.store("//database", "@name", database.name, UseDatabaseImpl.PreconditionCheck.class);
+
+                System.store("//database", "@uri", database.uri, UseDatabaseImpl.PreconditionCheck.class) ;
             }
-
-            System.storage("//database{name}", UseDatabaseImpl.Utility.getDatabaseName(parameter));
-
-            System.storage("//database{url}", UseDatabaseImpl.Utility.getDatabaseUrl(parameter));
-
-            //
-
-            System.finalize("//spin{database}", parameter, context);
         }
 
         else if(context.isAssignableFrom(UseDatabaseImpl.TaskRunner.class))
         {
+            /* 04/20/2020 @maxrupplin */
+
             Database database;
 
-            database = (Database) System.peek("//database");
+            if(System.aequalitas("//database", new Database(parameter, context), UseDatabaseImpl.TaskRunner.class))
+                return System.reference;
 
-            if(database==null)
-            {
-                System.storage("//database", database = new Database(parameter, context));
-            }
+            System.store("//database", database = new Database(parameter, context), UseDatabaseImpl.PreconditionCheck.class);
 
-            System.storage("//database{name}", UseDatabaseImpl.Utility.getDatabaseName(parameter));
+            System.store("//database", "@self", database, UseDatabaseImpl.PreconditionCheck.class);
 
-            System.storage("//database{url}", UseDatabaseImpl.Utility.getDatabaseUrl(parameter));
+            System.store("//database", "@name", database.name, UseDatabaseImpl.PreconditionCheck.class);
 
-            //
-
-            System.finalize("//spin{database}", parameter, context);
+            System.store("//database", "@uri", database.uri, UseDatabaseImpl.PreconditionCheck.class);
         }
 
         else if(context.isAssignableFrom(UseDatabaseImpl.PostconditionCheck.class))
         {
+            /* 04/21/2020 @maxrupplin */
+
             Database database;
 
-            database = (Database) System.storage("//database");
+            if(System.aequalitas("//database", new Database(parameter, context), UseDatabaseImpl.TaskRunner.class))
+                return System.reference;
 
-            //
+            //persistence engine
 
-            Persistence persistence;
-
-            persistence = new Persistence();
-
-            persistence.reader.readXML(bodhi, database, parameter, context);
-
-            //
-
-            System.finalize("//spin{database}", context);
+            System.finalize("//database@spin", context);
         }
 
         //
@@ -369,7 +439,7 @@ public class System
 
             System.storage("//database{name}", database.name);
 
-            System.storage("//database{url}", database.url);
+            System.storage("//database{url}", database.uri);
         }
 
         else if(context.isAssignableFrom(CreateDatabaseImpl.TaskRunner.class))
@@ -474,6 +544,21 @@ public class System
     public static Object storage(final String name) throws Exception
     {
         return Memory.reference.pull(name);
+    }
+
+    public static void storage(final String bodhi, final SystemProperty property, final Object object)
+    {
+
+    }
+
+    public static void storage(final String bodhi, final SystemKey key, final Object object)
+    {
+
+    }
+
+    public static void storage(final String bodhi, final String keypair, final Object object)
+    {
+
     }
 
     public static void storage(final String string, Object object) throws Exception

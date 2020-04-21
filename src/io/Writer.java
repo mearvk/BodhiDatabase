@@ -1,22 +1,12 @@
 package io;
 
 import components.persistence.Persistence;
-import constants.DatabaseConstants;
-import exceptions.ExceptionQueue;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.w3c.dom.*;
+import org.xml.Attribute;
+import org.xml.Document;
+import org.xml.Element;
+import org.xml.Root;
 import parameter.Parameter;
 import structures.database.Database;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 import java.io.*;
 
@@ -134,6 +124,37 @@ public class Writer
             }
             else if(context.isAssignableFrom(TableWriter.Runner.class))
             {
+                Document document;
+
+                Element tables;
+
+                Element table01, table02, table03;
+
+                Element column01, column02, column03, column04, column05, column06, column07, column08, column09;
+
+                //
+
+                document = new Document(new Root("database"));
+
+                //
+
+                document.root.addAttribute(new Attribute("name", pdatabase.name));
+
+                document.root.addElement(tables = new Element("tables"));
+
+                //
+
+                tables.addElement(table01 = new Element("table"));
+
+                tables.addElement(table02 = new Element("table"));
+
+                tables.addElement(table03 = new Element("table"));
+
+                //
+
+                //table01.addElement();
+
+                /*
                 JSONObject root = new JSONObject();
 
                 JSONObject database = new JSONObject();
@@ -171,7 +192,7 @@ public class Writer
 
                 //
 
-                FileWriter writer = new FileWriter(new File(pdatabase.url));
+                FileWriter writer = new FileWriter(new File(pdatabase.uri));
 
                 writer.write(database.toJSONString());
 
@@ -180,6 +201,9 @@ public class Writer
                 writer.close();
 
                 writer = null;
+
+
+                 */
             }
             else if(context.isAssignableFrom(TableWriter.Postcheck.class))
             {
@@ -196,6 +220,7 @@ public class Writer
 
             else if (context.isAssignableFrom(DatabaseWriter.Runner.class))
             {
+                /*
                 JSONObject database;
 
                 JSONArray tables;
@@ -210,7 +235,7 @@ public class Writer
 
                 //
 
-                FileWriter writer = new FileWriter(new File(pdatabase.url));
+                FileWriter writer = new FileWriter(new File(pdatabase.uri));
 
                 writer.write(database.toJSONString());
 
@@ -219,6 +244,8 @@ public class Writer
                 writer.close();
 
                 writer = null;
+                */
+
             }
 
             else if (context.isAssignableFrom(DatabaseWriter.Postcheck.class))

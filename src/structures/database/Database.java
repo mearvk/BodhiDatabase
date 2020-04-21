@@ -3,6 +3,7 @@ package structures.database;
 import cases.CreateDatabaseImpl;
 import cases.CreateTableImpl;
 
+import cases.UseDatabaseImpl;
 import parameter.Parameter;
 import structures.Structure;
 import structures.table.Table;
@@ -19,7 +20,7 @@ public class Database extends Structure
 
     public String name;
 
-    public String url;
+    public String uri;
 
     public Parameter parameter;
 
@@ -36,8 +37,20 @@ public class Database extends Structure
 
     public Database(Parameter parameter, Class<?> context) throws Exception
     {
+        if(context.isAssignableFrom(UseDatabaseImpl.PreconditionCheck.class))
+        {
+            Database.reference = this;
 
+            this.exists = UseDatabaseImpl.Utility.getDatabaseExists(parameter);
 
+            this.name = UseDatabaseImpl.Utility.getDatabaseName(parameter);
+
+            this.uri = UseDatabaseImpl.Utility.getDatabaseUrl(parameter);
+
+            this.parameter = parameter;
+
+            this.context = context;
+        }
         if(context.isAssignableFrom(CreateTableImpl.PreconditionCheck.class))
         {
             Database.reference = this;
@@ -46,7 +59,7 @@ public class Database extends Structure
 
             this.name = CreateTableImpl.Utility.getDatabaseName(parameter);
 
-            this.url = CreateTableImpl.Utility.getDatabaseUrl(parameter);
+            this.uri = CreateTableImpl.Utility.getDatabaseUrl(parameter);
 
             this.parameter = parameter;
 
@@ -60,7 +73,7 @@ public class Database extends Structure
 
             this.name = CreateTableImpl.Utility.getDatabaseName(parameter);
 
-            this.url = CreateTableImpl.Utility.getDatabaseUrl(parameter);
+            this.uri = CreateTableImpl.Utility.getDatabaseUrl(parameter);
 
             this.parameter = parameter;
 
@@ -74,7 +87,7 @@ public class Database extends Structure
 
             this.name = CreateDatabaseImpl.Utility.getDatabaseName(parameter);
 
-            this.url = CreateDatabaseImpl.Utility.getDatabaseUrl(parameter);
+            this.uri = CreateDatabaseImpl.Utility.getDatabaseUrl(parameter);
 
             this.parameter = parameter;
 
