@@ -427,6 +427,7 @@ public class System
         {
             return new Object();
         }
+
         else if(context.isAssignableFrom(UseDatabaseImpl.PreconditionCheck.class))
         {
             /* 04/20/2020 @maxrupplin */
@@ -478,7 +479,7 @@ public class System
 
         else if(context.isAssignableFrom(CreateDatabaseImpl.PreconditionCheck.class))
         {
-            /* aloha from bridge club solokaihai, love from alex rogers */
+            /* aloha */
 
             Database database;
 
