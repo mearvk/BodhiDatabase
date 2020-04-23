@@ -1,14 +1,13 @@
 package io;
 
 import components.persistence.Persistence;
+
 import org.xml.Attribute;
 import org.xml.Document;
 import org.xml.Element;
 import org.xml.Root;
 import parameter.Parameter;
 import structures.database.Database;
-
-import java.io.*;
 
 import java.util.HashMap;
 
@@ -18,13 +17,11 @@ public class Writer
 
     public System system = new System();
 
-    public Writer()
-    {
+    public Writer() {
         Writer.reference = this;
     }
 
-    public Object writeXML(final String bodhi, final structures.database.Database database, final structures.table.Table table, final Parameter parameter, Class<?> context) throws Exception
-    {
+    public Object writeXML(final String bodhi, final structures.database.Database database, final structures.table.Table table, final Parameter parameter, Class<?> context) throws Exception {
         Persistence persistence;
 
         persistence = new Persistence();
@@ -53,41 +50,37 @@ public class Writer
 
         persistence.writer.checkXML(bodhi, database, this, parameter, context);
 
+        Document document;
+
         return persistence = null;
     }
 
     //
 
-    public void precheck(final String bodhi, final structures.database.Database database, final Parameter parameter, final Class<?> context) throws Exception
-    {
-        System.runner(bodhi,"precheck", database, DatabaseWriter.Precheck.class);
+    public void precheck(final String bodhi, final structures.database.Database database, final Parameter parameter, final Class<?> context) throws Exception {
+        //System.runner(bodhi,"precheck", database, DatabaseWriter.Precheck.class);
     }
 
-    public void runner(final String bodhi, final structures.database.Database database, final Parameter parameter, final Class<?> context) throws Exception
-    {
-        System.runner(bodhi,"runner", database, DatabaseWriter.Runner.class);
+    public void runner(final String bodhi, final structures.database.Database database, final Parameter parameter, final Class<?> context) throws Exception {
+        //System.runner(bodhi,"runner", database, DatabaseWriter.Runner.class);
     }
 
-    public void postcheck(final String bodhi, final structures.database.Database database, final Parameter parameter, final Class<?> context) throws Exception
-    {
-        System.runner(bodhi,"postcheck", database, DatabaseWriter.Postcheck.class);
+    public void postcheck(final String bodhi, final structures.database.Database database, final Parameter parameter, final Class<?> context) throws Exception {
+        //System.runner(bodhi,"postcheck", database, DatabaseWriter.Postcheck.class);
     }
 
     //
 
-    public void precheck(final String bodhi, final structures.database.Database database, final structures.table.Table table, final Parameter parameter, final Class<?> context) throws Exception
-    {
-        System.runner(bodhi,"precheck", database, table, TableWriter.Precheck.class);
+    public void precheck(final String bodhi, final structures.database.Database database, final structures.table.Table table, final Parameter parameter, final Class<?> context) throws Exception {
+        //System.runner(bodhi,"precheck", database, table, TableWriter.Precheck.class);
     }
 
-    public void runner(final String bodhi, final structures.database.Database database, final structures.table.Table table, final Parameter parameter, final Class<?> context) throws Exception
-    {
-        System.runner(bodhi,"runner", database, table, TableWriter.Runner.class);
+    public void runner(final String bodhi, final structures.database.Database database, final structures.table.Table table, final Parameter parameter, final Class<?> context) throws Exception {
+        //System.runner(bodhi,"runner", database, table, TableWriter.Runner.class);
     }
 
-    public void postcheck(final String bodhi, final structures.database.Database database, final structures.table.Table table, final Parameter parameter, final Class<?> context) throws Exception
-    {
-        System.runner(bodhi,"postcheck", database, table, TableWriter.Postcheck.class);
+    public void postcheck(final String bodhi, final structures.database.Database database, final structures.table.Table table, final Parameter parameter, final Class<?> context) throws Exception {
+        //System.runner(bodhi,"postcheck", database, table, TableWriter.Postcheck.class);
     }
 
     public static class System
@@ -103,7 +96,7 @@ public class Writer
 
         public static void storage(final String bodhi00, final String bodhi01)
         {
-            System.storage(bodhi00, System.pull(bodhi01));
+            //System.storage(bodhi00, System.pull(bodhi01));
         }
 
         public static void storage(final String bodhi, final Object object)
@@ -116,7 +109,7 @@ public class Writer
             return System.reference.map.get(bodhi);
         }
 
-        public static void runner(final String bodhi, final String value, final structures.database.Database pdatabase, final structures.table.Table ptable, final Class<?> context) throws Exception
+        public static void runner(final String pbodhi, final String pvalue, final structures.database.Database pdatabase, final structures.table.Table ptable, final Class<?> context) throws Exception
         {
             if (context.isAssignableFrom(TableWriter.Precheck.class))
             {
@@ -124,6 +117,7 @@ public class Writer
             }
             else if(context.isAssignableFrom(TableWriter.Runner.class))
             {
+
                 Document document;
 
                 Element tables;
@@ -152,58 +146,8 @@ public class Writer
 
                 //
 
-                //table01.addElement();
+                org.xml.io.Writer writer = new org.xml.io.Writer(document, null);
 
-                /*
-                JSONObject root = new JSONObject();
-
-                JSONObject database = new JSONObject();
-
-                JSONObject tables = new JSONObject();
-
-                JSONObject table = new JSONObject();
-
-                JSONObject columns = new JSONObject();
-
-                JSONObject values = new JSONObject();
-
-                //
-
-                root.put("database", database);
-
-                    database.put("name", pdatabase.name);
-
-                    database.put("tables", tables);
-
-                        tables.put("table", table);
-
-                            table.put("columns", columns);
-
-                            table.put("name", ptable.name);
-
-                //
-
-                String name, type;
-
-                for(int i=0; i<ptable.column_names.length; i++)
-                {
-                    columns.put(ptable.column_names[i], ptable.column_types[i]);
-                }
-
-                //
-
-                FileWriter writer = new FileWriter(new File(pdatabase.uri));
-
-                writer.write(database.toJSONString());
-
-                writer.flush();
-
-                writer.close();
-
-                writer = null;
-
-
-                 */
             }
             else if(context.isAssignableFrom(TableWriter.Postcheck.class))
             {
@@ -220,6 +164,7 @@ public class Writer
 
             else if (context.isAssignableFrom(DatabaseWriter.Runner.class))
             {
+
                 /*
                 JSONObject database;
 

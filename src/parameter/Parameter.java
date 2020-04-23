@@ -2,6 +2,7 @@ package parameter;
 
 import cases.CreateTableImpl;
 import cases.UseCase;
+import cases.UseDatabaseImpl;
 import structures.database.Database;
 import structures.table.Table;
 
@@ -34,6 +35,16 @@ public class Parameter
             this.database_name = CreateTableImpl.Utility.getDatabaseName(this);
 
             this.url = CreateTableImpl.Utility.getDatabaseUrl(this);
+        }
+        if(context.isAssignableFrom(UseDatabaseImpl.class))
+        {
+            this.parent = parent;
+
+            this.sql_string = sql_string;
+
+            this.database_name = UseDatabaseImpl.Utility.getDatabaseName(this);
+
+            this.url = UseDatabaseImpl.Utility.getDatabaseUrl(this);
         }
         else
         {

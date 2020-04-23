@@ -4,6 +4,7 @@ import cases.CreateDatabaseImpl;
 import cases.CreateTableImpl;
 import cases.UseDatabaseImpl;
 
+import org.xml.io.Writer;
 import structures.table.Table;
 import structures.database.Database;
 
@@ -18,7 +19,9 @@ import parameter.Parameter;
 
 import io.Reader;
 import system.properties.SystemProperty;
+import system.registry.SystemRegister;
 
+import javax.xml.crypto.Data;
 import java.util.HashMap;
 
 public class System
@@ -44,12 +47,12 @@ public class System
 
     //
 
-    public static void store(final String bodhi, final Object object, Class<?> context) throws Exception
+    public static void pin(final String bodhi, final Object object, Class<?> context) throws Exception
     {
         Memory.reference.push(bodhi, object);
     }
 
-    public static void store(final String bodhi, final String attribute, final Object object, Class<?> context) throws Exception
+    public static void pin(final String bodhi, final String attribute, final Object object, Class<?> context) throws Exception
     {
         Memory.reference.push(bodhi+""+attribute, object);
     }
@@ -255,6 +258,51 @@ public class System
         }
     }
 
+    public static Boolean evaluate(final String bodhi, final String property, final Parameter parameter, final Class<?> context) throws Exception
+    {
+        if(context.isAssignableFrom(UseDatabaseImpl.PostconditionCheck.class))
+        {
+            if(property.equalsIgnoreCase("@selected"))
+            {
+                Database database = (Database)Memory.reference.pull("//database");
+
+                return database.selected.equalsIgnoreCase("true");
+            }
+
+            if(property.equalsIgnoreCase("@writ"))
+            {
+                //TODO fill in & create a database writ system
+            }
+        }
+
+        return true;
+    }
+
+    public static Boolean aequalitas(final String bodhi, final String property, final Object object, final Class<?> context) throws Exception
+    {
+        if(context.isAssignableFrom(UseDatabaseImpl.TaskRunner.class))
+        {
+            Database comparator01, comparator02;
+
+            comparator01 = (Database) System.peek(bodhi);
+
+            if(object instanceof Database)
+            {
+                Boolean result01, result02;
+
+                comparator02 = (Database) object;
+
+                result01 = comparator01.name.equalsIgnoreCase(comparator02.name);
+
+                result02 = comparator01.uri.equalsIgnoreCase(comparator02.uri);
+
+                return result01 & result02;
+            }
+        }
+
+        return true;
+    }
+
     public static Boolean aequalitas(final String bodhi, final Object object, final Class<?> context) throws Exception
     {
         if(context.isAssignableFrom(UseDatabaseImpl.TaskRunner.class))
@@ -351,6 +399,7 @@ public class System
 
             return new Object();
         }
+
         else if(context.isAssignableFrom(CreateTableImpl.TaskRunner.class))
         {
             Database database;
@@ -373,6 +422,7 @@ public class System
 
             return new Object();
         }
+
         else if(context.isAssignableFrom(CreateTableImpl.PostconditionCheck.class))
         {
             return new Object();
@@ -385,13 +435,13 @@ public class System
 
             if(System.inaequalitas("//database", new Database(parameter, context), UseDatabaseImpl.PreconditionCheck.class))
             {
-                System.store("//database", database = new Database(parameter, context), UseDatabaseImpl.PreconditionCheck.class);
+                System.pin("//database", database = new Database(parameter, context), UseDatabaseImpl.PreconditionCheck.class);
 
-                System.store("//database", "@self", database, UseDatabaseImpl.PreconditionCheck.class);
+                System.pin("//database", "@self", database, UseDatabaseImpl.PreconditionCheck.class);
 
-                System.store("//database", "@name", database.name, UseDatabaseImpl.PreconditionCheck.class);
+                System.pin("//database", "@name", database.name, UseDatabaseImpl.PreconditionCheck.class);
 
-                System.store("//database", "@uri", database.uri, UseDatabaseImpl.PreconditionCheck.class) ;
+                System.pin("//database", "@uri", database.uri, UseDatabaseImpl.PreconditionCheck.class) ;
             }
         }
 
@@ -404,72 +454,59 @@ public class System
             if(System.aequalitas("//database", new Database(parameter, context), UseDatabaseImpl.TaskRunner.class))
                 return System.reference;
 
-            System.store("//database", database = new Database(parameter, context), UseDatabaseImpl.PreconditionCheck.class);
+            System.pin("//database", database = new Database(parameter, context), UseDatabaseImpl.PreconditionCheck.class);
 
-            System.store("//database", "@self", database, UseDatabaseImpl.PreconditionCheck.class);
+            System.pin("//database", "@self", database, UseDatabaseImpl.PreconditionCheck.class);
 
-            System.store("//database", "@name", database.name, UseDatabaseImpl.PreconditionCheck.class);
+            System.pin("//database", "@name", database.name, UseDatabaseImpl.PreconditionCheck.class);
 
-            System.store("//database", "@uri", database.uri, UseDatabaseImpl.PreconditionCheck.class);
+            System.pin("//database", "@uri", database.uri, UseDatabaseImpl.PreconditionCheck.class);
+
+            System.pin("//database", "@selected", database.selected, UseDatabaseImpl.PreconditionCheck.class);
+
+            System.pin("//database", "@file", database.file, UseDatabaseImpl.PreconditionCheck.class);
         }
 
         else if(context.isAssignableFrom(UseDatabaseImpl.PostconditionCheck.class))
         {
             /* 04/21/2020 @maxrupplin */
 
-            Database database;
+            System.evaluate("//database","@selected", parameter, context);
 
-            if(System.aequalitas("//database", new Database(parameter, context), UseDatabaseImpl.TaskRunner.class))
-                return System.reference;
-
-            //persistence engine
-
-            System.finalize("//database@spin", context);
+            System.evaluate("//database","@writ", parameter, context);
         }
-
-        //
 
         else if(context.isAssignableFrom(CreateDatabaseImpl.PreconditionCheck.class))
         {
+            /* aloha from bridge club solokaihai, love from alex rogers */
+
             Database database;
 
-            System.storage("//database", database = new Database(parameter, context));
+            System.pin("//database", "@self", database = new Database(parameter, context), CreateDatabaseImpl.PreconditionCheck.class);
 
-            System.storage("//database{exists}", database.exists);
+            System.pin("//database", "@exists", database.exists, CreateDatabaseImpl.PreconditionCheck.class);
 
-            System.storage("//database{name}", database.name);
+            System.pin("//database", "@name", database.name, CreateDatabaseImpl.PreconditionCheck.class);
 
-            System.storage("//database{url}", database.uri);
+            System.pin("//database", "@uri", database.uri, CreateDatabaseImpl.PreconditionCheck.class);
         }
 
         else if(context.isAssignableFrom(CreateDatabaseImpl.TaskRunner.class))
         {
             Database database;
 
-            database = (Database) System.peek("//database");
+            System.pin("//database", "@self", database = new Database(parameter, context), CreateDatabaseImpl.TaskRunner.class);
 
-            //
-
-            Persistence persistence;
-
-            persistence = new Persistence();
-
-            persistence.writer.writeXML("//database", database, parameter, CreateDatabaseImpl.TaskRunner.class);
+            System.pin("//database", "@writ", database.writ, CreateDatabaseImpl.TaskRunner.class);
         }
 
         else if(context.isAssignableFrom(CreateDatabaseImpl.PostconditionCheck.class))
         {
             Database database;
 
-            database = (Database) System.peek("//database");
+            System.pin("//database", "@self", database = new Database(parameter, context), CreateDatabaseImpl.TaskRunner.class);
 
-            //
-
-            Reader reader;
-
-            reader = new Reader();
-
-            reader.checkXML("//database", database, parameter, CreateDatabaseImpl.PostconditionCheck.class);
+            System.pin("//database", "@writ", database.writ, CreateDatabaseImpl.TaskRunner.class);
         }
 
         return System.reference;
