@@ -1,8 +1,11 @@
 import bodhi.BodhiDatabase;
 import contexts.BodhiDatabaseContext;
-import database.*;
 import bodhi.network.RemoteBodhiServer;
-import database.interpreter.SQLInterpreter;
+import database.SQLColumn;
+import database.SQLDatabase;
+import database.SQLResult;
+import database.SQLTable;
+import interpreter.SQLInterpreter;
 
 public class Main
 {

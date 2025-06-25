@@ -1,4 +1,4 @@
-package database.interpreter;
+package interpreter;
 
 public class InterpreterResult
 {

@@ -1,4 +1,4 @@
-package database.interpreter;
+package interpreter;
 
 import bodhi.BodhiDatabase;
 import database.SQLColumn;
