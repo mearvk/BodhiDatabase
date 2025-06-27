@@ -25,7 +25,7 @@ public class SQLInterpreter
 
         //
 
-        if(line.startsWith("ADD DATABASE")) //e.g. ADD DATABASE '//citizens'
+        if(line.startsWith("ADD DATABASE")) //e.g. ADD DATABASE '{citizens}'
         {
             InterpreterResult result = new InterpreterResult();
 
@@ -46,7 +46,7 @@ public class SQLInterpreter
 
             return result;
         }
-        else if(line.startsWith("ALTER DATABASE") && line.contains("ADD TABLE")) //e.g. ALTER DATABASE '//citizens' ADD TABLE '//ages'
+        else if(line.startsWith("ALTER DATABASE") && line.contains("ADD TABLE")) //e.g. ALTER DATABASE '{citizens}' ADD TABLE '{ages}'
         {
             InterpreterResult result = new InterpreterResult();
 
@@ -83,7 +83,7 @@ public class SQLInterpreter
 
             return result;
         }
-        else if(line.startsWith("ALTER DATABASE") && line.contains("ADD TABLE") && line.contains("ADD COLUMN")) //e.g. ALTER DATABASE '//citizens' ALTER TABLE '//employees' ADD COLUMN '//social security number'
+        else if(line.startsWith("ALTER DATABASE") && line.contains("ADD TABLE") && line.contains("ADD COLUMN")) //e.g. ALTER DATABASE '{citizens}' ALTER TABLE '{employees}' ADD COLUMN '{social security number}'
         {
             InterpreterResult result = new InterpreterResult();
 
@@ -128,7 +128,7 @@ public class SQLInterpreter
 
             return result;
         }
-        else if(line.startsWith("INSERT INTO TABLE") && line.contains("WHERE TABLE EQUALS") && line.contains("WHERE COLUMN EQUALS")) //e.g. INSERT INTO DATABASE '//microsoft' WHERE TABLE EQUALS '//employees' WHERE COLUMN EQUALS '//social security number' VALUE '123-456-7890'
+        else if(line.startsWith("INSERT INTO TABLE") && line.contains("WHERE TABLE EQUALS") && line.contains("WHERE COLUMN EQUALS")) //e.g. INSERT INTO DATABASE '{microsoft}' WHERE TABLE EQUALS '{employees}' WHERE COLUMN EQUALS '{social security number}' VALUE '123-456-7890'
         {
             InterpreterResult result = new InterpreterResult();
 

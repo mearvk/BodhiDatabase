@@ -62,7 +62,7 @@ public class RemoteBodhiServer extends BaseServer
 
         public OutputStream outputStream;
 
-        public ArrayList<String> outputBuffer = new ArrayList<>(10);
+        public ArrayList<String> outputBuffer = new ArrayList<>(100);
 
         public OutputThread(RemoteBodhiServer server)
         {
