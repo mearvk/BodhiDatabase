@@ -41,9 +41,9 @@ public class RemoteBodhiServer extends BaseServer
 
         this.context.outputStream = outputthread.outputStream;
 
-        this.outputthread.start();
+        //this.outputthread.start();
 
-        this.inputThread.start();
+        //this.inputThread.start();
     }
 
     public static class OutputThread extends Thread
@@ -77,7 +77,7 @@ public class RemoteBodhiServer extends BaseServer
                 {
                     try
                     {
-                        Thread.sleep(25);
+                        Thread.sleep(20);
                     }
                     catch (Exception e)
                     {
@@ -125,8 +125,6 @@ public class RemoteBodhiServer extends BaseServer
         {
             try
             {
-                if(server.socket==null) System.out.println("TEST");
-
                 this.inputStream = server.socket.getInputStream();
             }
             catch (IOException e)

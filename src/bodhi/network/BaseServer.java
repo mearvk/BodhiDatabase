@@ -3,7 +3,7 @@ package bodhi.network;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class BaseServer
+public class BaseServer extends Thread
 {
     public ServerSocket serversocket;
 
@@ -31,12 +31,26 @@ public class BaseServer
             {
                 this.serversocket = new ServerSocket(this.port);
             }
-
-            this.socket = this.serversocket.accept();
         }
         catch (Exception exception)
         {
             return;
         }
+
+        this.start();
     }
+
+    @Override
+    public void run()
+    {
+        try
+        {
+            this.socket = this.serversocket.accept();
+        }
+        catch(Exception e)
+        {
+            return;
+        }
+    }
+
 }

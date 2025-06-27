@@ -40,7 +40,7 @@ public class BodhiClient extends Thread
     {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Connected to Remote Bodhi Server: [ "+BodhiClient.HOST+":"+BodhiClient.PORT+" ]");
+        System.out.println("Connected to Remote Bodhi Server: [ "+BodhiClient.HOST+":"+BodhiClient.PORT+" ]\n");
 
         StringBuffer inputBuffer = new StringBuffer();
 
