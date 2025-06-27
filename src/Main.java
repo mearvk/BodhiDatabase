@@ -96,6 +96,8 @@ public class Main
         //
 
         BodhiClient client = new BodhiClient();
+
+        client.start();
     }
 }
 

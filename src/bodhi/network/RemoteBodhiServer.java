@@ -46,16 +46,6 @@ public class RemoteBodhiServer extends BaseServer
         this.inputThread.start();
     }
 
-    public void setContext(DatabaseContext context)
-    {
-        this.context = context;
-    }
-
-    public void addBodhiDatabase(BodhiDatabase database)
-    {
-        this.database = database;
-    }
-
     public static class OutputThread extends Thread
     {
         public RemoteBodhiServer server;
@@ -135,6 +125,8 @@ public class RemoteBodhiServer extends BaseServer
         {
             try
             {
+                if(server.socket==null) System.out.println("TEST");
+
                 this.inputStream = server.socket.getInputStream();
             }
             catch (IOException e)
