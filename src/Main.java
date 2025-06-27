@@ -14,7 +14,7 @@ public class Main
     {
         BodhiDatabaseContext bodhiDatabaseContext;
 
-        BodhiDatabase bodhiDatabase = new BodhiDatabase(new SQLDatabase("{microsoft}"), bodhiDatabaseContext = new BodhiDatabaseContext("//context"));
+        BodhiDatabase bodhiDatabase = new BodhiDatabase(new SQLDatabase("{microsoft}"), bodhiDatabaseContext = new BodhiDatabaseContext("{context}"));
 
         //
         
