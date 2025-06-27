@@ -28,6 +28,12 @@ public class BodhiClient extends Thread
             this.inputListener = new InputListener(this);
 
             this.socket = new Socket(BodhiClient.HOST, BodhiClient.PORT);
+
+            if(this.socket.isConnected())
+            {
+                System.out.println("Connected to Remote Bodhi Server: [ " + BodhiClient.HOST + ":" + BodhiClient.PORT + " ]");
+            }
+            else System.out.println("Unable to connect to Remote Bodhi Server: [ " + BodhiClient.HOST + ":" + BodhiClient.PORT + "]");
         }
         catch (Exception e)
         {
@@ -39,8 +45,6 @@ public class BodhiClient extends Thread
     public void run()
     {
         Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Connected to Remote Bodhi Server: [ "+BodhiClient.HOST+":"+BodhiClient.PORT+" ]\n");
 
         StringBuffer inputBuffer = new StringBuffer();
 

@@ -41,9 +41,9 @@ public class RemoteBodhiServer extends BaseServer
 
         this.context.outputStream = outputthread.outputStream;
 
-        //this.outputthread.start();
+        this.outputthread.start();
 
-        //this.inputThread.start();
+        this.inputThread.start();
     }
 
     public static class OutputThread extends Thread
