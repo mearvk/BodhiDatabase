@@ -1,4 +1,5 @@
 import bodhi.BodhiDatabase;
+import bodhi.client.BodhiClient;
 import contexts.BodhiDatabaseContext;
 import bodhi.network.RemoteBodhiServer;
 import database.SQLColumn;
@@ -92,6 +93,9 @@ public class Main
 
         interpreter.result =  interpreter.interpret("UPDATE DATABASE '{microsoft}' WHERE TABLE EQUALS '{employees}' WHERE COLUMN EQUALS '{social security number}' SET VALUE '123-456-7890'");
 
+        //
+
+        BodhiClient client = new BodhiClient();
     }
 }
 

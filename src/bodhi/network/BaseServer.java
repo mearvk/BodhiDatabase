@@ -28,9 +28,16 @@ public class BaseServer implements Runnable
         {
             if(this.port==0)
             {
-                this.serversocket = new ServerSocket();
+                this.serversocket = new ServerSocket(39001);
+
+                this.socket = this.serversocket.accept();
             }
-            else this.serversocket = new ServerSocket(this.port);
+            else
+            {
+                this.serversocket = new ServerSocket(this.port);
+
+                this.socket = this.serversocket.accept();
+            }
         }
         catch (Exception exception)
         {
