@@ -32,6 +32,8 @@ public class BodhiClient extends Thread
             if(this.socket.isConnected())
             {
                 System.out.println("Connected to Remote Bodhi Server: [ " + BodhiClient.HOST + ":" + BodhiClient.PORT + " ]");
+
+                this.start();
             }
             else System.out.println("Unable to connect to Remote Bodhi Server: [ " + BodhiClient.HOST + ":" + BodhiClient.PORT + "]");
         }
