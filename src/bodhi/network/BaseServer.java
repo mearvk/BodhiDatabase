@@ -11,11 +11,6 @@ public class BaseServer extends Thread
 
     public Integer port = 0;
 
-    public BaseServer()
-    {
-
-    }
-
     public BaseServer(Integer port)
     {
         this.port = port;
@@ -38,6 +33,8 @@ public class BaseServer extends Thread
         }
 
         this.start();
+
+        //this.run();
     }
 
     @Override
@@ -49,6 +46,8 @@ public class BaseServer extends Thread
         }
         catch(Exception e)
         {
+            System.out.println(e);
+
             return;
         }
     }

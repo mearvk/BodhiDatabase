@@ -37,6 +37,8 @@ public class BodhiClient extends Thread
         }
         catch (Exception e)
         {
+            System.out.println("Client constructor: "+e);
+
             return;
         }
     }

@@ -62,15 +62,6 @@ public class RemoteBodhiServer extends BaseServer
         @Override
         public void run()
         {
-            try
-            {
-                this.outputStream = server.socket.getOutputStream();
-            }
-            catch (IOException e)
-            {
-                return;
-            }
-
             while(true)
             {
                 if(this.outputBuffer.size()==0)
@@ -90,7 +81,9 @@ public class RemoteBodhiServer extends BaseServer
 
                     try
                     {
-                        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(this.server.socket.getOutputStream()));
+                        this.outputStream = this.server.socket.getOutputStream();
+
+                        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(this.outputStream));
 
                         writer.write(line);
 
@@ -123,19 +116,12 @@ public class RemoteBodhiServer extends BaseServer
         @Override
         public void run()
         {
-            try
-            {
-                this.inputStream = server.socket.getInputStream();
-            }
-            catch (IOException e)
-            {
-                return;
-            }
-
             while(true)
             {
                 try
                 {
+                    this.inputStream = this.server.socket.getInputStream();
+
                     BufferedReader reader = new BufferedReader(new InputStreamReader(this.inputStream));
 
                     String line = null;
@@ -149,8 +135,14 @@ public class RemoteBodhiServer extends BaseServer
 
                     Thread.sleep(20);
                 }
+                catch (NullPointerException npe)
+                {
+                    return;
+                }
                 catch (Exception e)
                 {
+                    System.out.println(e);
+
                     return;
                 }
             }
