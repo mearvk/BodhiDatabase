@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class BodhiClient extends Thread
 {
-    public static final String HOST = "mearvk.us";
+    public static final String HOST = "localhost";
 
     public static final Integer PORT = 39001;
 

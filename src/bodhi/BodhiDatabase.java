@@ -12,18 +12,16 @@ public class BodhiDatabase
 {
     public HashMap<String, SQLDatabase> databases = new HashMap<>();
 
-    public BodhiDatabaseContext context;
+    public BodhiDatabaseContext context = new BodhiDatabaseContext("{context}",this);
 
     public BodhiDatabase()
     {
 
     }
 
-    public BodhiDatabase(SQLDatabase database, BodhiDatabaseContext context)
+    public BodhiDatabase(SQLDatabase database)
     {
         this.databases.put(database.name, database);
-
-        this.context = context;
     }
 
     public SQLDatabase getDatabase(String name)

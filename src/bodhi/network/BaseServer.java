@@ -19,11 +19,14 @@ public class BaseServer extends Thread
         {
             if(this.port==0)
             {
-                this.serversocket = new ServerSocket(39001);
+                System.out.println("<Opening Server Socket on port 39001>");
 
+                this.serversocket = new ServerSocket(39001);
             }
             else
             {
+                System.out.println("<Opening Server Socket on port "+this.port+">");
+
                 this.serversocket = new ServerSocket(this.port);
             }
         }
@@ -42,7 +45,11 @@ public class BaseServer extends Thread
     {
         try
         {
+            System.out.println("<ServerSocket set to accept>");
+
             this.socket = this.serversocket.accept();
+
+            System.out.println("<Connection accepted from "+socket.getRemoteSocketAddress()+">");
         }
         catch(Exception e)
         {

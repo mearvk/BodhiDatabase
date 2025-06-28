@@ -12,9 +12,7 @@ public class Main
 {
     public static void main(String[] args)
     {
-        BodhiDatabaseContext bodhiDatabaseContext;
-
-        BodhiDatabase bodhiDatabase = new BodhiDatabase(new SQLDatabase("{microsoft}"), bodhiDatabaseContext = new BodhiDatabaseContext("{context}"));
+        BodhiDatabase database = new BodhiDatabase(new SQLDatabase("{microsoft}"));
 
         //
         
@@ -22,43 +20,43 @@ public class Main
 
         //
         
-        result = bodhiDatabase.insert("{microsoft}", new SQLTable("{employees}"));
+        result = database.insert("{microsoft}", new SQLTable("{employees}"));
         
-        result = bodhiDatabase.insert("{microsoft}", new SQLTable("{parking}"));
+        result = database.insert("{microsoft}", new SQLTable("{parking}"));
 
-        result = bodhiDatabase.insert("{microsoft}", new SQLTable("{resumes}"));
+        result = database.insert("{microsoft}", new SQLTable("{resumes}"));
 
-        result = bodhiDatabase.insert("{microsoft}", new SQLTable("{security}"));
-
-        //
-
-        result = bodhiDatabase.insert("{microsoft}", "{employees}", new SQLColumn("{first name}"));
-
-        result = bodhiDatabase.insert("{microsoft}", "{employees}", new SQLColumn("{last name}"));
-
-        result = bodhiDatabase.insert("{microsoft}", "{employees}", new SQLColumn("{phone number}"));
-
-        result = bodhiDatabase.insert("{microsoft}", "{employees}", new SQLColumn("{social security number}"));
-
-        result = bodhiDatabase.insert("{microsoft}", "{employees}", new SQLColumn("{salary}"));
+        result = database.insert("{microsoft}", new SQLTable("{security}"));
 
         //
 
-        result = bodhiDatabase.insert("{microsoft}", "{employees}", "{first name}", "Max");
+        result = database.insert("{microsoft}", "{employees}", new SQLColumn("{first name}"));
 
-        result = bodhiDatabase.insert("{microsoft}", "{employees}", "{last name}", "Rupplin");
+        result = database.insert("{microsoft}", "{employees}", new SQLColumn("{last name}"));
 
-        result = bodhiDatabase.insert("{microsoft}", "{employees}", "{phone number}", "123-456-7890");
+        result = database.insert("{microsoft}", "{employees}", new SQLColumn("{phone number}"));
 
-        result = bodhiDatabase.insert("{microsoft}", "{employees}", "{social security number}", "111-222-3333");
+        result = database.insert("{microsoft}", "{employees}", new SQLColumn("{social security number}"));
 
-        result = bodhiDatabase.insert("{microsoft}", "{employees}", "{salary}", "$55.00/hr");
+        result = database.insert("{microsoft}", "{employees}", new SQLColumn("{salary}"));
+
+        //
+
+        result = database.insert("{microsoft}", "{employees}", "{first name}", "Max");
+
+        result = database.insert("{microsoft}", "{employees}", "{last name}", "Rupplin");
+
+        result = database.insert("{microsoft}", "{employees}", "{phone number}", "123-456-7890");
+
+        result = database.insert("{microsoft}", "{employees}", "{social security number}", "111-222-3333");
+
+        result = database.insert("{microsoft}", "{employees}", "{salary}", "$55.00/hr");
 
         //
 
-        RemoteBodhiServer bodhiServer = new RemoteBodhiServer(bodhiDatabaseContext);
+        RemoteBodhiServer bodhiServer = new RemoteBodhiServer(database.context);
 
-        //
+        /*
 
         SQLInterpreter interpreter = new SQLInterpreter(bodhiDatabase);
 
@@ -93,11 +91,11 @@ public class Main
 
         interpreter.result =  interpreter.interpret("UPDATE DATABASE '{microsoft}' WHERE TABLE EQUALS '{employees}' WHERE COLUMN EQUALS '{social security number}' SET VALUE '123-456-7890'");
 
+        */
+
         //
 
-        //BodhiClient client = new BodhiClient();
-
-        //client.start();
+        BodhiClient client = new BodhiClient();
     }
 }
 
