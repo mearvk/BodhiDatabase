@@ -1,12 +1,9 @@
 import bodhi.BodhiDatabase;
-import bodhi.client.BodhiClient;
-import contexts.BodhiDatabaseContext;
 import bodhi.network.RemoteBodhiServer;
 import database.SQLColumn;
 import database.SQLDatabase;
 import database.SQLResult;
 import database.SQLTable;
-import interpreter.SQLInterpreter;
 
 public class Main
 {
@@ -95,7 +92,7 @@ public class Main
 
         //
 
-        BodhiClient client = new BodhiClient();
+        //BodhiClient client = new BodhiClient();
     }
 }
 

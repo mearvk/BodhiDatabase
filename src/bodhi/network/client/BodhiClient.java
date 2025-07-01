@@ -1,4 +1,4 @@
-package bodhi.client;
+package bodhi.network.client;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

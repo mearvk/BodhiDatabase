@@ -2,6 +2,8 @@ package bodhi.network;
 
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class BaseServer extends Thread
 {
@@ -9,7 +11,9 @@ public class BaseServer extends Thread
 
     public Socket socket;
 
-    public Integer port = 0;
+    public Connections connections = new Connections();
+
+    public Integer port = 39001;
 
     public BaseServer(Integer port)
     {
@@ -17,18 +21,9 @@ public class BaseServer extends Thread
 
         try
         {
-            if(this.port==0)
-            {
-                System.out.println("<Opening Server Socket on port 39001>");
+            System.out.println(">> Server socket on port "+this.port+" initialized.");
 
-                this.serversocket = new ServerSocket(39001);
-            }
-            else
-            {
-                System.out.println("<Opening Server Socket on port "+this.port+">");
-
-                this.serversocket = new ServerSocket(this.port);
-            }
+            this.serversocket = new ServerSocket(this.port);
         }
         catch (Exception exception)
         {
@@ -36,8 +31,6 @@ public class BaseServer extends Thread
         }
 
         this.start();
-
-        //this.run();
     }
 
     @Override
@@ -45,11 +38,14 @@ public class BaseServer extends Thread
     {
         try
         {
-            System.out.println("<ServerSocket set to accept>");
+            Socket socket;
 
-            this.socket = this.serversocket.accept();
+            while(true)
+            {
+                this.connections.add(new Connection(this.serversocket.accept()));
 
-            System.out.println("<Connection accepted from "+socket.getRemoteSocketAddress()+">");
+                System.out.println("    >> Connection accepted from "+(this.connections.getLast().socket).getRemoteSocketAddress());
+            }
         }
         catch(Exception e)
         {
@@ -59,4 +55,37 @@ public class BaseServer extends Thread
         }
     }
 
+    public static class Connections
+    {
+        public ArrayList<Connection> connections = new ArrayList<>(100);
+
+        public void add(Connection connection)
+        {
+            this.connections.add(connection);
+        }
+
+        public Connection getFirst()
+        {
+            return this.connections.get(0);
+        }
+
+        public Connection getLast()
+        {
+            return this.connections.get(this.connections.size()-1);
+        }
+    }
+
+    public static class Connection
+    {
+        public Socket socket;
+
+        public Date date;
+
+        public Connection(Socket socket)
+        {
+            this.socket = socket;
+
+            this.date = new Date(System.currentTimeMillis());
+        }
+    }
 }
