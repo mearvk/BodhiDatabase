@@ -1,4 +1,4 @@
-package contexts;
+package bodhi.contexts;
 
 import bodhi.interpreter.Interpreter;
 import bodhi.network.RemoteBodhiServer;

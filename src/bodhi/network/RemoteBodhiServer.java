@@ -1,10 +1,10 @@
 package bodhi.network;
 
 import bodhi.listener.ConnectionListener;
-import contexts.ConnectionContext;
-import contexts.BodhiDatabaseContext;
+import bodhi.contexts.ConnectionContext;
+import bodhi.contexts.BodhiDatabaseContext;
 import bodhi.BodhiDatabase;
-import contexts.DatabaseContext;
+import bodhi.contexts.DatabaseContext;
 
 import java.util.ArrayList;
 

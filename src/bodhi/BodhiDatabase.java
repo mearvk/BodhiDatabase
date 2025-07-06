@@ -1,6 +1,6 @@
 package bodhi;
 
-import contexts.BodhiDatabaseContext;
+import bodhi.contexts.BodhiDatabaseContext;
 import database.SQLColumn;
 import database.SQLDatabase;
 import database.SQLResult;

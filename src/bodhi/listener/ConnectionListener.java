@@ -2,7 +2,7 @@ package bodhi.listener;
 
 import bodhi.connections.Connection;
 import bodhi.network.RemoteBodhiServer;
-import contexts.ConnectionContext;
+import bodhi.contexts.ConnectionContext;
 
 import java.util.Date;
 

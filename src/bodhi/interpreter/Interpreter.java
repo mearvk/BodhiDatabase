@@ -2,7 +2,7 @@ package bodhi.interpreter;
 
 import bodhi.BodhiDatabase;
 import bodhi.network.RemoteBodhiServer;
-import contexts.ConnectionContext;
+import bodhi.contexts.ConnectionContext;
 import interpreter.SQLInterpreter;
 
 import java.util.ArrayList;
