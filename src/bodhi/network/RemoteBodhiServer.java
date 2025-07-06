@@ -38,8 +38,4 @@ public class RemoteBodhiServer extends BaseServer
 
         this.listener.start();
     }
-
-
-
-
 }
