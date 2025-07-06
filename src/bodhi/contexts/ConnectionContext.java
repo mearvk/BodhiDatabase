@@ -71,7 +71,14 @@ public class ConnectionContext
 
                     while((line=reader.readLine())!=null)
                     {
-                        this.inputBuffer.add(line);
+                        if(line.contains("��\u001F�� ��\u0018��'��\u0001��\u0003��\u0003"))
+                        {
+                            line = line.replace("��\u001F�� ��\u0018��'��\u0001��\u0003��\u0003","");
+                        }
+
+                        //this.inputBuffer.add(line);
+
+                        System.out.println(">> "+line);
                     }
 
                     this.interpreter.copyBuffer(this.inputBuffer);
