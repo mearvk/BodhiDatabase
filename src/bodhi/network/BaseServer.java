@@ -3,7 +3,7 @@ package bodhi.network;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Date;
+import bodhi.connections.Connection;
 
 public class BaseServer extends Thread
 {
@@ -77,17 +77,5 @@ public class BaseServer extends Thread
         }
     }
 
-    public static class Connection
-    {
-        public Socket socket;
 
-        public Date date;
-
-        public Connection(Socket socket)
-        {
-            this.socket = socket;
-
-            this.date = new Date(System.currentTimeMillis());
-        }
-    }
 }

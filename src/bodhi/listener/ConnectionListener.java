@@ -1,6 +1,6 @@
 package bodhi.listener;
 
-import bodhi.network.BaseServer;
+import bodhi.connections.Connection;
 import bodhi.network.RemoteBodhiServer;
 import contexts.ConnectionContext;
 
@@ -20,7 +20,7 @@ public class ConnectionListener extends Thread
     {
         while(true)
         {
-            BaseServer.Connection connection = this.server.connections.getFirst();
+            Connection connection = this.server.connections.getFirst();
 
             if(connection==null)
             {

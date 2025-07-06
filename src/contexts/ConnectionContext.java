@@ -1,8 +1,8 @@
 package contexts;
 
 import bodhi.interpreter.Interpreter;
-import bodhi.network.BaseServer;
 import bodhi.network.RemoteBodhiServer;
+import bodhi.connections.Connection;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -10,13 +10,13 @@ import java.util.Date;
 
 public class ConnectionContext extends Thread
 {
-    public BaseServer.Connection connection;
+    public Connection connection;
 
     public RemoteBodhiServer server;
 
     public Date timestamp;
 
-    public ConnectionContext(BaseServer.Connection connection, RemoteBodhiServer server, Date timestamp)
+    public ConnectionContext(Connection connection, RemoteBodhiServer server, Date timestamp)
     {
         this.connection = connection;
 
@@ -28,7 +28,7 @@ public class ConnectionContext extends Thread
     @Override
     public void run()
     {
-        //check for new connections with waiting data presumably
+
     }
 
     public static class InputThread extends Thread
