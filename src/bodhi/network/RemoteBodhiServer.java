@@ -29,6 +29,8 @@ public class RemoteBodhiServer extends BaseServer
     {
         super(PORT);
 
+        //
+
         this.context = context;
 
         this.database = context.database;

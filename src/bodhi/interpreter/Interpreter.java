@@ -13,7 +13,7 @@ public class Interpreter extends Thread
 
     public BodhiDatabase database;
 
-    public ConnectionContext.InputThread inputthread;
+    public ConnectionContext.InputPollingThread inputthread;
 
     public ArrayList<String> buffer = new ArrayList<>();
 
@@ -24,7 +24,7 @@ public class Interpreter extends Thread
         this.buffer.addAll(buffer);
     }
 
-    public Interpreter(ConnectionContext.InputThread inputthread)
+    public Interpreter(ConnectionContext.InputPollingThread inputthread)
     {
         this.inputthread = inputthread;
 

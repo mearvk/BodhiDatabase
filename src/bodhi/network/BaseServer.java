@@ -9,8 +9,6 @@ public class BaseServer extends Thread
 {
     public ServerSocket serversocket;
 
-    public Socket socket;
-
     public Connections connections = new Connections();
 
     public Integer port = 39001;

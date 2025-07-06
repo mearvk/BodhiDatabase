@@ -8,13 +8,17 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class ConnectionContext extends Thread
+public class ConnectionContext
 {
     public Connection connection;
 
     public RemoteBodhiServer server;
 
     public Date timestamp;
+
+    public InputPollingThread input;
+
+    public OutputPollingThread output;
 
     public ConnectionContext(Connection connection, RemoteBodhiServer server, Date timestamp)
     {
@@ -23,16 +27,22 @@ public class ConnectionContext extends Thread
         this.server = server;
 
         this.timestamp = timestamp;
+
+        this.input = new InputPollingThread(this);
+
+        this.output = new OutputPollingThread(this);
+
+        //
+
+        this.input.start();
+
+        this.output.start();
     }
 
-    @Override
-    public void run()
+    public static class InputPollingThread extends Thread
     {
+        public ConnectionContext context;
 
-    }
-
-    public static class InputThread extends Thread
-    {
         public RemoteBodhiServer server;
 
         public ArrayList<String> inputBuffer = new ArrayList<>();
@@ -41,9 +51,11 @@ public class ConnectionContext extends Thread
 
         public Interpreter interpreter = new Interpreter(this);
 
-        public InputThread(RemoteBodhiServer server)
+        public InputPollingThread(ConnectionContext context)
         {
-            this.server = server;
+            this.context = context;
+
+            this.server = context.server;
         }
 
         @Override
@@ -53,9 +65,7 @@ public class ConnectionContext extends Thread
             {
                 try
                 {
-                    this.inputStream = this.server.socket.getInputStream();
-
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(this.inputStream));
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(this.context.connection.socket.getInputStream()));
 
                     String line = null;
 
@@ -82,17 +92,21 @@ public class ConnectionContext extends Thread
         }
     }
 
-    public static class OutputThread extends Thread
+    public static class OutputPollingThread extends Thread
     {
+        public ConnectionContext context;
+
         public RemoteBodhiServer server;
 
         public OutputStream outputStream;
 
         public ArrayList<String> outputBuffer = new ArrayList<>(100);
 
-        public OutputThread(RemoteBodhiServer server)
+        public OutputPollingThread(ConnectionContext context)
         {
-            this.server = server;
+            this.context = context;
+
+            this.server = context.server;
         }
 
         @Override
@@ -117,9 +131,7 @@ public class ConnectionContext extends Thread
 
                     try
                     {
-                        this.outputStream = this.server.socket.getOutputStream();
-
-                        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(this.outputStream));
+                        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(this.context.connection.socket.getOutputStream()));
 
                         writer.write(line);
 
