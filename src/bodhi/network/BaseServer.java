@@ -21,7 +21,7 @@ public class BaseServer extends Thread
 
         try
         {
-            System.out.println(">>  Server socket on port "+this.port+" initialized.");
+            System.out.println(">>  Server socket on port <"+this.port+"> initialized.");
 
             this.serversocket = new ServerSocket(this.port);
         }
@@ -66,6 +66,8 @@ public class BaseServer extends Thread
 
         public Connection getFirst()
         {
+            if(this.connections.size()==0) return null;
+
             return this.connections.remove(0);
         }
 

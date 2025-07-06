@@ -5,7 +5,6 @@ import contexts.ConnectionContext;
 import contexts.BodhiDatabaseContext;
 import bodhi.BodhiDatabase;
 import contexts.DatabaseContext;
-import interpreter.SQLInterpreter;
 
 import java.util.ArrayList;
 
