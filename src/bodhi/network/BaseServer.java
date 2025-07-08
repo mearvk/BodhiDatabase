@@ -19,7 +19,7 @@ public class BaseServer extends Thread
 
         try
         {
-            System.out.println(">>  Server socket on port <"+this.port+"> initialized.");
+            System.out.println(">> Server socket on port <"+this.port+"> initialized.");
 
             this.serversocket = new ServerSocket(this.port);
         }
@@ -42,7 +42,7 @@ public class BaseServer extends Thread
             {
                 this.connections.add(new Connection(this.serversocket.accept()));
 
-                System.out.println(">>      Connection accepted from "+(this.connections.getLast().socket).getRemoteSocketAddress());
+                System.out.println(">> Connection accepted from "+(this.connections.getLast().socket).getRemoteSocketAddress());
             }
         }
         catch(Exception e)

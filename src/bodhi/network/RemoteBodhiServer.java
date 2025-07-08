@@ -1,6 +1,6 @@
 package bodhi.network;
 
-import bodhi.interpreter.Interpreter;
+import bodhi.interpreter.InputInterpreter;
 import bodhi.listener.ConnectionListener;
 import bodhi.contexts.ConnectionContext;
 import bodhi.contexts.BodhiDatabaseContext;
@@ -21,7 +21,7 @@ public class RemoteBodhiServer extends BaseServer
 
     public ConnectionListener listener = new ConnectionListener(this);
 
-    public Interpreter interpreter;
+    public InputInterpreter interpreter;
 
     public RemoteBodhiServer()
     {

@@ -6,7 +6,7 @@ import interpreter.SQLInterpreter;
 
 import java.util.ArrayList;
 
-public class Interpreter extends Thread
+public class InputInterpreter extends Thread
 {
     public BodhiDatabase database;
 
@@ -21,9 +21,9 @@ public class Interpreter extends Thread
         this.buffer.addAll(buffer);
     }
 
-    public Interpreter()
+    public InputInterpreter()
     {
-        this.interpreter = new SQLInterpreter(this.database);
+        this.interpreter = new SQLInterpreter();
     }
 
     @Override

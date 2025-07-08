@@ -14,9 +14,9 @@ public class SQLInterpreter
 
     public InterpreterResult result;
 
-    public SQLInterpreter(BodhiDatabase bodhidatabase)
+    public SQLInterpreter()
     {
-        this.bodhidatabase = bodhidatabase;
+
     }
 
     public InterpreterResult interpret(String line)
