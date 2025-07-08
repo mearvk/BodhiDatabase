@@ -72,7 +72,7 @@ public class ConnectionContext
 
                     while((line=reader.readLine())!=null)
                     {
-                        //READ: Putty Telnet workaround
+                        //Putty Client Telnet bug
                         if(line.contains("��\u001F�� ��\u0018��'��\u0001��\u0003��\u0003"))
                         {
                             line = line.replace("��\u001F�� ��\u0018��'��\u0001��\u0003��\u0003","");
@@ -135,6 +135,8 @@ public class ConnectionContext
                     }
                     catch (Exception e)
                     {
+                        Logger.log(e.getMessage(), e, Logger.STDOUT, true);
+
                         return;
                     }
                 }
@@ -152,6 +154,8 @@ public class ConnectionContext
                     }
                     catch (IOException e)
                     {
+                        Logger.log(e.getMessage(), e, Logger.STDOUT, true);
+
                         return;
                     }
                 }
