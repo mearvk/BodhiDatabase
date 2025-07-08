@@ -140,25 +140,25 @@ public class SQLInterpreter
 
             if(matcher.matches())
             {
-                String databasename = matcher.group(1);
+                String databaseName = matcher.group(1);
 
-                SQLDatabase database = this.bodhidatabase.databases.get(databasename);
+                SQLDatabase database = this.bodhidatabase.databases.get(databaseName);
 
                 if(database != null)
                 {
-                    String tablename = matcher.group(2);
+                    String tableName = matcher.group(2);
 
-                    if(tablename != null)
+                    if(tableName != null)
                     {
-                        SQLTable table = database.tables.get(tablename);
+                        SQLTable table = database.tables.get(tableName);
 
                         if(table != null)
                         {
-                            String columnname = matcher.group(3);
+                            String columnName = matcher.group(3);
 
-                            if(columnname != null)
+                            if(columnName != null)
                             {
-                                SQLColumn column = table.columns.get(columnname);
+                                SQLColumn column = table.columns.get(columnName);
 
                                 if(column != null) //Add support for File object types
                                 {

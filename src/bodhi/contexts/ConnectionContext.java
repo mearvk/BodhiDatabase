@@ -48,11 +48,13 @@ public class ConnectionContext
 
         public ArrayList<String> inputBuffer = new ArrayList<>();
 
-        public Interpreter interpreter = new Interpreter(this);
+        public Interpreter interpreter = new Interpreter();
 
         public InputPollingThread(ConnectionContext context)
         {
             this.context = context;
+
+            this.interpreter.context = context;
 
             this.server = context.server;
         }

@@ -1,7 +1,6 @@
 package bodhi.interpreter;
 
 import bodhi.BodhiDatabase;
-import bodhi.network.RemoteBodhiServer;
 import bodhi.contexts.ConnectionContext;
 import interpreter.SQLInterpreter;
 
@@ -9,13 +8,11 @@ import java.util.ArrayList;
 
 public class Interpreter extends Thread
 {
-    public RemoteBodhiServer server;
-
     public BodhiDatabase database;
 
-    public ConnectionContext.InputPollingThread inputthread;
-
     public ArrayList<String> buffer = new ArrayList<>();
+
+    public ConnectionContext context;
 
     public SQLInterpreter interpreter;
 
@@ -24,12 +21,8 @@ public class Interpreter extends Thread
         this.buffer.addAll(buffer);
     }
 
-    public Interpreter(ConnectionContext.InputPollingThread inputthread)
+    public Interpreter()
     {
-        this.inputthread = inputthread;
-
-        this.server = inputthread.server;
-
         this.interpreter = new SQLInterpreter(this.database);
     }
 
