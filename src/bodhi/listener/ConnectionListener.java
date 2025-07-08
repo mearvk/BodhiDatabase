@@ -3,6 +3,7 @@ package bodhi.listener;
 import bodhi.connections.Connection;
 import bodhi.network.RemoteBodhiServer;
 import bodhi.contexts.ConnectionContext;
+import logging.Logger;
 
 import java.util.Date;
 
@@ -30,7 +31,7 @@ public class ConnectionListener extends Thread
                 }
                 catch (Exception e)
                 {
-                    System.out.println(e);
+                    Logger.log(e.getMessage(), e, Logger.STDOUT, true);
                  }
             }
             else

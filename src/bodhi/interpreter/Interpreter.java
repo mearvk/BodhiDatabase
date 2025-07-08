@@ -19,7 +19,7 @@ public class Interpreter extends Thread
 
     public SQLInterpreter interpreter;
 
-    public void copyBuffer(ArrayList<String> buffer)
+    public void importMessages(ArrayList<String> buffer)
     {
         this.buffer.addAll(buffer);
     }

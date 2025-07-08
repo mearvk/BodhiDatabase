@@ -3,6 +3,7 @@ package bodhi.contexts;
 import bodhi.interpreter.Interpreter;
 import bodhi.network.RemoteBodhiServer;
 import bodhi.connections.Connection;
+import logging.Logger;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -71,27 +72,32 @@ public class ConnectionContext
 
                     while((line=reader.readLine())!=null)
                     {
+                        //READ: Putty Telnet workaround
                         if(line.contains("��\u001F�� ��\u0018��'��\u0001��\u0003��\u0003"))
                         {
                             line = line.replace("��\u001F�� ��\u0018��'��\u0001��\u0003��\u0003","");
+
+                            Logger.log("Putty Client detected; removing unnecessary string.", Logger.STDOUT, false);
                         }
 
-                        //this.inputBuffer.add(line);
+                        this.inputBuffer.add(line);
 
-                        System.out.println(">> "+line);
+                        Logger.log(">> "+this.context.connection.socket.toString()+" received: "+line, Logger.STDOUT, true);
                     }
 
-                    this.interpreter.copyBuffer(this.inputBuffer);
+                    this.interpreter.importMessages(this.inputBuffer);
 
                     Thread.sleep(20);
                 }
                 catch (NullPointerException npe)
                 {
+                    Logger.log(npe.getMessage(), npe, Logger.STDOUT, true);
+
                     return;
                 }
                 catch (Exception e)
                 {
-                    System.out.println(e);
+                    Logger.log(e.getMessage(), e, Logger.STDOUT, true);
 
                     return;
                 }
