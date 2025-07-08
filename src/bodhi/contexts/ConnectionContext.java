@@ -48,8 +48,6 @@ public class ConnectionContext
 
         public ArrayList<String> inputBuffer = new ArrayList<>();
 
-        public InputStream inputStream;
-
         public Interpreter interpreter = new Interpreter(this);
 
         public InputPollingThread(ConnectionContext context)
@@ -77,7 +75,7 @@ public class ConnectionContext
                         {
                             line = line.replace("��\u001F�� ��\u0018��'��\u0001��\u0003��\u0003","");
 
-                            Logger.log("Putty Client detected; removing unnecessary string.", Logger.STDOUT, false);
+                            Logger.log(">> Putty Client detected; removing unnecessary string.", Logger.STDOUT, false);
                         }
 
                         this.inputBuffer.add(line);
@@ -111,8 +109,6 @@ public class ConnectionContext
 
         public RemoteBodhiServer server;
 
-        public OutputStream outputStream;
-
         public ArrayList<String> outputBuffer = new ArrayList<>(100);
 
         public OutputPollingThread(ConnectionContext context)
@@ -135,7 +131,7 @@ public class ConnectionContext
                     }
                     catch (Exception e)
                     {
-                        Logger.log(e.getMessage(), e, Logger.STDOUT, true);
+                        Logger.log(">> "+e.getMessage(), e, Logger.STDOUT, true);
 
                         return;
                     }
@@ -154,7 +150,7 @@ public class ConnectionContext
                     }
                     catch (IOException e)
                     {
-                        Logger.log(e.getMessage(), e, Logger.STDOUT, true);
+                        Logger.log(">> "+e.getMessage(), e, Logger.STDOUT, true);
 
                         return;
                     }
