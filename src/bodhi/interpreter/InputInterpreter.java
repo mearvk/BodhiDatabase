@@ -8,8 +8,6 @@ import java.util.ArrayList;
 
 public class InputInterpreter extends Thread
 {
-    public BodhiDatabase database;
-
     public ArrayList<String> buffer = new ArrayList<>();
 
     public ConnectionContext context;
