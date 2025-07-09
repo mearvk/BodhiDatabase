@@ -6,7 +6,7 @@ import interpreter.SQLInterpreter;
 
 import java.util.ArrayList;
 
-public class InputInterpreter extends Thread
+public class InputRunnable extends Thread
 {
     public ArrayList<String> buffer = new ArrayList<>();
 
@@ -19,9 +19,9 @@ public class InputInterpreter extends Thread
         this.buffer.addAll(buffer);
     }
 
-    public InputInterpreter()
+    public InputRunnable(BodhiDatabase bodhiDatabase)
     {
-        this.interpreter = new SQLInterpreter();
+        this.interpreter = new SQLInterpreter(bodhiDatabase);
     }
 
     @Override

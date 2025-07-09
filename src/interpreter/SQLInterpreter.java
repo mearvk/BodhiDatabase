@@ -10,13 +10,13 @@ import java.util.regex.Pattern;
 
 public class SQLInterpreter
 {
-    public BodhiDatabase bodhidatabase;
+    public BodhiDatabase bodhiDatabase;
 
     public InterpreterResult result;
 
-    public SQLInterpreter()
+    public SQLInterpreter(BodhiDatabase bodhiDatabase)
     {
-
+        this.bodhiDatabase = bodhiDatabase;
     }
 
     public InterpreterResult interpret(String line)
@@ -39,7 +39,7 @@ public class SQLInterpreter
             {
                 String databasename = matcher.group(1);
 
-                this.bodhidatabase.databases.put(databasename, new SQLDatabase(databasename));
+                this.bodhiDatabase.databases.put(databasename, new SQLDatabase(databasename));
             }
 
             //
@@ -62,7 +62,7 @@ public class SQLInterpreter
 
                 if(databasename != null)
                 {
-                    SQLDatabase database = this.bodhidatabase.databases.get(databasename);
+                    SQLDatabase database = this.bodhiDatabase.databases.get(databasename);
 
                     if(database != null)
                     {
@@ -97,7 +97,7 @@ public class SQLInterpreter
             {
                 String databasename = matcher.group(1);
 
-                SQLDatabase database = this.bodhidatabase.databases.get(databasename);
+                SQLDatabase database = this.bodhiDatabase.databases.get(databasename);
 
                 if(database != null)
                 {
@@ -142,7 +142,7 @@ public class SQLInterpreter
             {
                 String databaseName = matcher.group(1);
 
-                SQLDatabase database = this.bodhidatabase.databases.get(databaseName);
+                SQLDatabase database = this.bodhiDatabase.databases.get(databaseName);
 
                 if(database != null)
                 {

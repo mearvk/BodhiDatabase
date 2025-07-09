@@ -1,7 +1,6 @@
 package bodhi.threads;
 
 import bodhi.contexts.ConnectionContext;
-import bodhi.interpreter.InputInterpreter;
 import bodhi.network.RemoteBodhiServer;
 import logging.Logger;
 
@@ -17,13 +16,10 @@ public class InputPollingThread extends Thread
 
     public ArrayList<String> inputBuffer = new ArrayList<>();
 
-    public InputInterpreter interpreter = new InputInterpreter();
 
     public InputPollingThread(ConnectionContext context)
     {
         this.context = context;
-
-        this.interpreter.context = context;
 
         this.server = context.server;
     }
@@ -54,7 +50,7 @@ public class InputPollingThread extends Thread
                     Logger.log(">> "+this.context.connection.socket.toString()+" received: '"+line+"'", Logger.STDOUT, true);
                 }
 
-                this.interpreter.importMessages(this.inputBuffer);
+                this.server.interpreter.importMessages(this.inputBuffer);
 
                 Thread.sleep(20);
             }
